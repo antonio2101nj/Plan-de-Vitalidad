@@ -15,6 +15,7 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="challenges-styles.css">
     
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -714,13 +715,165 @@
 
                 <div class="tab-content" id="challenges">
                     <div class="content-header">
-                        <h2 data-i18n="challenges">Desafios</h2>
-                        <p data-i18n="challenges-description">Gerencie os desafios do aplicativo</p>
+                        <h2 data-i18n="challenges">🏆 Desafios</h2>
+                        <p data-i18n="challenges-description">Gerencie desafios interativos e acompanhe o progresso dos usuários</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-trophy"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Challenges Stats -->
+                    <div class="challenges-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon active">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="activeChallengesCount">0</h3>
+                                <p>Desafios Ativos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon premium">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="premiumChallengesCount">0</h3>
+                                <p>Desafios Premium</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon participants">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalParticipantsCount">0</h3>
+                                <p>Participantes Ativos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon total">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalChallengesCount">0</h3>
+                                <p>Total de Desafios</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Challenges Controls -->
+                    <div class="challenges-controls">
+                        <div class="controls-left">
+                            <button class="btn btn-primary" id="createChallengeBtn">
+                                <i class="fas fa-plus"></i>
+                                Criar Novo Desafio
+                            </button>
+                            <button class="btn btn-secondary" id="exportChallengesBtn">
+                                <i class="fas fa-download"></i>
+                                Exportar Relatório
+                            </button>
+                        </div>
+                        
+                        <div class="controls-right">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="challengeSearchInput" placeholder="Buscar por nome...">
+                            </div>
+                            
+                            <div class="filters">
+                                <select id="challengeLanguageFilter" class="filter-select">
+                                    <option value="">Todos os Idiomas</option>
+                                    <option value="es">Español</option>
+                                    <option value="pt">Português</option>
+                                    <option value="en">English</option>
+                                </select>
+                                
+                                <select id="challengeVisibilityFilter" class="filter-select">
+                                    <option value="">Todos os Planos</option>
+                                    <option value="free">Gratuito</option>
+                                    <option value="premium">Premium</option>
+                                    <option value="both">Ambos</option>
+                                </select>
+                                
+                                <select id="challengeStatusFilter" class="filter-select">
+                                    <option value="">Todos os Status</option>
+                                    <option value="active">Ativos</option>
+                                    <option value="inactive">Inativos</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- View Toggle -->
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="challengeCardViewBtn" data-view="cards">
+                            <i class="fas fa-th-large"></i>
+                            Cards
+                        </button>
+                        <button class="view-btn" id="challengeTableViewBtn" data-view="table">
+                            <i class="fas fa-list"></i>
+                            Tabela
+                        </button>
+                    </div>
+                    
+                    <!-- Challenges Container -->
+                    <div class="challenges-container">
+                        <!-- Cards View -->
+                        <div class="challenges-grid" id="challengesGrid">
+                            <!-- Challenge cards will be populated here -->
+                        </div>
+                        
+                        <!-- Table View -->
+                        <div class="challenges-table-container" id="challengesTableContainer" style="display: none;">
+                            <table class="challenges-table" id="challengesTable">
+                                <thead>
+                                    <tr>
+                                        <th>🏆 Desafio</th>
+                                        <th>⏱️ Duração</th>
+                                        <th>🗣️ Idioma</th>
+                                        <th>👥 Visibilidade</th>
+                                        <th>📊 Participantes</th>
+                                        <th>📈 Taxa Conclusão</th>
+                                        <th>✅ Status</th>
+                                        <th>⚙️ Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="challengesTableBody">
+                                    <!-- Challenges will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="table-loading" id="challengesLoading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Carregando desafios...</p>
+                        </div>
+                        
+                        <div class="no-challenges" id="noChallengesMessage" style="display: none;">
+                            <i class="fas fa-trophy"></i>
+                            <h3>Nenhum desafio encontrado</h3>
+                            <p>Não há desafios cadastrados ou que correspondam aos filtros selecionados.</p>
+                            <button class="btn btn-primary" onclick="challengesManager.openCreateChallengeModal()">
+                                <i class="fas fa-plus"></i>
+                                Criar Primeiro Desafio
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="challengesPaginationInfo">Mostrando 0 de 0 desafios</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn btn-small" id="challengesPrevPageBtn" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                                Anterior
+                            </button>
+                            <span class="page-numbers" id="challengesPageNumbers"></span>
+                            <button class="btn btn-small" id="challengesNextPageBtn" disabled>
+                                Próximo
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -1405,11 +1558,329 @@
         </div>
     </div>
 
+    <!-- Challenge Modals -->
+    <!-- Create/Edit Challenge Modal -->
+    <div class="modal extra-large" id="challengeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="challengeModalTitle">Criar Novo Desafio</h3>
+                <button class="modal-close" id="challengeModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="challengeForm">
+                    <input type="hidden" id="challengeId" name="challengeId">
+                    
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-info-circle"></i> Informações Básicas</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="challengeName">Nome do Desafio *</label>
+                                <input type="text" id="challengeName" name="name" required placeholder="Ex: Desafio 30 Dias para Transformação">
+                            </div>
+                            <div class="form-group">
+                                <label for="challengeLanguage">Idioma *</label>
+                                <select id="challengeLanguage" name="language" required>
+                                    <option value="">Selecione o idioma</option>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="pt">🇧🇷 Português</option>
+                                    <option value="en">🇺🇸 English</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="challengeDescription">Descrição *</label>
+                            <textarea id="challengeDescription" name="description" required placeholder="Descreva o desafio, seus objetivos e benefícios..." rows="4"></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="challengeDuration">Duração (dias) *</label>
+                                <input type="number" id="challengeDuration" name="duration" required min="1" max="365" placeholder="Ex: 30">
+                            </div>
+                            <div class="form-group">
+                                <label for="challengeVisibility">Visibilidade *</label>
+                                <select id="challengeVisibility" name="visibility" required>
+                                    <option value="">Selecione a visibilidade</option>
+                                    <option value="free">🆓 Usuários Gratuitos</option>
+                                    <option value="premium">👑 Usuários Premium</option>
+                                    <option value="both">👥 Ambos</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="challengeProgressUnlockable">
+                                    <input type="checkbox" id="challengeProgressUnlockable" name="progressUnlockable">
+                                    Progresso Desbloqueável
+                                </label>
+                                <small class="form-help">Libera o próximo dia apenas após completar o atual</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="challengeStatus">Status *</label>
+                                <select id="challengeStatus" name="status" required>
+                                    <option value="active">✅ Ativo</option>
+                                    <option value="inactive">❌ Inativo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Release Configuration -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-clock"></i> Configuração de Liberação</h4>
+                        
+                        <div class="form-group">
+                            <label for="challengeReleaseType">Tipo de Liberação *</label>
+                            <select id="challengeReleaseType" name="releaseType" required>
+                                <option value="">Selecione o tipo</option>
+                                <option value="immediate">⚡ Imediata após cadastro</option>
+                                <option value="delayed">⏰ Após X dias da inscrição</option>
+                                <option value="scheduled">📅 Em data específica</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group" id="challengeDelayDaysGroup" style="display: none;">
+                            <label for="challengeDelayDays">Liberar após quantos dias?</label>
+                            <input type="number" id="challengeDelayDays" name="delayDays" min="1" max="365" placeholder="Ex: 7">
+                            <small class="form-help">Número de dias após a inscrição do usuário</small>
+                        </div>
+                        
+                        <div class="form-group" id="challengeScheduledDateGroup" style="display: none;">
+                            <label for="challengeScheduledDate">Data de Liberação</label>
+                            <input type="datetime-local" id="challengeScheduledDate" name="scheduledDate">
+                            <small class="form-help">Data e hora específica para liberação</small>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Upload -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-image"></i> Imagem de Apresentação</h4>
+                        
+                        <div class="form-group">
+                            <label for="challengeImage">Imagem do Desafio</label>
+                            <div class="file-upload-area" id="challengeImageUploadArea">
+                                <input type="file" id="challengeImage" name="image" accept="image/*" style="display: none;">
+                                <div class="upload-placeholder">
+                                    <i class="fas fa-image"></i>
+                                    <p>Clique para selecionar imagem do desafio</p>
+                                    <small>PNG, JPG até 5MB</small>
+                                </div>
+                                <div class="upload-preview" id="challengeImagePreview" style="display: none;">
+                                    <img id="challengeImagePreviewImg" src="" alt="Preview">
+                                    <button type="button" class="remove-file" onclick="removeChallengeFile('image')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="challengeModalCancel">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="challengeModalSave" form="challengeForm">
+                    <i class="fas fa-save"></i>
+                    Salvar e Configurar Dias
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Challenge Days Configuration Modal -->
+    <div class="modal extra-large" id="challengeDaysModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="challengeDaysModalTitle">Configurar Conteúdo Diário</h3>
+                <button class="modal-close" id="challengeDaysModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="challenge-days-header">
+                    <h4 id="challengeDaysName">Nome do Desafio</h4>
+                    <p id="challengeDaysDuration">Duração: 0 dias</p>
+                </div>
+                
+                <div class="days-navigation">
+                    <button class="btn btn-small" id="prevDayBtn" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                        Dia Anterior
+                    </button>
+                    <span class="current-day-info">
+                        Dia <span id="currentDayNumber">1</span> de <span id="totalDaysNumber">1</span>
+                    </span>
+                    <button class="btn btn-small" id="nextDayBtn">
+                        Próximo Dia
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <form id="challengeDayForm">
+                    <input type="hidden" id="dayNumber" name="dayNumber">
+                    <input type="hidden" id="parentChallengeId" name="challengeId">
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-calendar-day"></i> Conteúdo do Dia</h4>
+                        
+                        <div class="form-group">
+                            <label for="dayTitle">Título do Dia *</label>
+                            <input type="text" id="dayTitle" name="title" required placeholder="Ex: Preparação Mental">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dayContent">Instrução do Dia *</label>
+                            <textarea id="dayContent" name="content" required placeholder="Descreva as atividades, exercícios ou reflexões do dia..." rows="6"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dayMotivationalPhrase">Frase de Incentivo *</label>
+                            <input type="text" id="dayMotivationalPhrase" name="motivationalPhrase" required placeholder="Ex: ¡Buen trabajo! Sigue así.">
+                            <small class="form-help">Frase que aparece quando o usuário marca como concluído</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dayMedia">Mídia Motivacional (Opcional)</label>
+                            <div class="file-upload-area" id="dayMediaUploadArea">
+                                <input type="file" id="dayMedia" name="media" accept="image/*,video/*,audio/*" style="display: none;">
+                                <div class="upload-placeholder">
+                                    <i class="fas fa-play-circle"></i>
+                                    <p>Clique para adicionar imagem, vídeo ou áudio</p>
+                                    <small>PNG, JPG, MP4, MP3 até 50MB</small>
+                                </div>
+                                <div class="upload-preview" id="dayMediaPreview" style="display: none;">
+                                    <div class="media-info">
+                                        <i class="fas fa-file" id="dayMediaIcon"></i>
+                                        <div class="media-details">
+                                            <span class="media-name" id="dayMediaName"></span>
+                                            <span class="media-size" id="dayMediaSize"></span>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="remove-file" onclick="removeChallengeFile('dayMedia')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="challengeDaysModalCancel">Fechar</button>
+                <button type="button" class="btn btn-primary" id="saveDayBtn">
+                    <i class="fas fa-save"></i>
+                    Salvar Dia
+                </button>
+                <button type="button" class="btn btn-success" id="finishChallengeBtn">
+                    <i class="fas fa-check"></i>
+                    Finalizar Desafio
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Challenge Progress Modal -->
+    <div class="modal large" id="challengeProgressModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="challengeProgressModalTitle">Progresso do Desafio</h3>
+                <button class="modal-close" id="challengeProgressModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="challenge-progress-header">
+                    <h4 id="progressChallengeName">Nome do Desafio</h4>
+                    <div class="progress-stats">
+                        <div class="progress-stat">
+                            <span class="stat-label">Participantes:</span>
+                            <span class="stat-value" id="progressParticipants">0</span>
+                        </div>
+                        <div class="progress-stat">
+                            <span class="stat-label">Taxa de Conclusão:</span>
+                            <span class="stat-value" id="progressCompletionRate">0%</span>
+                        </div>
+                        <div class="progress-stat">
+                            <span class="stat-label">Média de Dias:</span>
+                            <span class="stat-value" id="progressAverageDays">0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="progress-chart">
+                    <canvas id="progressChart" width="400" height="200"></canvas>
+                </div>
+                
+                <div class="participants-list">
+                    <h5>Participantes Ativos</h5>
+                    <div class="participants-table-container">
+                        <table class="participants-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Progresso</th>
+                                    <th>Dias Concluídos</th>
+                                    <th>Último Acesso</th>
+                                </tr>
+                            </thead>
+                            <tbody id="participantsTableBody">
+                                <!-- Participants will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="challengeProgressModalCancel">Fechar</button>
+                <button type="button" class="btn btn-primary" id="exportProgressBtn">
+                    <i class="fas fa-download"></i>
+                    Exportar Relatório
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirm Delete Challenge Modal -->
+    <div class="modal" id="confirmDeleteChallengeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão</h3>
+                <button class="modal-close" id="confirmDeleteChallengeClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="confirm-delete-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h4>Tem certeza que deseja excluir este desafio?</h4>
+                    <p>Esta ação não pode ser desfeita. O desafio será removido permanentemente do sistema, incluindo todo o progresso dos usuários.</p>
+                    <div class="challenge-info">
+                        <strong id="deleteChallengeName"></strong>
+                        <span id="deleteChallengeParticipants"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="confirmDeleteChallengeCancel">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteChallengeConfirm">
+                    <i class="fas fa-trash"></i>
+                    Excluir Desafio
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="auth.js"></script>
     <script src="script.js"></script>
     <script src="users-management.js"></script>
     <script src="products-management.js"></script>
     <script src="bonus-management.js"></script>
+    <script src="challenges-management.js"></script>
     <script>
         // Verificar autenticação ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
