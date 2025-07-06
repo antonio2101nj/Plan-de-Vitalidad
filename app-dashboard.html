@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Vitalidad - Meu Painel</title>
+    <meta name="description" content="Seu painel pessoal no Plan de Vitalidad">
+    <meta name="theme-color" content="#10B981">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="app-styles.css">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <i class="fas fa-leaf"></i>
+                    <h1>Plan de Vitalidad</h1>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <h2 class="welcome-message" data-i18n="welcome-user">Olá, bem-vindo!</h2>
+            </div>
+            
+            <div class="header-right">
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <button class="language-btn" id="languageBtn">
+                        <i class="fas fa-globe"></i>
+                        <span id="currentLanguage">PT</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <div class="language-option" data-lang="pt">
+                            <span class="flag">🇧🇷</span>
+                            <span>Português</span>
+                        </div>
+                        <div class="language-option" data-lang="es">
+                            <span class="flag">🇪🇸</span>
+                            <span>Español</span>
+                        </div>
+                        <div class="language-option" data-lang="en">
+                            <span class="flag">🇺🇸</span>
+                            <span>English</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Theme Toggle -->
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- User Menu -->
+                <div class="user-menu">
+                    <button class="user-btn" id="userBtn">
+                        <i class="fas fa-user"></i>
+                        <span id="userName">Usuário</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info">
+                            <i class="fas fa-user-circle"></i>
+                            <div>
+                                <div class="user-name" id="userNameFull">Usuário Demo</div>
+                                <div class="user-email" id="userEmail">usuario@planvitalidad.com</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" data-i18n="profile">
+                            <i class="fas fa-user-edit"></i>
+                            <span>Perfil</span>
+                        </a>
+                        <a href="#" class="dropdown-item" data-i18n="settings">
+                            <i class="fas fa-cog"></i>
+                            <span>Configurações</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item logout-item" onclick="logout()" data-i18n="logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Sair</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Stats Overview -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon healthy">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>85%</h3>
+                            <p data-i18n="nutrition-score">Pontuação Nutricional</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon active">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>12</h3>
+                            <p data-i18n="workouts-week">Treinos na Semana</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon progress">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>23</h3>
+                            <p data-i18n="challenges-completed">Desafios Concluídos</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon streak">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>7</h3>
+                            <p data-i18n="day-streak">Dias Consecutivos</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="actions-section">
+                <h2 data-i18n="quick-actions">Ações Rápidas</h2>
+                <div class="actions-grid">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3 data-i18n="log-meal">Registrar Refeição</h3>
+                        <p data-i18n="log-meal-desc">Anote o que você comeu hoje</p>
+                        <button class="action-btn" data-i18n="add-meal">Adicionar Refeição</button>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h3 data-i18n="start-workout">Iniciar Treino</h3>
+                        <p data-i18n="start-workout-desc">Comece um treino guiado</p>
+                        <button class="action-btn" data-i18n="start-now">Começar Agora</button>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 data-i18n="view-progress">Ver Progresso</h3>
+                        <p data-i18n="view-progress-desc">Acompanhe sua evolução</p>
+                        <button class="action-btn" data-i18n="view-details">Ver Detalhes</button>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h3 data-i18n="daily-challenge">Desafio Diário</h3>
+                        <p data-i18n="daily-challenge-desc">Complete o desafio de hoje</p>
+                        <button class="action-btn" data-i18n="accept-challenge">Aceitar Desafio</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Today's Goals -->
+            <section class="goals-section">
+                <h2 data-i18n="todays-goals">Metas de Hoje</h2>
+                <div class="goals-list">
+                    <div class="goal-item">
+                        <div class="goal-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="goal-content">
+                            <h4 data-i18n="water-intake">Consumo de Água</h4>
+                            <p data-i18n="water-goal">Meta: 2.5L</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%"></div>
+                            </div>
+                            <span class="progress-text">1.5L / 2.5L</span>
+                        </div>
+                    </div>
+                    
+                    <div class="goal-item">
+                        <div class="goal-icon">
+                            <i class="fas fa-walking"></i>
+                        </div>
+                        <div class="goal-content">
+                            <h4 data-i18n="steps-today">Passos de Hoje</h4>
+                            <p data-i18n="steps-goal">Meta: 10.000 passos</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%"></div>
+                            </div>
+                            <span class="progress-text">7.500 / 10.000</span>
+                        </div>
+                    </div>
+                    
+                    <div class="goal-item">
+                        <div class="goal-icon">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div class="goal-content">
+                            <h4 data-i18n="sleep-quality">Qualidade do Sono</h4>
+                            <p data-i18n="sleep-goal">Meta: 8 horas</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 90%"></div>
+                            </div>
+                            <span class="progress-text">7.2h / 8h</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="activity-section">
+                <h2 data-i18n="recent-activity">Atividade Recente</h2>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4 data-i18n="achievement-unlocked">Conquista Desbloqueada!</h4>
+                            <p data-i18n="achievement-desc">Você completou 7 dias consecutivos</p>
+                            <span class="activity-time">2 horas atrás</span>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4 data-i18n="meal-logged">Refeição Registrada</h4>
+                            <p data-i18n="meal-logged-desc">Almoço - Salada com frango grelhado</p>
+                            <span class="activity-time">4 horas atrás</span>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4 data-i18n="workout-completed">Treino Concluído</h4>
+                            <p data-i18n="workout-completed-desc">Cardio HIIT - 30 minutos</p>
+                            <span class="activity-time">Ontem</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Navigation Bottom (Mobile) -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span data-i18n="home">Início</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-utensils"></i>
+                <span data-i18n="nutrition">Nutrição</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-dumbbell"></i>
+                <span data-i18n="workouts">Treinos</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span data-i18n="progress">Progresso</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span data-i18n="community">Comunidade</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Scripts -->
+    <script src="auth.js"></script>
+    <script>
+        // Internationalization for user app
+        const userI18n = {
+            pt: {
+                'welcome-user': 'Olá, bem-vindo!',
+                'profile': 'Perfil',
+                'settings': 'Configurações',
+                'logout': 'Sair',
+                'nutrition-score': 'Pontuação Nutricional',
+                'workouts-week': 'Treinos na Semana',
+                'challenges-completed': 'Desafios Concluídos',
+                'day-streak': 'Dias Consecutivos',
+                'quick-actions': 'Ações Rápidas',
+                'log-meal': 'Registrar Refeição',
+                'log-meal-desc': 'Anote o que você comeu hoje',
+                'add-meal': 'Adicionar Refeição',
+                'start-workout': 'Iniciar Treino',
+                'start-workout-desc': 'Comece um treino guiado',
+                'start-now': 'Começar Agora',
+                'view-progress': 'Ver Progresso',
+                'view-progress-desc': 'Acompanhe sua evolução',
+                'view-details': 'Ver Detalhes',
+                'daily-challenge': 'Desafio Diário',
+                'daily-challenge-desc': 'Complete o desafio de hoje',
+                'accept-challenge': 'Aceitar Desafio',
+                'todays-goals': 'Metas de Hoje',
+                'water-intake': 'Consumo de Água',
+                'water-goal': 'Meta: 2.5L',
+                'steps-today': 'Passos de Hoje',
+                'steps-goal': 'Meta: 10.000 passos',
+                'sleep-quality': 'Qualidade do Sono',
+                'sleep-goal': 'Meta: 8 horas',
+                'recent-activity': 'Atividade Recente',
+                'achievement-unlocked': 'Conquista Desbloqueada!',
+                'achievement-desc': 'Você completou 7 dias consecutivos',
+                'meal-logged': 'Refeição Registrada',
+                'meal-logged-desc': 'Almoço - Salada com frango grelhado',
+                'workout-completed': 'Treino Concluído',
+                'workout-completed-desc': 'Cardio HIIT - 30 minutos',
+                'home': 'Início',
+                'nutrition': 'Nutrição',
+                'workouts': 'Treinos',
+                'progress': 'Progresso',
+                'community': 'Comunidade'
+            },
+            es: {
+                'welcome-user': '¡Hola, bienvenido!',
+                'profile': 'Perfil',
+                'settings': 'Configuraciones',
+                'logout': 'Salir',
+                'nutrition-score': 'Puntuación Nutricional',
+                'workouts-week': 'Entrenamientos en la Semana',
+                'challenges-completed': 'Desafíos Completados',
+                'day-streak': 'Días Consecutivos',
+                'quick-actions': 'Acciones Rápidas',
+                'log-meal': 'Registrar Comida',
+                'log-meal-desc': 'Anota lo que comiste hoy',
+                'add-meal': 'Agregar Comida',
+                'start-workout': 'Iniciar Entrenamiento',
+                'start-workout-desc': 'Comienza un entrenamiento guiado',
+                'start-now': 'Comenzar Ahora',
+                'view-progress': 'Ver Progreso',
+                'view-progress-desc': 'Sigue tu evolución',
+                'view-details': 'Ver Detalles',
+                'daily-challenge': 'Desafío Diario',
+                'daily-challenge-desc': 'Completa el desafío de hoy',
+                'accept-challenge': 'Aceptar Desafío',
+                'todays-goals': 'Metas de Hoy',
+                'water-intake': 'Consumo de Agua',
+                'water-goal': 'Meta: 2.5L',
+                'steps-today': 'Pasos de Hoy',
+                'steps-goal': 'Meta: 10.000 pasos',
+                'sleep-quality': 'Calidad del Sueño',
+                'sleep-goal': 'Meta: 8 horas',
+                'recent-activity': 'Actividad Reciente',
+                'achievement-unlocked': '¡Logro Desbloqueado!',
+                'achievement-desc': 'Completaste 7 días consecutivos',
+                'meal-logged': 'Comida Registrada',
+                'meal-logged-desc': 'Almuerzo - Ensalada con pollo a la plancha',
+                'workout-completed': 'Entrenamiento Completado',
+                'workout-completed-desc': 'Cardio HIIT - 30 minutos',
+                'home': 'Inicio',
+                'nutrition': 'Nutrición',
+                'workouts': 'Entrenamientos',
+                'progress': 'Progreso',
+                'community': 'Comunidad'
+            },
+            en: {
+                'welcome-user': 'Hello, welcome!',
+                'profile': 'Profile',
+                'settings': 'Settings',
+                'logout': 'Logout',
+                'nutrition-score': 'Nutrition Score',
+                'workouts-week': 'Workouts This Week',
+                'challenges-completed': 'Challenges Completed',
+                'day-streak': 'Day Streak',
+                'quick-actions': 'Quick Actions',
+                'log-meal': 'Log Meal',
+                'log-meal-desc': 'Record what you ate today',
+                'add-meal': 'Add Meal',
+                'start-workout': 'Start Workout',
+                'start-workout-desc': 'Begin a guided workout',
+                'start-now': 'Start Now',
+                'view-progress': 'View Progress',
+                'view-progress-desc': 'Track your evolution',
+                'view-details': 'View Details',
+                'daily-challenge': 'Daily Challenge',
+                'daily-challenge-desc': 'Complete today\'s challenge',
+                'accept-challenge': 'Accept Challenge',
+                'todays-goals': 'Today\'s Goals',
+                'water-intake': 'Water Intake',
+                'water-goal': 'Goal: 2.5L',
+                'steps-today': 'Steps Today',
+                'steps-goal': 'Goal: 10,000 steps',
+                'sleep-quality': 'Sleep Quality',
+                'sleep-goal': 'Goal: 8 hours',
+                'recent-activity': 'Recent Activity',
+                'achievement-unlocked': 'Achievement Unlocked!',
+                'achievement-desc': 'You completed 7 consecutive days',
+                'meal-logged': 'Meal Logged',
+                'meal-logged-desc': 'Lunch - Salad with grilled chicken',
+                'workout-completed': 'Workout Completed',
+                'workout-completed-desc': 'HIIT Cardio - 30 minutes',
+                'home': 'Home',
+                'nutrition': 'Nutrition',
+                'workouts': 'Workouts',
+                'progress': 'Progress',
+                'community': 'Community'
+            }
+        };
+
+        let currentLanguage = 'pt';
+
+        // Language management
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('userLanguage', lang);
+            
+            // Update current language display
+            const langMap = { pt: 'PT', es: 'ES', en: 'EN' };
+            document.getElementById('currentLanguage').textContent = langMap[lang];
+            
+            // Update language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.classList.toggle('active', option.dataset.lang === lang);
+            });
+            
+            // Update all texts
+            updateTexts();
+            
+            // Update document language
+            document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+        }
+
+        function updateTexts() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (userI18n[currentLanguage] && userI18n[currentLanguage][key]) {
+                    element.textContent = userI18n[currentLanguage][key];
+                }
+            });
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar se usuário está logado
+            if (!authSystem.isLoggedIn()) {
+                window.location.href = 'app-login.html';
+                return;
+            }
+            
+            // Verificar se é usuário comum (não admin)
+            if (authSystem.isAdmin()) {
+                alert('Redirecionando para área administrativa...');
+                window.location.href = 'admin-dashboard.html';
+                return;
+            }
+            
+            // Load saved language
+            const savedLanguage = localStorage.getItem('userLanguage') || 'pt';
+            setLanguage(savedLanguage);
+            
+            // Atualizar informações do usuário
+            const currentUser = authSystem.getCurrentUser();
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.name.split(' ')[0];
+                document.getElementById('userNameFull').textContent = currentUser.name;
+                document.getElementById('userEmail').textContent = currentUser.email;
+                
+                // Atualizar mensagem de boas-vindas
+                const welcomeMsg = document.querySelector('.welcome-message');
+                if (currentLanguage === 'pt') {
+                    welcomeMsg.textContent = `Olá, ${currentUser.name.split(' ')[0]}!`;
+                } else if (currentLanguage === 'es') {
+                    welcomeMsg.textContent = `¡Hola, ${currentUser.name.split(' ')[0]}!`;
+                } else {
+                    welcomeMsg.textContent = `Hello, ${currentUser.name.split(' ')[0]}!`;
+                }
+            }
+            
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Language selector
+            const languageBtn = document.getElementById('languageBtn');
+            const languageDropdown = document.getElementById('languageDropdown');
+            
+            languageBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                languageDropdown.classList.toggle('show');
+            });
+            
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.dataset.lang;
+                    setLanguage(lang);
+                    languageDropdown.classList.remove('show');
+                });
+            });
+            
+            // User menu
+            const userBtn = document.getElementById('userBtn');
+            const userDropdown = document.getElementById('userDropdown');
+            
+            userBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle('show');
+            });
+            
+            // Theme toggle
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-theme');
+                const isDark = document.body.classList.contains('dark-theme');
+                this.querySelector('i').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+                localStorage.setItem('userTheme', isDark ? 'dark' : 'light');
+            });
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('userTheme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                themeToggle.querySelector('i').className = 'fas fa-sun';
+            }
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.language-selector')) {
+                    languageDropdown.classList.remove('show');
+                }
+                if (!e.target.closest('.user-menu')) {
+                    userDropdown.classList.remove('show');
+                }
+            });
+            
+            // Action buttons
+            document.querySelectorAll('.action-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Placeholder for action functionality
+                    alert('Funcionalidade em desenvolvimento!');
+                });
+            });
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                authSystem.logout();
+            }
+        }
+    </script>
+</body>
+</html>

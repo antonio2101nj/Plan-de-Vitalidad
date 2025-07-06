@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Plan de Vitalidad</title>
+    <meta name="description" content="Acesse sua conta no Plan de Vitalidad">
+    <meta name="theme-color" content="#10B981">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="auth-styles.css">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="user-theme">
+    <div class="auth-container">
+        <!-- Background Pattern -->
+        <div class="background-pattern"></div>
+        
+        <!-- Language Selector -->
+        <div class="language-selector-top">
+            <button class="language-btn" id="languageBtn">
+                <i class="fas fa-globe"></i>
+                <span id="currentLanguage">PT</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="language-dropdown" id="languageDropdown">
+                <div class="language-option" data-lang="pt">
+                    <span class="flag">🇧🇷</span>
+                    <span>Português</span>
+                </div>
+                <div class="language-option" data-lang="es">
+                    <span class="flag">🇪🇸</span>
+                    <span>Español</span>
+                </div>
+                <div class="language-option" data-lang="en">
+                    <span class="flag">🇺🇸</span>
+                    <span>English</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Login Card -->
+        <div class="auth-card">
+            <!-- Header -->
+            <div class="auth-header">
+                <div class="logo">
+                    <i class="fas fa-leaf"></i>
+                    <h1>Plan de Vitalidad</h1>
+                    <span class="subtitle" data-i18n="app-subtitle">Saúde e Bem-estar</span>
+                </div>
+            </div>
+            
+            <!-- Login Form -->
+            <form class="auth-form" id="userLoginForm">
+                <div class="form-header">
+                    <h2 data-i18n="welcome">Bem-vindo de volta!</h2>
+                    <p data-i18n="login-description">Entre em sua conta para continuar sua jornada</p>
+                </div>
+                
+                <!-- Alert Message -->
+                <div class="alert-message" id="alertMessage" style="display: none;"></div>
+                
+                <!-- Email Field -->
+                <div class="form-group">
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope"></i>
+                        <span data-i18n="email">Email</span>
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-input" 
+                        data-i18n-placeholder="email-placeholder"
+                        placeholder="seu@email.com"
+                        required
+                        autocomplete="email"
+                    >
+                    <span class="form-error" id="emailError"></span>
+                </div>
+                
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="password" class="form-label">
+                        <i class="fas fa-lock"></i>
+                        <span data-i18n="password">Senha</span>
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-input" 
+                            data-i18n-placeholder="password-placeholder"
+                            placeholder="Digite sua senha"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <button type="button" class="password-toggle" id="passwordToggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <span class="form-error" id="passwordError"></span>
+                </div>
+                
+                <!-- Remember Me -->
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rememberMe" name="rememberMe" checked>
+                        <span class="checkmark"></span>
+                        <span data-i18n="remember-me">Manter-me conectado por 7 dias</span>
+                    </label>
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="auth-button" id="loginButton">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span data-i18n="login-btn">Entrar</span>
+                    <div class="loading-spinner" style="display: none;"></div>
+                </button>
+                
+                <!-- Demo Credentials -->
+                <div class="demo-credentials user-demo">
+                    <h4><i class="fas fa-info-circle"></i> <span data-i18n="demo-account">Conta Demo</span></h4>
+                    <div class="demo-accounts">
+                        <div class="demo-account">
+                            <strong data-i18n="demo-user">Usuário Demo:</strong><br>
+                            Email: usuario@planvitalidad.com<br>
+                            <span data-i18n="password">Senha</span>: user123
+                        </div>
+                    </div>
+                    <p class="demo-note" data-i18n="demo-note">Clique nas credenciais acima para preenchimento automático</p>
+                </div>
+                
+                <!-- Footer Links -->
+                <div class="auth-footer">
+                    <p>
+                        <span data-i18n="admin-access">Acesso administrativo?</span>
+                        <a href="admin-login.html" class="auth-link">
+                            <i class="fas fa-shield-alt"></i>
+                            <span data-i18n="admin-login">Login Admin</span>
+                        </a>
+                    </p>
+                </div>
+            </form>
+        </div>
+        
+        <!-- User Features -->
+        <div class="features-sidebar user-features">
+            <div class="features-content">
+                <h3><i class="fas fa-heart"></i> <span data-i18n="your-journey">Sua Jornada</span></h3>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <i class="fas fa-apple-alt"></i>
+                        <span data-i18n="feature-nutrition">Nutrição Personalizada</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-dumbbell"></i>
+                        <span data-i18n="feature-exercises">Exercícios Guiados</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-trophy"></i>
+                        <span data-i18n="feature-challenges">Desafios Diários</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span data-i18n="feature-progress">Acompanhar Progresso</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-users"></i>
+                        <span data-i18n="feature-community">Comunidade Ativa</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span data-i18n="feature-mobile">App Mobile</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="auth.js"></script>
+    <script>
+        // Internationalization for user app
+        const userI18n = {
+            pt: {
+                'app-subtitle': 'Saúde e Bem-estar',
+                'welcome': 'Bem-vindo de volta!',
+                'login-description': 'Entre em sua conta para continuar sua jornada',
+                'email': 'Email',
+                'email-placeholder': 'seu@email.com',
+                'password': 'Senha',
+                'password-placeholder': 'Digite sua senha',
+                'remember-me': 'Manter-me conectado por 7 dias',
+                'login-btn': 'Entrar',
+                'demo-account': 'Conta Demo',
+                'demo-user': 'Usuário Demo',
+                'demo-note': 'Clique nas credenciais acima para preenchimento automático',
+                'admin-access': 'Acesso administrativo?',
+                'admin-login': 'Login Admin',
+                'your-journey': 'Sua Jornada',
+                'feature-nutrition': 'Nutrição Personalizada',
+                'feature-exercises': 'Exercícios Guiados',
+                'feature-challenges': 'Desafios Diários',
+                'feature-progress': 'Acompanhar Progresso',
+                'feature-community': 'Comunidade Ativa',
+                'feature-mobile': 'App Mobile',
+                'invalid-email': 'Email inválido',
+                'password-min': 'Senha deve ter pelo menos 6 caracteres',
+                'login-error': 'Email ou senha incorretos',
+                'access-denied': 'Acesso negado. Use o login de administrador.',
+                'internal-error': 'Erro interno. Tente novamente.'
+            },
+            es: {
+                'app-subtitle': 'Salud y Bienestar',
+                'welcome': '¡Bienvenido de nuevo!',
+                'login-description': 'Ingresa a tu cuenta para continuar tu viaje',
+                'email': 'Email',
+                'email-placeholder': 'tu@email.com',
+                'password': 'Contraseña',
+                'password-placeholder': 'Ingresa tu contraseña',
+                'remember-me': 'Mantenerme conectado por 7 días',
+                'login-btn': 'Ingresar',
+                'demo-account': 'Cuenta Demo',
+                'demo-user': 'Usuario Demo',
+                'demo-note': 'Haz clic en las credenciales de arriba para autocompletar',
+                'admin-access': '¿Acceso administrativo?',
+                'admin-login': 'Login Admin',
+                'your-journey': 'Tu Viaje',
+                'feature-nutrition': 'Nutrición Personalizada',
+                'feature-exercises': 'Ejercicios Guiados',
+                'feature-challenges': 'Desafíos Diarios',
+                'feature-progress': 'Seguir Progreso',
+                'feature-community': 'Comunidad Activa',
+                'feature-mobile': 'App Móvil',
+                'invalid-email': 'Email inválido',
+                'password-min': 'La contraseña debe tener al menos 6 caracteres',
+                'login-error': 'Email o contraseña incorrectos',
+                'access-denied': 'Acceso denegado. Usa el login de administrador.',
+                'internal-error': 'Error interno. Inténtalo de nuevo.'
+            },
+            en: {
+                'app-subtitle': 'Health & Wellness',
+                'welcome': 'Welcome back!',
+                'login-description': 'Sign in to your account to continue your journey',
+                'email': 'Email',
+                'email-placeholder': 'your@email.com',
+                'password': 'Password',
+                'password-placeholder': 'Enter your password',
+                'remember-me': 'Keep me signed in for 7 days',
+                'login-btn': 'Sign In',
+                'demo-account': 'Demo Account',
+                'demo-user': 'Demo User',
+                'demo-note': 'Click on the credentials above for auto-fill',
+                'admin-access': 'Administrative access?',
+                'admin-login': 'Admin Login',
+                'your-journey': 'Your Journey',
+                'feature-nutrition': 'Personalized Nutrition',
+                'feature-exercises': 'Guided Exercises',
+                'feature-challenges': 'Daily Challenges',
+                'feature-progress': 'Track Progress',
+                'feature-community': 'Active Community',
+                'feature-mobile': 'Mobile App',
+                'invalid-email': 'Invalid email',
+                'password-min': 'Password must be at least 6 characters',
+                'login-error': 'Incorrect email or password',
+                'access-denied': 'Access denied. Use the admin login.',
+                'internal-error': 'Internal error. Please try again.'
+            }
+        };
+
+        let currentLanguage = 'pt';
+
+        // Language management
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('userLanguage', lang);
+            
+            // Update current language display
+            const langMap = { pt: 'PT', es: 'ES', en: 'EN' };
+            document.getElementById('currentLanguage').textContent = langMap[lang];
+            
+            // Update language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.classList.toggle('active', option.dataset.lang === lang);
+            });
+            
+            // Update all texts
+            updateTexts();
+            
+            // Update document language
+            document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+        }
+
+        function updateTexts() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (userI18n[currentLanguage] && userI18n[currentLanguage][key]) {
+                    element.textContent = userI18n[currentLanguage][key];
+                }
+            });
+            
+            // Update placeholders
+            const placeholderElements = document.querySelectorAll('[data-i18n-placeholder]');
+            placeholderElements.forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (userI18n[currentLanguage] && userI18n[currentLanguage][key]) {
+                    element.placeholder = userI18n[currentLanguage][key];
+                }
+            });
+        }
+
+        // Main app logic
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved language
+            const savedLanguage = localStorage.getItem('userLanguage') || 'pt';
+            setLanguage(savedLanguage);
+            
+            const form = document.getElementById('userLoginForm');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const rememberMeInput = document.getElementById('rememberMe');
+            const loginButton = document.getElementById('loginButton');
+            const alertMessage = document.getElementById('alertMessage');
+            const passwordToggle = document.getElementById('passwordToggle');
+            const languageBtn = document.getElementById('languageBtn');
+            const languageDropdown = document.getElementById('languageDropdown');
+            
+            // Language selector
+            languageBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                languageDropdown.classList.toggle('show');
+            });
+            
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.dataset.lang;
+                    setLanguage(lang);
+                    languageDropdown.classList.remove('show');
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.language-selector-top')) {
+                    languageDropdown.classList.remove('show');
+                }
+            });
+            
+            // Toggle password visibility
+            passwordToggle.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                const icon = this.querySelector('i');
+                icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+            });
+            
+            // Form submission
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+                const rememberMe = rememberMeInput.checked;
+                
+                // Clear previous errors
+                clearErrors();
+                
+                // Show loading
+                showLoading(true);
+                
+                try {
+                    // Attempt login
+                    const result = await authSystem.login(email, password, rememberMe);
+                    
+                    if (result.success) {
+                        showAlert('success', result.message);
+                        
+                        // Verificar se é usuário comum
+                        if (result.user.role === 'admin') {
+                            showAlert('error', userI18n[currentLanguage]['access-denied']);
+                            authSystem.logout();
+                            return;
+                        }
+                        
+                        // Redirect será feito automaticamente pelo authSystem
+                    } else {
+                        showAlert('error', userI18n[currentLanguage]['login-error']);
+                    }
+                } catch (error) {
+                    showAlert('error', userI18n[currentLanguage]['internal-error']);
+                    console.error('Erro no login:', error);
+                } finally {
+                    showLoading(false);
+                }
+            });
+            
+            // Real-time validation
+            emailInput.addEventListener('blur', function() {
+                if (this.value && !authSystem.validateEmail(this.value)) {
+                    showFieldError('email', userI18n[currentLanguage]['invalid-email']);
+                } else {
+                    clearFieldError('email');
+                }
+            });
+            
+            passwordInput.addEventListener('input', function() {
+                if (this.value.length > 0 && this.value.length < 6) {
+                    showFieldError('password', userI18n[currentLanguage]['password-min']);
+                } else {
+                    clearFieldError('password');
+                }
+            });
+            
+            // Auto-fill demo credentials
+            document.querySelectorAll('.demo-account').forEach(account => {
+                account.addEventListener('click', function() {
+                    const emailMatch = this.textContent.match(/Email: (.+)/);
+                    const passwordMatch = this.textContent.match(/user123/);
+                    
+                    if (emailMatch && passwordMatch) {
+                        emailInput.value = emailMatch[1];
+                        passwordInput.value = 'user123';
+                        clearErrors();
+                    }
+                });
+            });
+            
+            // Utility functions
+            function showLoading(show) {
+                const spinner = loginButton.querySelector('.loading-spinner');
+                const text = loginButton.querySelector('span');
+                const icon = loginButton.querySelector('i:not(.loading-spinner i)');
+                
+                if (show) {
+                    spinner.style.display = 'block';
+                    text.style.display = 'none';
+                    icon.style.display = 'none';
+                    loginButton.disabled = true;
+                } else {
+                    spinner.style.display = 'none';
+                    text.style.display = 'inline';
+                    icon.style.display = 'inline';
+                    loginButton.disabled = false;
+                }
+            }
+            
+            function showAlert(type, message) {
+                alertMessage.className = `alert-message alert-${type}`;
+                alertMessage.textContent = message;
+                alertMessage.style.display = 'block';
+                
+                // Auto-hide success messages
+                if (type === 'success') {
+                    setTimeout(() => {
+                        alertMessage.style.display = 'none';
+                    }, 3000);
+                }
+                
+                // Scroll to top
+                alertMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            
+            function showFieldError(field, message) {
+                const errorElement = document.getElementById(field + 'Error');
+                const inputElement = document.getElementById(field);
+                
+                if (errorElement) {
+                    errorElement.textContent = message;
+                    errorElement.style.display = 'block';
+                }
+                
+                if (inputElement) {
+                    inputElement.classList.add('error');
+                }
+            }
+            
+            function clearFieldError(field) {
+                const errorElement = document.getElementById(field + 'Error');
+                const inputElement = document.getElementById(field);
+                
+                if (errorElement) {
+                    errorElement.style.display = 'none';
+                }
+                
+                if (inputElement) {
+                    inputElement.classList.remove('error');
+                }
+            }
+            
+            function clearErrors() {
+                document.querySelectorAll('.form-error').forEach(error => {
+                    error.style.display = 'none';
+                });
+                
+                document.querySelectorAll('.form-input').forEach(input => {
+                    input.classList.remove('error');
+                });
+                
+                alertMessage.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
