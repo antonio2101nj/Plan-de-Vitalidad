@@ -1086,13 +1086,229 @@
 
                 <div class="tab-content" id="sales">
                     <div class="content-header">
-                        <h2 data-i18n="sales">Vendas - Kiwify</h2>
-                        <p data-i18n="sales-description">Gerencie as vendas via Kiwify</p>
+                        <h2 data-i18n="sales">💰 Vendas - Kiwify</h2>
+                        <p data-i18n="sales-description">Gerencie vendas e integrações via Webhook</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-shopping-cart"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Sales Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="salesThisMonth">0</h3>
+                                <p>Vendas no Mês</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="approvedSales">0</h3>
+                                <p>Vendas Aprovadas</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalRevenue">$0.00</h3>
+                                <p>Total Arrecadado</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="bestSellingProduct">-</h3>
+                                <p>Produto Mais Vendido</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Webhook Integration Section -->
+                    <div class="webhook-section">
+                        <div class="webhook-card">
+                            <div class="webhook-header">
+                                <h3><i class="fas fa-plug"></i> Integração Webhook Kiwify</h3>
+                                <div class="webhook-status" id="webhookStatus">
+                                    <span class="status-indicator disconnected"></span>
+                                    <span class="status-text">Desconectado</span>
+                                </div>
+                            </div>
+                            <div class="webhook-body">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="webhookUrl">URL do Webhook *</label>
+                                        <input type="url" id="webhookUrl" placeholder="https://api.kiwify.com/webhook/your-endpoint" value="">
+                                        <small class="form-help">Cole aqui a URL do webhook fornecida pela Kiwify</small>
+                                    </div>
+                                    <div class="webhook-actions">
+                                        <button class="btn btn-secondary" id="testWebhookBtn">
+                                            <i class="fas fa-flask"></i>
+                                            Testar Conexão
+                                        </button>
+                                        <button class="btn btn-primary" id="saveWebhookBtn">
+                                            <i class="fas fa-save"></i>
+                                            Salvar
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="webhook-options">
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="autoCaptureSales" checked>
+                                            <span class="checkbox-custom"></span>
+                                            🔄 Capturar automaticamente novos pedidos
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="captureRefunds" checked>
+                                            <span class="checkbox-custom"></span>
+                                            💸 Capturar reembolsos e cancelamentos
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="autoUpgradePlan" checked>
+                                            <span class="checkbox-custom"></span>
+                                            👑 Liberar acesso Premium automaticamente
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="sendNotifications" checked>
+                                            <span class="checkbox-custom"></span>
+                                            🔔 Disparar notificações de boas-vindas
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sales Controls -->
+                    <div class="section-controls">
+                        <div class="controls-left">
+                            <button class="btn btn-primary" id="refreshSalesBtn">
+                                <i class="fas fa-sync-alt"></i>
+                                Atualizar Vendas
+                            </button>
+                            <button class="btn btn-secondary" id="exportSalesBtn">
+                                <i class="fas fa-download"></i>
+                                Exportar CSV
+                            </button>
+                            <button class="btn btn-info" id="addManualSaleBtn">
+                                <i class="fas fa-plus"></i>
+                                Adicionar Venda Manual
+                            </button>
+                        </div>
+                        <div class="controls-right">
+                            <div class="search-container">
+                                <input type="text" id="salesSearchInput" placeholder="Buscar por nome ou email...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sales Filters -->
+                    <div class="filters-container">
+                        <div class="filter-group">
+                            <label for="salesStatusFilter">Status:</label>
+                            <select id="salesStatusFilter">
+                                <option value="">Todos</option>
+                                <option value="approved">✅ Aprovado</option>
+                                <option value="pending">⏳ Pendente</option>
+                                <option value="refunded">💸 Reembolsado</option>
+                                <option value="cancelled">❌ Cancelado</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="salesProductFilter">Produto:</label>
+                            <select id="salesProductFilter">
+                                <option value="">Todos os produtos</option>
+                                <!-- Produtos serão populados dinamicamente -->
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="salesPlanFilter">Plano:</label>
+                            <select id="salesPlanFilter">
+                                <option value="">Todos</option>
+                                <option value="premium">👑 Premium</option>
+                                <option value="free">🆓 Gratuito</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="salesDateFromFilter">Data Início:</label>
+                            <input type="date" id="salesDateFromFilter">
+                        </div>
+                        <div class="filter-group">
+                            <label for="salesDateToFilter">Data Fim:</label>
+                            <input type="date" id="salesDateToFilter">
+                        </div>
+                    </div>
+                    
+                    <!-- Sales Table -->
+                    <div class="sales-container">
+                        <div class="sales-table-container">
+                            <table class="sales-table" id="salesTable">
+                                <thead>
+                                    <tr>
+                                        <th>👤 Cliente</th>
+                                        <th>📧 E-mail</th>
+                                        <th>🛍️ Produto</th>
+                                        <th>💰 Valor</th>
+                                        <th>📅 Data</th>
+                                        <th>🏪 Origem</th>
+                                        <th>📊 Status</th>
+                                        <th>🗣️ Idioma</th>
+                                        <th>👑 Plano</th>
+                                        <th>⚙️ Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="salesTableBody">
+                                    <!-- Sales will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="table-loading" id="salesLoading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Carregando vendas...</p>
+                        </div>
+                        
+                        <div class="no-sales" id="noSalesMessage" style="display: none;">
+                            <i class="fas fa-shopping-cart"></i>
+                            <h3>Nenhuma venda encontrada</h3>
+                            <p>Não há vendas registradas ou que correspondam aos filtros selecionados.</p>
+                            <button class="btn btn-primary" onclick="salesManager.openManualSaleModal()">
+                                <i class="fas fa-plus"></i>
+                                Adicionar Primeira Venda
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="salesPaginationInfo">Mostrando 0 de 0 vendas</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn btn-small" id="salesPrevPageBtn" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                                Anterior
+                            </button>
+                            <span class="page-numbers" id="salesPageNumbers"></span>
+                            <button class="btn btn-small" id="salesNextPageBtn" disabled>
+                                Próximo
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -1730,6 +1946,214 @@
     </div>
 
     <!-- Challenge Modals -->
+    <!-- Sales Modals -->
+    <!-- Manual Sale Modal -->
+    <div class="modal large" id="manualSaleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="manualSaleModalTitle">Adicionar Venda Manual</h3>
+                <button class="modal-close" id="manualSaleModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="manualSaleForm">
+                    <input type="hidden" id="manualSaleId" name="saleId">
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-user"></i> Dados do Cliente</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="manualSaleCustomerName">Nome do Cliente *</label>
+                                <input type="text" id="manualSaleCustomerName" name="customerName" required placeholder="Ex: Maria Silva">
+                            </div>
+                            <div class="form-group">
+                                <label for="manualSaleCustomerEmail">E-mail do Cliente *</label>
+                                <input type="email" id="manualSaleCustomerEmail" name="customerEmail" required placeholder="maria@email.com">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-shopping-cart"></i> Dados da Venda</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="manualSaleProduct">Produto Adquirido *</label>
+                                <select id="manualSaleProduct" name="product" required>
+                                    <option value="">Selecione o produto</option>
+                                    <!-- Produtos serão populados dinamicamente -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="manualSaleValue">Valor da Venda *</label>
+                                <div class="price-input-container">
+                                    <select id="manualSaleCurrency" name="currency" required>
+                                        <option value="USD">💵 USD</option>
+                                        <option value="EUR">💶 EUR</option>
+                                        <option value="BRL">💳 BRL</option>
+                                    </select>
+                                    <input type="number" id="manualSaleValue" name="value" step="0.01" min="0" required placeholder="0.00">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="manualSaleDate">Data da Compra *</label>
+                                <input type="datetime-local" id="manualSaleDate" name="saleDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="manualSaleOrigin">Origem da Venda *</label>
+                                <select id="manualSaleOrigin" name="origin" required>
+                                    <option value="">Selecione a origem</option>
+                                    <option value="kiwify">🥝 Kiwify</option>
+                                    <option value="stripe">💳 Stripe</option>
+                                    <option value="paypal">🅿️ PayPal</option>
+                                    <option value="manual">📝 Manual</option>
+                                    <option value="other">🔗 Outro</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="manualSaleStatus">Status do Pagamento *</label>
+                                <select id="manualSaleStatus" name="status" required>
+                                    <option value="approved">✅ Aprovado</option>
+                                    <option value="pending">⏳ Pendente</option>
+                                    <option value="refunded">💸 Reembolsado</option>
+                                    <option value="cancelled">❌ Cancelado</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="manualSaleLanguage">Idioma do Produto *</label>
+                                <select id="manualSaleLanguage" name="language" required>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="pt">🇧🇷 Português</option>
+                                    <option value="en">🇺🇸 English</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="manualSaleUpgradePlan" name="upgradePlan" checked>
+                                    <span class="checkbox-custom"></span>
+                                    👑 Liberar acesso Premium para este cliente
+                                    <small>O cliente receberá automaticamente acesso aos recursos premium</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="manualSaleModalCancel">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="manualSaleModalSave" form="manualSaleForm">
+                    <i class="fas fa-save"></i>
+                    Salvar Venda
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sale Details Modal -->
+    <div class="modal large" id="saleDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="saleDetailsModalTitle">Detalhes da Venda</h3>
+                <button class="modal-close" id="saleDetailsModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="sale-details-content">
+                    <div class="sale-info-grid">
+                        <div class="sale-info-card">
+                            <h4><i class="fas fa-user"></i> Cliente</h4>
+                            <div class="info-item">
+                                <label>Nome:</label>
+                                <span id="detailCustomerName">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>E-mail:</label>
+                                <span id="detailCustomerEmail">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Plano Atual:</label>
+                                <span id="detailCustomerPlan">-</span>
+                            </div>
+                        </div>
+                        
+                        <div class="sale-info-card">
+                            <h4><i class="fas fa-shopping-cart"></i> Venda</h4>
+                            <div class="info-item">
+                                <label>Produto:</label>
+                                <span id="detailProduct">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Valor:</label>
+                                <span id="detailValue">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Data:</label>
+                                <span id="detailDate">-</span>
+                            </div>
+                        </div>
+                        
+                        <div class="sale-info-card">
+                            <h4><i class="fas fa-info-circle"></i> Informações</h4>
+                            <div class="info-item">
+                                <label>Origem:</label>
+                                <span id="detailOrigin">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Status:</label>
+                                <span id="detailStatus">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Idioma:</label>
+                                <span id="detailLanguage">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sale-actions-section">
+                        <h4><i class="fas fa-cogs"></i> Ações Disponíveis</h4>
+                        <div class="action-buttons">
+                            <button class="btn btn-success" id="upgradeToPremiumBtn">
+                                <i class="fas fa-crown"></i>
+                                Liberar Premium
+                            </button>
+                            <button class="btn btn-info" id="sendWelcomeNotificationBtn">
+                                <i class="fas fa-bell"></i>
+                                Enviar Notificação
+                            </button>
+                            <button class="btn btn-warning" id="refundSaleBtn">
+                                <i class="fas fa-undo"></i>
+                                Processar Reembolso
+                            </button>
+                            <button class="btn btn-secondary" id="resendAccessBtn">
+                                <i class="fas fa-paper-plane"></i>
+                                Reenviar Acesso
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="saleDetailsModalCancel">Fechar</button>
+                <button type="button" class="btn btn-primary" id="editSaleBtn">
+                    <i class="fas fa-edit"></i>
+                    Editar Venda
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Store Product Modals -->
     <!-- Create/Edit Store Product Modal -->
     <div class="modal extra-large" id="storeProductModal">
@@ -2243,7 +2667,9 @@
     <script src="bonus-management.js"></script>
     <script src="challenges-management.js"></script>
     <script src="store-management.js"></script>
+    <script src="sales-management.js"></script>
     <link rel="stylesheet" href="store-styles.css">
+    <link rel="stylesheet" href="sales-styles.css">
     <script>
         // Verificar autenticação ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
