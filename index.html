@@ -27,6 +27,12 @@
             color: white;
         }
         
+        .container {
+            max-width: 600px;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
         .logo {
             font-size: 72px;
             margin-bottom: 20px;
@@ -36,21 +42,89 @@
             font-size: 32px;
             font-weight: 700;
             margin-bottom: 16px;
-            text-align: center;
         }
         
         .subtitle {
             font-size: 18px;
             opacity: 0.9;
             margin-bottom: 40px;
-            text-align: center;
+        }
+        
+        .access-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .access-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            min-width: 280px;
+            justify-content: center;
+        }
+        
+        .access-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .user-button {
+            background: rgba(16, 185, 129, 0.3);
+            border-color: rgba(16, 185, 129, 0.5);
+        }
+        
+        .admin-button {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+        
+        .demo-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .demo-credentials {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .demo-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
         }
         
         .loading {
-            display: flex;
+            display: none;
             flex-direction: column;
             align-items: center;
             gap: 16px;
+            margin-top: 20px;
+        }
+        
+        .loading.show {
+            display: flex;
         }
         
         .spinner {
@@ -72,59 +146,105 @@
             opacity: 0.9;
         }
         
-        .links {
-            position: absolute;
-            bottom: 40px;
-            display: flex;
-            gap: 20px;
-        }
-        
-        .link {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
-        }
-        
-        .link:hover {
-            opacity: 1;
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 56px;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+            
+            .subtitle {
+                font-size: 16px;
+            }
+            
+            .demo-credentials {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="logo">🌱</div>
-    <h1 class="title">Plan de Vitalidad</h1>
-    <p class="subtitle">Sua jornada de saúde e bem-estar</p>
-    
-    <div class="loading">
-        <div class="spinner"></div>
-        <p class="loading-text">Redirecionando...</p>
+    <div class="container">
+        <div class="logo">🌱</div>
+        <h1 class="title">Plan de Vitalidad</h1>
+        <p class="subtitle">Sua jornada de saúde e bem-estar começa aqui</p>
+        
+        <div class="access-buttons">
+            <a href="app-login.html" class="access-button user-button" onclick="showLoading()">
+                <i>👤</i>
+                <span>Acesso do Usuário</span>
+            </a>
+            <a href="admin-login.html" class="access-button admin-button" onclick="showLoading()">
+                <i>🛡️</i>
+                <span>Acesso Administrativo</span>
+            </a>
+        </div>
+        
+        <div class="demo-info">
+            <h3>🎯 Credenciais Demo</h3>
+            <div class="demo-credentials">
+                <div class="demo-item">
+                    <strong>👤 Usuário</strong><br>
+                    usuario@planvitalidad.com<br>
+                    Senha: user123
+                </div>
+                <div class="demo-item">
+                    <strong>🛡️ Admin</strong><br>
+                    admin@planvitalidad.com<br>
+                    Senha: admin123
+                </div>
+            </div>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p class="loading-text">Redirecionando...</p>
+        </div>
     </div>
-    
-    <div class="links">
-        <a href="app-login.html" class="link">Acesso do Usuário</a>
-        <a href="admin-login.html" class="link">Acesso Administrativo</a>
-    </div>
-    
-    <script src="auth.js"></script>
+
     <script>
-        // Verificar se o usuário já está logado e redirecionar apropriadamente
+        // Função para mostrar loading
+        function showLoading() {
+            const loading = document.getElementById('loading');
+            if (loading) {
+                loading.classList.add('show');
+            }
+        }
+
+        // Verificação de sessão ao carregar a página (sem auth.js para evitar conflitos)
         document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => {
-                if (authSystem.isLoggedIn()) {
-                    const currentUser = authSystem.getCurrentUser();
+            try {
+                // Verificar sessão existente diretamente
+                const sessionData = localStorage.getItem('planVitalidad_session');
+                
+                if (sessionData) {
+                    const session = JSON.parse(sessionData);
                     
-                    if (currentUser.role === 'admin') {
-                        window.location.href = 'admin-dashboard.html';
+                    // Verificar se a sessão não expirou
+                    if (session.expiresAt && new Date().getTime() < session.expiresAt) {
+                        showLoading();
+                        
+                        setTimeout(() => {
+                            if (session.user && session.user.role === 'admin') {
+                                window.location.replace('admin-dashboard.html');
+                            } else if (session.user && session.user.role === 'user') {
+                                window.location.replace('user-dashboard.html');
+                            } else {
+                                // Sessão inválida, limpar
+                                localStorage.removeItem('planVitalidad_session');
+                            }
+                        }, 1000);
                     } else {
-                        window.location.href = 'user-dashboard.html';
+                        // Sessão expirada, limpar
+                        localStorage.removeItem('planVitalidad_session');
                     }
-                } else {
-                    // Se não está logado, redirecionar para login do usuário
-                    window.location.href = 'app-login.html';
                 }
-            }, 1500); // Pequeno delay para mostrar a tela de loading
+            } catch (error) {
+                console.error('Erro ao verificar sessão:', error);
+                localStorage.removeItem('planVitalidad_session');
+            }
         });
     </script>
 </body>
