@@ -525,16 +525,177 @@
                     </div>
                 </div>
 
-                <!-- Placeholder for other tabs -->
+                <!-- Bonus Materials Tab -->
                 <div class="tab-content" id="bonus-materials">
                     <div class="content-header">
-                        <h2 data-i18n="bonus-materials">Bônus e Materiais Extras</h2>
-                        <p data-i18n="bonus-materials-description">Gerencie materiais extras e bônus</p>
+                        <h2 data-i18n="bonus-materials">🎁 Bônus e Materiais Extras</h2>
+                        <p data-i18n="bonus-materials-description">Gerencie bônus exclusivos e materiais extras para seus usuários</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-gift"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Bonus Stats -->
+                    <div class="bonus-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon active">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="activeBonusCount">0</h3>
+                                <p>Bônus Ativos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon premium">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="premiumBonusCount">0</h3>
+                                <p>Bônus Premium</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon scheduled">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="scheduledBonusCount">0</h3>
+                                <p>Bônus Agendados</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon total">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalBonusCount">0</h3>
+                                <p>Total de Bônus</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bonus Controls -->
+                    <div class="bonus-controls">
+                        <div class="controls-left">
+                            <button class="btn btn-primary" id="createBonusBtn">
+                                <i class="fas fa-plus"></i>
+                                Adicionar Novo Bônus
+                            </button>
+                            <button class="btn btn-secondary" id="exportBonusBtn">
+                                <i class="fas fa-download"></i>
+                                Exportar Lista
+                            </button>
+                        </div>
+                        
+                        <div class="controls-right">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="bonusSearchInput" placeholder="Buscar por nome...">
+                            </div>
+                            
+                            <div class="filters">
+                                <select id="bonusTypeFilter" class="filter-select">
+                                    <option value="">Todos os Tipos</option>
+                                    <option value="planner">Planner</option>
+                                    <option value="mini-guide">Mini Guia</option>
+                                    <option value="challenge">Desafio Extra</option>
+                                    <option value="checklist">Checklist</option>
+                                    <option value="calendar">Calendário</option>
+                                    <option value="other">Outro</option>
+                                </select>
+                                
+                                <select id="bonusLanguageFilter" class="filter-select">
+                                    <option value="">Todos os Idiomas</option>
+                                    <option value="es">Español</option>
+                                    <option value="pt">Português</option>
+                                    <option value="en">English</option>
+                                </select>
+                                
+                                <select id="bonusVisibilityFilter" class="filter-select">
+                                    <option value="">Todos os Planos</option>
+                                    <option value="free">Gratuito</option>
+                                    <option value="premium">Premium</option>
+                                    <option value="both">Ambos</option>
+                                </select>
+                                
+                                <select id="bonusStatusFilter" class="filter-select">
+                                    <option value="">Todos os Status</option>
+                                    <option value="active">Ativos</option>
+                                    <option value="inactive">Inativos</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- View Toggle -->
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="bonusCardViewBtn" data-view="cards">
+                            <i class="fas fa-th-large"></i>
+                            Cards
+                        </button>
+                        <button class="view-btn" id="bonusTableViewBtn" data-view="table">
+                            <i class="fas fa-list"></i>
+                            Tabela
+                        </button>
+                    </div>
+                    
+                    <!-- Bonus Container -->
+                    <div class="bonus-container">
+                        <!-- Cards View -->
+                        <div class="bonus-grid" id="bonusGrid">
+                            <!-- Bonus cards will be populated here -->
+                        </div>
+                        
+                        <!-- Table View -->
+                        <div class="bonus-table-container" id="bonusTableContainer" style="display: none;">
+                            <table class="bonus-table" id="bonusTable">
+                                <thead>
+                                    <tr>
+                                        <th>🎁 Bônus</th>
+                                        <th>📝 Tipo</th>
+                                        <th>🗣️ Idioma</th>
+                                        <th>👥 Plano</th>
+                                        <th>⏰ Liberação</th>
+                                        <th>✅ Status</th>
+                                        <th>⚙️ Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bonusTableBody">
+                                    <!-- Bonus will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="table-loading" id="bonusLoading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Carregando bônus...</p>
+                        </div>
+                        
+                        <div class="no-bonus" id="noBonusMessage" style="display: none;">
+                            <i class="fas fa-gift"></i>
+                            <h3>Nenhum bônus encontrado</h3>
+                            <p>Não há bônus cadastrados ou que correspondam aos filtros selecionados.</p>
+                            <button class="btn btn-primary" onclick="bonusManager.openCreateBonusModal()">
+                                <i class="fas fa-plus"></i>
+                                Criar Primeiro Bônus
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="bonusPaginationInfo">Mostrando 0 de 0 bônus</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn btn-small" id="bonusPrevPageBtn" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                                Anterior
+                            </button>
+                            <span class="page-numbers" id="bonusPageNumbers"></span>
+                            <button class="btn btn-small" id="bonusNextPageBtn" disabled>
+                                Próximo
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -1050,11 +1211,205 @@
             </div>
         </div>
     </div>
+    
+    <!-- Bonus Modals -->
+    <!-- Create/Edit Bonus Modal -->
+    <div class="modal large" id="bonusModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="bonusModalTitle">Adicionar Novo Bônus</h3>
+                <button class="modal-close" id="bonusModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="bonusForm">
+                    <input type="hidden" id="bonusId" name="bonusId">
+                    
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-info-circle"></i> Informações Básicas</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bonusName">Nome do Bônus *</label>
+                                <input type="text" id="bonusName" name="name" required placeholder="Ex: Planner de 30 Dias para Transformação">
+                            </div>
+                            <div class="form-group">
+                                <label for="bonusLanguage">Idioma *</label>
+                                <select id="bonusLanguage" name="language" required>
+                                    <option value="">Selecione o idioma</option>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="pt">🇧🇷 Português</option>
+                                    <option value="en">🇺🇸 English</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bonusDescription">Descrição Curta *</label>
+                            <textarea id="bonusDescription" name="description" required placeholder="Descreva brevemente o que este bônus oferece..." rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bonusType">Tipo de Bônus *</label>
+                                <select id="bonusType" name="type" required>
+                                    <option value="">Selecione o tipo</option>
+                                    <option value="planner">📋 Planner</option>
+                                    <option value="mini-guide">📖 Mini Guia</option>
+                                    <option value="challenge">🏆 Desafio Extra</option>
+                                    <option value="checklist">✅ Checklist</option>
+                                    <option value="calendar">📅 Calendário</option>
+                                    <option value="other">📄 Outro</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bonusVisibility">Visibilidade *</label>
+                                <select id="bonusVisibility" name="visibility" required>
+                                    <option value="">Selecione a visibilidade</option>
+                                    <option value="free">🆓 Usuários Gratuitos</option>
+                                    <option value="premium">👑 Usuários Premium</option>
+                                    <option value="both">👥 Ambos</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Release Configuration -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-clock"></i> Configuração de Liberação</h4>
+                        
+                        <div class="form-group">
+                            <label for="bonusReleaseType">Tipo de Liberação *</label>
+                            <select id="bonusReleaseType" name="releaseType" required>
+                                <option value="">Selecione o tipo</option>
+                                <option value="immediate">⚡ Imediata após cadastro</option>
+                                <option value="delayed">⏰ Após X dias da inscrição</option>
+                                <option value="scheduled">📅 Em data específica</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group" id="delayDaysGroup" style="display: none;">
+                            <label for="bonusDelayDays">Liberar após quantos dias?</label>
+                            <input type="number" id="bonusDelayDays" name="delayDays" min="1" max="365" placeholder="Ex: 7">
+                            <small class="form-help">Número de dias após a inscrição do usuário</small>
+                        </div>
+                        
+                        <div class="form-group" id="scheduledDateGroup" style="display: none;">
+                            <label for="bonusScheduledDate">Data de Liberação</label>
+                            <input type="datetime-local" id="bonusScheduledDate" name="scheduledDate">
+                            <small class="form-help">Data e hora específica para liberação</small>
+                        </div>
+                    </div>
+                    
+                    <!-- File Uploads -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-cloud-upload-alt"></i> Arquivos e Imagens</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bonusImage">Imagem de Apresentação</label>
+                                <div class="file-upload-area" id="bonusImageUploadArea">
+                                    <input type="file" id="bonusImage" name="image" accept="image/*" style="display: none;">
+                                    <div class="upload-placeholder">
+                                        <i class="fas fa-image"></i>
+                                        <p>Clique para selecionar banner/mockup</p>
+                                        <small>PNG, JPG até 5MB</small>
+                                    </div>
+                                    <div class="upload-preview" id="bonusImagePreview" style="display: none;">
+                                        <img id="bonusImagePreviewImg" src="" alt="Preview">
+                                        <button type="button" class="remove-file" onclick="removeBonusFile('image')">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="bonusFile">Arquivo Principal *</label>
+                                <div class="file-upload-area" id="bonusFileUploadArea">
+                                    <input type="file" id="bonusFile" name="file" accept=".pdf,.mp4,.jpg,.jpeg,.png,.zip" style="display: none;">
+                                    <div class="upload-placeholder">
+                                        <i class="fas fa-file-upload"></i>
+                                        <p>Clique para selecionar arquivo</p>
+                                        <small>PDF, MP4, Imagem, ZIP até 100MB</small>
+                                    </div>
+                                    <div class="upload-preview" id="bonusFilePreview" style="display: none;">
+                                        <div class="file-info">
+                                            <i class="fas fa-file" id="bonusFileIcon"></i>
+                                            <div class="file-details">
+                                                <span class="file-name" id="bonusFileName"></span>
+                                                <span class="file-size" id="bonusFileSize"></span>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="remove-file" onclick="removeBonusFile('file')">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Status -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-toggle-on"></i> Status</h4>
+                        
+                        <div class="form-group">
+                            <label for="bonusStatus">Status *</label>
+                            <select id="bonusStatus" name="status" required>
+                                <option value="active">✅ Ativo</option>
+                                <option value="inactive">❌ Inativo</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="bonusModalCancel">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="bonusModalSave" form="bonusForm">
+                    <i class="fas fa-save"></i>
+                    Salvar Bônus
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirm Delete Bonus Modal -->
+    <div class="modal" id="confirmDeleteBonusModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão</h3>
+                <button class="modal-close" id="confirmDeleteBonusClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="confirm-delete-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h4>Tem certeza que deseja excluir este bônus?</h4>
+                    <p>Esta ação não pode ser desfeita. O bônus será removido permanentemente do sistema e não aparecerá mais no app dos usuários.</p>
+                    <div class="bonus-info">
+                        <strong id="deleteBonusName"></strong>
+                        <span id="deleteBonusType"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="confirmDeleteBonusCancel">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBonusConfirm">
+                    <i class="fas fa-trash"></i>
+                    Excluir Bônus
+                </button>
+            </div>
+        </div>
+    </div>
 
     <script src="auth.js"></script>
     <script src="script.js"></script>
     <script src="users-management.js"></script>
     <script src="products-management.js"></script>
+    <script src="bonus-management.js"></script>
     <script>
         // Verificar autenticação ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
