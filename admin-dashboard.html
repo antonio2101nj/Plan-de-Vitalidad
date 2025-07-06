@@ -350,16 +350,178 @@
                     </div>
                 </div>
 
-                <!-- Add more tab contents as needed -->
+                <!-- Digital Products Tab -->
                 <div class="tab-content" id="digital-products">
                     <div class="content-header">
-                        <h2 data-i18n="digital-products">Produtos Digitais</h2>
-                        <p data-i18n="digital-products-description">Gerencie seus produtos digitais</p>
+                        <h2 data-i18n="digital-products">📚 Produtos Digitais</h2>
+                        <p data-i18n="digital-products-description">Gerencie o conteúdo principal do aplicativo</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-laptop"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Products Stats -->
+                    <div class="products-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon active">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="activeProductsCount">0</h3>
+                                <p>Produtos Ativos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon inactive">
+                                <i class="fas fa-pause-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="inactiveProductsCount">0</h3>
+                                <p>Produtos Inativos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon premium">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="premiumProductsCount">0</h3>
+                                <p>Produtos Premium</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon total">
+                                <i class="fas fa-layer-group"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalProductsCount">0</h3>
+                                <p>Total de Produtos</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Products Controls -->
+                    <div class="products-controls">
+                        <div class="controls-left">
+                            <button class="btn btn-primary" id="createProductBtn">
+                                <i class="fas fa-plus"></i>
+                                Adicionar Novo Produto
+                            </button>
+                            <button class="btn btn-secondary" id="exportProductsBtn">
+                                <i class="fas fa-download"></i>
+                                Exportar Lista
+                            </button>
+                        </div>
+                        
+                        <div class="controls-right">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="productSearchInput" placeholder="Buscar por nome...">
+                            </div>
+                            
+                            <div class="filters">
+                                <select id="productLanguageFilter" class="filter-select">
+                                    <option value="">Todos os Idiomas</option>
+                                    <option value="es">Español</option>
+                                    <option value="pt">Português</option>
+                                    <option value="en">English</option>
+                                </select>
+                                
+                                <select id="productTypeFilter" class="filter-select">
+                                    <option value="">Todos os Tipos</option>
+                                    <option value="ebook">eBook</option>
+                                    <option value="video">Vídeo</option>
+                                    <option value="audio">Áudio</option>
+                                    <option value="planner">Planner</option>
+                                    <option value="guide">Guia</option>
+                                    <option value="bonus">Bônus</option>
+                                </select>
+                                
+                                <select id="productStatusFilter" class="filter-select">
+                                    <option value="">Todos os Status</option>
+                                    <option value="active">Ativos</option>
+                                    <option value="inactive">Inativos</option>
+                                </select>
+                                
+                                <select id="productVisibilityFilter" class="filter-select">
+                                    <option value="">Todas Visibilidades</option>
+                                    <option value="free">Gratuito</option>
+                                    <option value="premium">Premium</option>
+                                    <option value="both">Ambos</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- View Toggle -->
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="cardViewBtn" data-view="cards">
+                            <i class="fas fa-th-large"></i>
+                            Cards
+                        </button>
+                        <button class="view-btn" id="tableViewBtn" data-view="table">
+                            <i class="fas fa-list"></i>
+                            Tabela
+                        </button>
+                    </div>
+                    
+                    <!-- Products Container -->
+                    <div class="products-container">
+                        <!-- Cards View -->
+                        <div class="products-grid" id="productsGrid">
+                            <!-- Products cards will be populated here -->
+                        </div>
+                        
+                        <!-- Table View -->
+                        <div class="products-table-container" id="productsTableContainer" style="display: none;">
+                            <table class="products-table" id="productsTable">
+                                <thead>
+                                    <tr>
+                                        <th>📚 Produto</th>
+                                        <th>📝 Tipo</th>
+                                        <th>🗣️ Idioma</th>
+                                        <th>👥 Visibilidade</th>
+                                        <th>🏷️ Tags</th>
+                                        <th>✅ Status</th>
+                                        <th>📅 Publicação</th>
+                                        <th>⚙️ Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productsTableBody">
+                                    <!-- Products will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="table-loading" id="productsLoading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Carregando produtos...</p>
+                        </div>
+                        
+                        <div class="no-products" id="noProductsMessage" style="display: none;">
+                            <i class="fas fa-box-open"></i>
+                            <h3>Nenhum produto encontrado</h3>
+                            <p>Não há produtos cadastrados ou que correspondam aos filtros selecionados.</p>
+                            <button class="btn btn-primary" onclick="productsManager.openCreateProductModal()">
+                                <i class="fas fa-plus"></i>
+                                Criar Primeiro Produto
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="productsPaginationInfo">Mostrando 0 de 0 produtos</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn btn-small" id="productsPrevPageBtn" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                                Anterior
+                            </button>
+                            <span class="page-numbers" id="productsPageNumbers"></span>
+                            <button class="btn btn-small" id="productsNextPageBtn" disabled>
+                                Próximo
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -667,10 +829,232 @@
             </div>
         </div>
     </div>
+    
+    <!-- Product Modals -->
+    <!-- Create/Edit Product Modal -->
+    <div class="modal large" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="productModalTitle">Adicionar Novo Produto</h3>
+                <button class="modal-close" id="productModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <input type="hidden" id="productId" name="productId">
+                    
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-info-circle"></i> Informações Básicas</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productName">Nome do Produto *</label>
+                                <input type="text" id="productName" name="name" required placeholder="Ex: Guia de Alimentação Saudável">
+                            </div>
+                            <div class="form-group">
+                                <label for="productLanguage">Idioma Principal *</label>
+                                <select id="productLanguage" name="language" required>
+                                    <option value="">Selecione o idioma</option>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="pt">🇧🇷 Português</option>
+                                    <option value="en">🇺🇸 English</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productDescription">Descrição *</label>
+                            <div class="rich-text-editor">
+                                <div class="editor-toolbar">
+                                    <button type="button" class="editor-btn" data-command="bold" title="Negrito">
+                                        <i class="fas fa-bold"></i>
+                                    </button>
+                                    <button type="button" class="editor-btn" data-command="italic" title="Itálico">
+                                        <i class="fas fa-italic"></i>
+                                    </button>
+                                    <button type="button" class="editor-btn" data-command="underline" title="Sublinhado">
+                                        <i class="fas fa-underline"></i>
+                                    </button>
+                                    <div class="editor-separator"></div>
+                                    <button type="button" class="editor-btn" data-command="insertUnorderedList" title="Lista">
+                                        <i class="fas fa-list-ul"></i>
+                                    </button>
+                                    <button type="button" class="editor-btn" data-command="insertOrderedList" title="Lista Numerada">
+                                        <i class="fas fa-list-ol"></i>
+                                    </button>
+                                </div>
+                                <div class="editor-content" id="productDescription" contenteditable="true" placeholder="Descreva o produto em detalhes..."></div>
+                            </div>
+                            <input type="hidden" id="productDescriptionHidden" name="description">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productType">Categoria *</label>
+                                <select id="productType" name="type" required>
+                                    <option value="">Selecione a categoria</option>
+                                    <option value="ebook">📖 eBook</option>
+                                    <option value="video">🎥 Vídeo</option>
+                                    <option value="audio">🎵 Áudio</option>
+                                    <option value="planner">📋 Planner</option>
+                                    <option value="guide">📚 Guia</option>
+                                    <option value="bonus">🎁 Bônus</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="productVisibility">Visibilidade *</label>
+                                <select id="productVisibility" name="visibility" required>
+                                    <option value="">Selecione a visibilidade</option>
+                                    <option value="free">🆓 Usuários Gratuitos</option>
+                                    <option value="premium">👑 Usuários Premium</option>
+                                    <option value="both">👥 Ambos</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productTags">Tags</label>
+                            <div class="tags-input-container">
+                                <input type="text" id="productTagsInput" placeholder="Digite uma tag e pressione Enter">
+                                <div class="tags-list" id="productTagsList"></div>
+                            </div>
+                            <input type="hidden" id="productTags" name="tags">
+                            <small class="form-help">Ex: alimentação, bem-estar, emagrecimento, saúde</small>
+                        </div>
+                    </div>
+                    
+                    <!-- File Uploads -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-cloud-upload-alt"></i> Arquivos e Imagens</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productCover">Imagem de Capa</label>
+                                <div class="file-upload-area" id="coverUploadArea">
+                                    <input type="file" id="productCover" name="cover" accept="image/*" style="display: none;">
+                                    <div class="upload-placeholder">
+                                        <i class="fas fa-image"></i>
+                                        <p>Clique para selecionar imagem de capa</p>
+                                        <small>PNG, JPG até 5MB</small>
+                                    </div>
+                                    <div class="upload-preview" id="coverPreview" style="display: none;">
+                                        <img id="coverPreviewImg" src="" alt="Preview">
+                                        <button type="button" class="remove-file" onclick="removeFile('cover')">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="productMockup">Imagem de Mockup (Opcional)</label>
+                                <div class="file-upload-area" id="mockupUploadArea">
+                                    <input type="file" id="productMockup" name="mockup" accept="image/*" style="display: none;">
+                                    <div class="upload-placeholder">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        <p>Clique para selecionar mockup</p>
+                                        <small>PNG, JPG até 5MB</small>
+                                    </div>
+                                    <div class="upload-preview" id="mockupPreview" style="display: none;">
+                                        <img id="mockupPreviewImg" src="" alt="Preview">
+                                        <button type="button" class="remove-file" onclick="removeFile('mockup')">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productFile">Arquivo Principal *</label>
+                            <div class="file-upload-area" id="fileUploadArea">
+                                <input type="file" id="productFile" name="file" accept=".pdf,.mp4,.mp3,.zip" style="display: none;">
+                                <div class="upload-placeholder">
+                                    <i class="fas fa-file-upload"></i>
+                                    <p>Clique para selecionar arquivo principal</p>
+                                    <small>PDF, MP4, MP3, ZIP até 100MB</small>
+                                </div>
+                                <div class="upload-preview" id="filePreview" style="display: none;">
+                                    <div class="file-info">
+                                        <i class="fas fa-file" id="fileIcon"></i>
+                                        <div class="file-details">
+                                            <span class="file-name" id="fileName"></span>
+                                            <span class="file-size" id="fileSize"></span>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="remove-file" onclick="removeFile('file')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Status -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-toggle-on"></i> Status e Publicação</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productStatus">Status *</label>
+                                <select id="productStatus" name="status" required>
+                                    <option value="active">✅ Ativo</option>
+                                    <option value="inactive">❌ Inativo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="productPublishDate">Data de Publicação</label>
+                                <input type="date" id="productPublishDate" name="publishDate">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="productModalCancel">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="productModalSave" form="productForm">
+                    <i class="fas fa-save"></i>
+                    Salvar Produto
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirm Delete Product Modal -->
+    <div class="modal" id="confirmDeleteProductModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão</h3>
+                <button class="modal-close" id="confirmDeleteProductClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="confirm-delete-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h4>Tem certeza que deseja excluir este produto?</h4>
+                    <p>Esta ação não pode ser desfeita. O produto será removido permanentemente do sistema e não aparecerá mais no app dos usuários.</p>
+                    <div class="product-info">
+                        <strong id="deleteProductName"></strong>
+                        <span id="deleteProductType"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="confirmDeleteProductCancel">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteProductConfirm">
+                    <i class="fas fa-trash"></i>
+                    Excluir Produto
+                </button>
+            </div>
+        </div>
+    </div>
 
     <script src="auth.js"></script>
     <script src="script.js"></script>
     <script src="users-management.js"></script>
+    <script src="products-management.js"></script>
     <script>
         // Verificar autenticação ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
