@@ -15,8 +15,31 @@ class BonusManager {
     init() {
         this.loadDemoBonus();
         this.setupEventListeners();
-        this.renderBonus();
-        this.updateStats();
+        this.waitForBonusTab();
+    }
+    
+    waitForBonusTab() {
+        // Check if bonus tab elements exist
+        const bonusGrid = document.getElementById('bonusGrid');
+        
+        if (bonusGrid) {
+            console.log('Bonus tab elements found, initializing...');
+            this.renderBonus();
+            this.updateStats();
+        } else {
+            console.log('Bonus tab elements not found, waiting for tab activation...');
+            // Wait for tab to be clicked
+            const bonusTab = document.querySelector('a[href="#bonus-extras"]');
+            if (bonusTab) {
+                bonusTab.addEventListener('click', () => {
+                    console.log('Bonus tab clicked, initializing...');
+                    setTimeout(() => {
+                        this.renderBonus();
+                        this.updateStats();
+                    }, 100);
+                });
+            }
+        }
     }
     
     // Demo bonus data
@@ -399,8 +422,17 @@ class BonusManager {
         // Check if bonus elements exist (tab might not be active)
         if (!bonusGrid) {
             console.log('Bonus elements not found - tab might not be active yet');
+            // Try to find and click the bonus tab
+            const bonusTab = document.querySelector('a[href="#bonus-extras"]');
+            if (bonusTab && !bonusTab.classList.contains('active')) {
+                console.log('Attempting to activate bonus tab...');
+                bonusTab.click();
+                setTimeout(() => this.renderBonus(), 200);
+            }
             return;
         }
+        
+        console.log('Rendering bonus with', this.filteredBonus.length, 'items');
         
         // Show loading
         if (loadingElement) loadingElement.style.display = 'flex';
@@ -1002,33 +1034,73 @@ function removeBonusFile(type) {
 let bonusManager;
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Wait a bit for all elements to be ready
+    console.log('DOM loaded, setting up bonus manager...');
+    
+    // Function to initialize bonus manager
+    function initializeBonusManager() {
+        if (!bonusManager) {
+            console.log('Creating new BonusManager instance...');
+            bonusManager = new BonusManager();
+            window.bonusManager = bonusManager;
+        } else {
+            console.log('BonusManager already exists, re-rendering...');
+            bonusManager.renderBonus();
+            bonusManager.updateStats();
+        }
+    }
+    
+    // Wait for the main script to load the tab system
     setTimeout(() => {
-        // Check if bonus tab exists and initialize
-        const bonusTab = document.querySelector('[data-tab="bonus-materials"]');
+        // Look for bonus tab
+        const bonusTab = document.querySelector('.menu-item[data-tab="bonus-materials"]');
+        
         if (bonusTab) {
+            console.log('Found bonus tab, setting up listener...');
             bonusTab.addEventListener('click', function() {
-                // Wait for tab content to be visible
-                setTimeout(() => {
-                    if (!bonusManager) {
-                        console.log('Initializing Bonus Manager...');
-                        bonusManager = new BonusManager();
-                    } else {
-                        // Re-render if already exists
-                        bonusManager.renderBonus();
-                        bonusManager.updateStats();
-                    }
-                }, 100);
+                console.log('Bonus tab clicked, initializing...');
+                setTimeout(initializeBonusManager, 300);
             });
         }
         
-        // Try to initialize immediately if bonus elements are present
-        const bonusGrid = document.getElementById('bonusGrid');
-        if (bonusGrid) {
-            console.log('Bonus grid found, initializing...');
-            bonusManager = new BonusManager();
+        // Check if bonus tab is already active
+        const bonusSection = document.querySelector('#bonus-materials');
+        if (bonusSection && bonusSection.classList.contains('active')) {
+            console.log('Bonus section is already active, initializing...');
+            setTimeout(initializeBonusManager, 500);
         }
-    }, 500);
+        
+        // Also listen for any tab changes using MutationObserver
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    const target = mutation.target;
+                    if (target.id === 'bonus-materials' && target.classList.contains('active')) {
+                        console.log('Bonus section became active via mutation observer');
+                        setTimeout(initializeBonusManager, 100);
+                    }
+                }
+            });
+        });
+        
+        // Start observing the bonus section directly
+        if (bonusSection) {
+            observer.observe(bonusSection, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+        }
+        
+        // Also observe the main content area
+        const mainContent = document.querySelector('.content-area');
+        if (mainContent) {
+            observer.observe(mainContent, {
+                attributes: true,
+                subtree: true,
+                attributeFilter: ['class']
+            });
+        }
+    }, 1000);
 });
 
+// Make sure it's available globally
 window.bonusManager = bonusManager;
