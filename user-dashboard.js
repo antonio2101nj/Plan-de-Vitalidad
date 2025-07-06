@@ -818,8 +818,18 @@ class UserDashboard {
     }
 
     logout() {
-        authSystem.logout();
-        window.location.href = 'app-login.html';
+        // Limpar dados do localStorage
+        localStorage.removeItem('planVitalidad_session');
+        localStorage.removeItem('userLanguage');
+        localStorage.removeItem('dailyTasks');
+        
+        // Limpar variáveis de sessão
+        this.currentUser = null;
+        
+        // Forçar redirecionamento para a página de login
+        setTimeout(() => {
+            window.location.replace('app-login.html');
+        }, 100);
     }
 
     showSaveMessage() {

@@ -129,12 +129,17 @@
                 
                 <!-- Demo Credentials -->
                 <div class="demo-credentials user-demo">
-                    <h4><i class="fas fa-info-circle"></i> <span data-i18n="demo-account">Conta Demo</span></h4>
+                    <h4><i class="fas fa-info-circle"></i> <span data-i18n="demo-account">Contas Demo</span></h4>
                     <div class="demo-accounts">
                         <div class="demo-account">
                             <strong data-i18n="demo-user">Usuário Demo:</strong><br>
                             Email: usuario@planvitalidad.com<br>
                             <span data-i18n="password">Senha</span>: user123
+                        </div>
+                        <div class="demo-account">
+                            <strong>Admin Demo:</strong><br>
+                            Email: admin@planvitalidad.com<br>
+                            <span data-i18n="password">Senha</span>: admin123
                         </div>
                     </div>
                     <p class="demo-note" data-i18n="demo-note">Clique nas credenciais acima para preenchimento automático</p>
@@ -387,14 +392,15 @@
                     if (result.success) {
                         showAlert('success', result.message);
                         
-                        // Verificar se é usuário comum
+                        // Redirecionar baseado no role do usuário
                         if (result.user.role === 'admin') {
-                            showAlert('error', userI18n[currentLanguage]['access-denied']);
-                            authSystem.logout();
-                            return;
+                            // Administrador será redirecionado para admin-dashboard.html
+                            setTimeout(() => {
+                                window.location.href = 'admin-dashboard.html';
+                            }, 1500);
+                        } else {
+                            // Usuário comum será redirecionado automaticamente pelo authSystem
                         }
-                        
-                        // Redirect será feito automaticamente pelo authSystem
                     } else {
                         showAlert('error', userI18n[currentLanguage]['login-error']);
                     }
@@ -427,11 +433,18 @@
             document.querySelectorAll('.demo-account').forEach(account => {
                 account.addEventListener('click', function() {
                     const emailMatch = this.textContent.match(/Email: (.+)/);
-                    const passwordMatch = this.textContent.match(/user123/);
+                    const userPasswordMatch = this.textContent.match(/user123/);
+                    const adminPasswordMatch = this.textContent.match(/admin123/);
                     
-                    if (emailMatch && passwordMatch) {
+                    if (emailMatch) {
                         emailInput.value = emailMatch[1];
-                        passwordInput.value = 'user123';
+                        
+                        if (userPasswordMatch) {
+                            passwordInput.value = 'user123';
+                        } else if (adminPasswordMatch) {
+                            passwordInput.value = 'admin123';
+                        }
+                        
                         clearErrors();
                     }
                 });
