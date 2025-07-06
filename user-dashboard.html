@@ -11,9 +11,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- PWA Meta Tags -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="user-manifest.json">
     <meta name="theme-color" content="#10B981">
-    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <meta name="application-name" content="Plan de Vitalidad">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Plan Vitalidad">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='115' fill='%2310B981'/%3E%3Ctext x='256' y='350' font-size='280' text-anchor='middle' fill='white'%3E🌱%3C/text%3E%3C/svg%3E">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#10B981">
+    <meta name="msapplication-config" content="browserconfig.xml">
 </head>
 <body>
     <!-- Loading Screen -->
@@ -889,6 +896,206 @@
     <!-- Scripts -->
     <script src="auth.js"></script>
     <script src="user-dashboard.js"></script>
+    
+    <!-- PWA Installation and Service Worker -->
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/user-service-worker.js')
+                    .then((registration) => {
+                        console.log('🌱 User SW registered: ', registration);
+                    })
+                    .catch((error) => {
+                        console.log('🌱 User SW registration failed: ', error);
+                    });
+            });
+        }
+        
+        // PWA Installation Banner
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('🌱 PWA: beforeinstallprompt event fired');
+            e.preventDefault();
+            deferredPrompt = e;
+            showInstallBanner();
+        });
+        
+        function showInstallBanner() {
+            const installBanner = document.createElement('div');
+            installBanner.id = 'install-banner';
+            installBanner.innerHTML = `
+                <div class="install-banner-content">
+                    <div class="install-banner-icon">🌱</div>
+                    <div class="install-banner-text">
+                        <strong>Instalar Plan de Vitalidad</strong>
+                        <p>Accede más rápido a tu dashboard</p>
+                    </div>
+                    <button class="install-banner-btn" onclick="installPWA()">
+                        <i class="fas fa-download"></i> Instalar
+                    </button>
+                    <button class="install-banner-close" onclick="closeInstallBanner()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            const bannerCSS = `
+                <style>
+                    #install-banner {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+                        color: white;
+                        padding: 12px 16px;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                        z-index: 10000;
+                        transform: translateY(-100%);
+                        transition: transform 0.3s ease;
+                    }
+                    
+                    #install-banner.show {
+                        transform: translateY(0);
+                    }
+                    
+                    .install-banner-content {
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        max-width: 1200px;
+                        margin: 0 auto;
+                    }
+                    
+                    .install-banner-icon {
+                        font-size: 24px;
+                        flex-shrink: 0;
+                    }
+                    
+                    .install-banner-text {
+                        flex: 1;
+                        min-width: 0;
+                    }
+                    
+                    .install-banner-text strong {
+                        display: block;
+                        font-size: 16px;
+                        margin-bottom: 2px;
+                    }
+                    
+                    .install-banner-text p {
+                        font-size: 14px;
+                        opacity: 0.9;
+                        margin: 0;
+                    }
+                    
+                    .install-banner-btn {
+                        background: rgba(255,255,255,0.2);
+                        border: 1px solid rgba(255,255,255,0.3);
+                        color: white;
+                        padding: 8px 16px;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-size: 14px;
+                        display: flex;
+                        align-items: center;
+                        gap: 6px;
+                        transition: all 0.2s;
+                        flex-shrink: 0;
+                    }
+                    
+                    .install-banner-btn:hover {
+                        background: rgba(255,255,255,0.3);
+                        border-color: rgba(255,255,255,0.5);
+                    }
+                    
+                    .install-banner-close {
+                        background: none;
+                        border: none;
+                        color: white;
+                        font-size: 16px;
+                        cursor: pointer;
+                        padding: 4px;
+                        opacity: 0.7;
+                        border-radius: 4px;
+                        transition: opacity 0.2s;
+                        flex-shrink: 0;
+                    }
+                    
+                    .install-banner-close:hover {
+                        opacity: 1;
+                    }
+                    
+                    @media (max-width: 768px) {
+                        .install-banner-content {
+                            gap: 8px;
+                        }
+                        
+                        .install-banner-text strong {
+                            font-size: 14px;
+                        }
+                        
+                        .install-banner-text p {
+                            font-size: 12px;
+                        }
+                        
+                        .install-banner-btn {
+                            font-size: 12px;
+                            padding: 6px 12px;
+                        }
+                    }
+                </style>
+            `;
+            
+            document.head.insertAdjacentHTML('beforeend', bannerCSS);
+            document.body.insertAdjacentElement('afterbegin', installBanner);
+            
+            // Show banner with animation
+            setTimeout(() => {
+                installBanner.classList.add('show');
+            }, 100);
+        }
+        
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('🌱 PWA: User accepted the install prompt');
+                        closeInstallBanner();
+                    } else {
+                        console.log('🌱 PWA: User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        }
+        
+        function closeInstallBanner() {
+            const banner = document.getElementById('install-banner');
+            if (banner) {
+                banner.classList.remove('show');
+                setTimeout(() => {
+                    banner.remove();
+                }, 300);
+            }
+        }
+        
+        // Handle successful installation
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('🌱 PWA: App was installed successfully');
+            closeInstallBanner();
+        });
+        
+        // Handle updates
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                window.location.reload();
+            });
+        }
+    </script>
     <script>
         // Initialize the dashboard
         document.addEventListener('DOMContentLoaded', function() {
