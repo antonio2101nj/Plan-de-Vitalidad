@@ -210,16 +210,143 @@
                     </div>
                 </div>
 
-                <!-- Other Tab Contents (Placeholder) -->
+                <!-- Users Tab -->
                 <div class="tab-content" id="users">
                     <div class="content-header">
-                        <h2 data-i18n="users">Usuários</h2>
+                        <h2 data-i18n="users">👥 Usuários</h2>
                         <p data-i18n="users-description">Gerencie os usuários do seu aplicativo</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-users"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Users Stats -->
+                    <div class="users-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon active">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="activeUsersCount">0</h3>
+                                <p>Usuários Ativos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon inactive">
+                                <i class="fas fa-user-slash"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="inactiveUsersCount">0</h3>
+                                <p>Usuários Inativos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon premium">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="premiumUsersCount">0</h3>
+                                <p>Usuários Premium</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon total">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalUsersCount">0</h3>
+                                <p>Total de Usuários</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Users Controls -->
+                    <div class="users-controls">
+                        <div class="controls-left">
+                            <button class="btn btn-primary" id="createUserBtn">
+                                <i class="fas fa-plus"></i>
+                                Criar Novo Usuário
+                            </button>
+                            <button class="btn btn-secondary" id="exportUsersBtn">
+                                <i class="fas fa-download"></i>
+                                Exportar Lista
+                            </button>
+                        </div>
+                        
+                        <div class="controls-right">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="userSearchInput" placeholder="Buscar por nome ou e-mail...">
+                            </div>
+                            
+                            <div class="filters">
+                                <select id="statusFilter" class="filter-select">
+                                    <option value="">Todos os Status</option>
+                                    <option value="active">Ativos</option>
+                                    <option value="inactive">Inativos</option>
+                                </select>
+                                
+                                <select id="languageFilter" class="filter-select">
+                                    <option value="">Todos os Idiomas</option>
+                                    <option value="es">Español</option>
+                                    <option value="pt">Português</option>
+                                    <option value="en">English</option>
+                                </select>
+                                
+                                <select id="planFilter" class="filter-select">
+                                    <option value="">Todos os Planos</option>
+                                    <option value="free">Gratuito</option>
+                                    <option value="premium">Premium</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Users Table -->
+                    <div class="users-table-container">
+                        <table class="users-table" id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th>👤 Nome</th>
+                                    <th>📧 E-mail</th>
+                                    <th>🌍 País</th>
+                                    <th>🗣️ Idioma</th>
+                                    <th>💎 Plano</th>
+                                    <th>✅ Status</th>
+                                    <th>📅 Cadastro</th>
+                                    <th>⚙️ Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- Users will be populated here -->
+                            </tbody>
+                        </table>
+                        
+                        <div class="table-loading" id="usersTableLoading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Carregando usuários...</p>
+                        </div>
+                        
+                        <div class="no-users" id="noUsersMessage" style="display: none;">
+                            <i class="fas fa-users"></i>
+                            <h3>Nenhum usuário encontrado</h3>
+                            <p>Não há usuários cadastrados ou que correspondam aos filtros selecionados.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="paginationInfo">Mostrando 0 de 0 usuários</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn btn-small" id="prevPageBtn" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                                Anterior
+                            </button>
+                            <span class="page-numbers" id="pageNumbers"></span>
+                            <button class="btn btn-small" id="nextPageBtn" disabled>
+                                Próximo
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -423,9 +550,127 @@
 
     <!-- Overlay for mobile -->
     <div class="overlay" id="overlay"></div>
+    
+    <!-- User Modals -->
+    <!-- Create/Edit User Modal -->
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="userModalTitle">Criar Novo Usuário</h3>
+                <button class="modal-close" id="userModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="userForm">
+                    <input type="hidden" id="userId" name="userId">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="userName">Nome Completo *</label>
+                            <input type="text" id="userName" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userEmail">E-mail *</label>
+                            <input type="email" id="userEmail" name="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="userCountry">País</label>
+                            <select id="userCountry" name="country">
+                                <option value="">Selecione o país</option>
+                                <option value="BR">🇧🇷 Brasil</option>
+                                <option value="ES">🇪🇸 Espanha</option>
+                                <option value="MX">🇲🇽 México</option>
+                                <option value="AR">🇦🇷 Argentina</option>
+                                <option value="CO">🇨🇴 Colômbia</option>
+                                <option value="PE">🇵🇪 Peru</option>
+                                <option value="CL">🇨🇱 Chile</option>
+                                <option value="US">🇺🇸 Estados Unidos</option>
+                                <option value="CA">🇨🇦 Canadá</option>
+                                <option value="PT">🇵🇹 Portugal</option>
+                                <option value="Other">🌍 Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="userLanguage">Idioma Preferido *</label>
+                            <select id="userLanguage" name="language" required>
+                                <option value="es">🇪🇸 Español</option>
+                                <option value="pt">🇧🇷 Português</option>
+                                <option value="en">🇺🇸 English</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="userPlan">Plano *</label>
+                            <select id="userPlan" name="plan" required>
+                                <option value="free">Gratuito</option>
+                                <option value="premium">Premium</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="userStatus">Status *</label>
+                            <select id="userStatus" name="status" required>
+                                <option value="active">Ativo</option>
+                                <option value="inactive">Inativo</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="passwordGroup">
+                        <label for="userPassword">Senha *</label>
+                        <input type="password" id="userPassword" name="password" required>
+                        <small class="form-help">Mínimo 6 caracteres</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="userModalCancel">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="userModalSave" form="userForm">
+                    <i class="fas fa-save"></i>
+                    Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirm Delete Modal -->
+    <div class="modal" id="confirmDeleteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão</h3>
+                <button class="modal-close" id="confirmDeleteClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="confirm-delete-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h4>Tem certeza que deseja excluir este usuário?</h4>
+                    <p>Esta ação não pode ser desfeita. Todos os dados do usuário serão permanentemente removidos.</p>
+                    <div class="user-info">
+                        <strong id="deleteUserName"></strong>
+                        <span id="deleteUserEmail"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="confirmDeleteCancel">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteConfirm">
+                    <i class="fas fa-trash"></i>
+                    Excluir Usuário
+                </button>
+            </div>
+        </div>
+    </div>
 
     <script src="auth.js"></script>
     <script src="script.js"></script>
+    <script src="users-management.js"></script>
     <script>
         // Verificar autenticação ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
