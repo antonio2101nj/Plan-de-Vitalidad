@@ -394,6 +394,13 @@ class BonusManager {
     renderBonus() {
         const loadingElement = document.getElementById('bonusLoading');
         const noBonusElement = document.getElementById('noBonusMessage');
+        const bonusGrid = document.getElementById('bonusGrid');
+        
+        // Check if bonus elements exist (tab might not be active)
+        if (!bonusGrid) {
+            console.log('Bonus elements not found - tab might not be active yet');
+            return;
+        }
         
         // Show loading
         if (loadingElement) loadingElement.style.display = 'flex';
@@ -995,9 +1002,33 @@ function removeBonusFile(type) {
 let bonusManager;
 
 document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('bonusGrid')) {
-        bonusManager = new BonusManager();
-    }
+    // Wait a bit for all elements to be ready
+    setTimeout(() => {
+        // Check if bonus tab exists and initialize
+        const bonusTab = document.querySelector('[data-tab="bonus-materials"]');
+        if (bonusTab) {
+            bonusTab.addEventListener('click', function() {
+                // Wait for tab content to be visible
+                setTimeout(() => {
+                    if (!bonusManager) {
+                        console.log('Initializing Bonus Manager...');
+                        bonusManager = new BonusManager();
+                    } else {
+                        // Re-render if already exists
+                        bonusManager.renderBonus();
+                        bonusManager.updateStats();
+                    }
+                }, 100);
+            });
+        }
+        
+        // Try to initialize immediately if bonus elements are present
+        const bonusGrid = document.getElementById('bonusGrid');
+        if (bonusGrid) {
+            console.log('Bonus grid found, initializing...');
+            bonusManager = new BonusManager();
+        }
+    }, 500);
 });
 
 window.bonusManager = bonusManager;
