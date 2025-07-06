@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Vitalidad - Painel do Usuário</title>
+    <link rel="stylesheet" href="user-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10B981">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <div class="vitality-icon">V</div>
+            </div>
+            <div class="loading-text">Plan de Vitalidad</div>
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="logout-icon">🚪</div>
+                <h3 id="logoutTitle">Cerrar Sesión</h3>
+                <p id="logoutMessage">¿Estás seguro de que deseas cerrar sesión?</p>
+            </div>
+            <div class="modal-actions">
+                <button id="cancelLogout" class="btn-secondary">Cancelar</button>
+                <button id="confirmLogout" class="btn-danger">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Detail Modal -->
+    <div id="notificationModal" class="modal hidden">
+        <div class="modal-content notification-modal">
+            <div class="modal-header">
+                <div class="notification-modal-header">
+                    <div class="notification-icon-wrapper">
+                        <span id="notificationIcon" class="notification-icon">🔔</span>
+                    </div>
+                    <div class="notification-details">
+                        <h3 id="notificationTitle">Notificación</h3>
+                        <p id="notificationTime" class="notification-timestamp"></p>
+                    </div>
+                </div>
+                <button id="closeNotificationModal" class="close-btn">✕</button>
+            </div>
+            <div class="modal-body">
+                <p id="notificationFullMessage" class="notification-full-text"></p>
+                <div class="notification-actions">
+                    <button id="goToSection" class="btn-primary">Ir a sección</button>
+                    <button id="toggleNotificationRead" class="btn-secondary">Marcar como leída</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app" class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <button id="menuToggle" class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 id="appTitle" class="app-title">Plan de Vitalidad</h1>
+            </div>
+            <div class="header-right">
+                <button id="languageToggle" class="language-toggle">
+                    <i class="fas fa-globe"></i>
+                </button>
+                <span id="currentLanguage" class="current-language">ES</span>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <!-- Sidebar -->
+            <aside id="sidebar" class="sidebar">
+                <div class="sidebar-header">
+                    <div class="user-profile">
+                        <div class="user-avatar">SE</div>
+                        <div class="user-info">
+                            <h3 id="userGreeting">Plan de Vitalidad</h3>
+                            <p id="userName">Sara Emanuelly</p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <button class="nav-item active" data-tab="inicio">
+                        <span class="nav-icon">🏠</span>
+                        <span id="nav-inicio" class="nav-label">Inicio</span>
+                    </button>
+                    <button class="nav-item" data-tab="productos">
+                        <span class="nav-icon">📚</span>
+                        <span id="nav-productos" class="nav-label">Mis Productos</span>
+                    </button>
+                    <button class="nav-item" data-tab="bonus">
+                        <span class="nav-icon">🎁</span>
+                        <span id="nav-bonus" class="nav-label">Mis Bónus</span>
+                    </button>
+                    <button class="nav-item" data-tab="desafios">
+                        <span class="nav-icon">🏆</span>
+                        <span id="nav-desafios" class="nav-label">Desafíos</span>
+                    </button>
+                    <button class="nav-item" data-tab="tienda">
+                        <span class="nav-icon">🛒</span>
+                        <span id="nav-tienda" class="nav-label">Tienda</span>
+                    </button>
+                    <button class="nav-item" data-tab="notificaciones">
+                        <span class="nav-icon">🔔</span>
+                        <span id="nav-notificaciones" class="nav-label">Notificaciones</span>
+                        <span id="notificationBadge" class="notification-badge">3</span>
+                    </button>
+                    <button class="nav-item" data-tab="soporte">
+                        <span class="nav-icon">🤖</span>
+                        <span id="nav-soporte" class="nav-label">Soporte</span>
+                    </button>
+                    <button class="nav-item" data-tab="configuraciones">
+                        <span class="nav-icon">⚙️</span>
+                        <span id="nav-configuraciones" class="nav-label">Configuraciones</span>
+                    </button>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <button id="logoutBtn" class="logout-btn">
+                        <span class="nav-icon">🚪</span>
+                        <span id="nav-salir" class="nav-label">Salir</span>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Sidebar Overlay for Mobile -->
+            <div id="sidebarOverlay" class="sidebar-overlay hidden"></div>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Save Message -->
+                <div id="saveMessage" class="save-message hidden">
+                    <div class="save-content">
+                        <span class="save-icon">✅</span>
+                        <span id="saveText">Cambios guardados exitosamente</span>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Inicio -->
+                <div id="tab-inicio" class="tab-content active">
+                    <div class="content-section">
+                        <!-- Welcome Card -->
+                        <div class="welcome-card">
+                            <h2 id="welcomeMessage">¡Hola, Sara Emanuelly 👋</h2>
+                            <p id="currentDate" class="current-date"></p>
+                            <div class="language-indicator">
+                                <span id="languageIndicator" class="language-badge">🌐 ES</span>
+                            </div>
+                        </div>
+
+                        <!-- Rotating Banner -->
+                        <div id="rotatingBanner" class="rotating-banner">
+                            <div class="banner-content">
+                                <span id="bannerIcon" class="banner-icon">🎁</span>
+                                <span id="bannerText" class="banner-text">¡Nuevo bono disponible!</span>
+                            </div>
+                            <div class="banner-indicators">
+                                <div class="indicator active"></div>
+                                <div class="indicator"></div>
+                                <div class="indicator"></div>
+                            </div>
+                        </div>
+
+                        <!-- Motivational Quote -->
+                        <div class="motivational-card">
+                            <div class="quote-icon">✨</div>
+                            <div class="quote-content">
+                                <p id="motivationalQuote" class="quote-text">"Tu bienestar empieza con una pequeña decisión"</p>
+                                <p class="quote-attribution">Frase del día</p>
+                            </div>
+                        </div>
+
+                        <!-- Quick Access Cards -->
+                        <div class="quick-access-grid">
+                            <button class="quick-access-card" data-tab="productos">
+                                <div class="card-icon productos">📚</div>
+                                <h3 id="quickProductsTitle">Mis Productos</h3>
+                                <p class="card-subtitle">3 disponibles</p>
+                            </button>
+                            <button class="quick-access-card" data-tab="bonus">
+                                <div class="card-icon bonus">🎁</div>
+                                <h3 id="quickBonusTitle">Bónus Liberados</h3>
+                                <p class="card-subtitle">2 nuevos</p>
+                            </button>
+                            <button class="quick-access-card" data-tab="desafios">
+                                <div class="card-icon desafios">🏆</div>
+                                <h3 id="quickChallengesTitle">Desafíos Activos</h3>
+                                <p class="card-subtitle">1 activo</p>
+                            </button>
+                            <button class="quick-access-card" data-tab="tienda">
+                                <div class="card-icon tienda">🛒</div>
+                                <h3 id="quickStoreTitle">Tienda</h3>
+                                <p class="card-subtitle">Ofertas especiales</p>
+                            </button>
+                        </div>
+
+                        <!-- Progress Card -->
+                        <div class="progress-card">
+                            <div class="progress-header">
+                                <h3 id="progressTitle">Tu Progreso</h3>
+                                <span class="progress-badge">Activo</span>
+                            </div>
+                            <div class="progress-details">
+                                <div class="progress-info">
+                                    <span>Día 4 de 7</span>
+                                    <span class="progress-percentage">57% Completado 🎉</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 57%"></div>
+                                </div>
+                                <button id="viewChallenge" class="btn-primary" data-tab="desafios">Ver desafío</button>
+                            </div>
+                        </div>
+
+                        <!-- Continue Where You Left Off -->
+                        <div class="continue-card">
+                            <h3 id="continueTitle">Continúa donde lo dejaste</h3>
+                            <div class="continue-content">
+                                <div class="continue-icon">📖</div>
+                                <div class="continue-details">
+                                    <h4 id="lastAccessTitle">Último acceso: eBook Nutrición Vital</h4>
+                                    <p class="continue-subtitle">Capítulo 3: Alimentación consciente</p>
+                                    <div class="continue-progress">
+                                        <div class="continue-progress-bar">
+                                            <div class="continue-progress-fill" style="width: 75%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="continueReading" class="btn-primary" data-tab="productos">Continuar</button>
+                        </div>
+
+                        <!-- Explore All Button -->
+                        <button id="exploreAll" class="explore-btn" data-tab="productos">
+                            Explorar todos los contenidos 🚀
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Productos -->
+                <div id="tab-productos" class="tab-content">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2 id="productosTitle">Mis Productos</h2>
+                            <span class="section-badge">6 productos liberados</span>
+                        </div>
+
+                        <!-- Filters Card -->
+                        <div class="filters-card">
+                            <h3 id="filtersTitle">Filtrar por</h3>
+                            <div class="search-bar">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" id="productSearch" placeholder="Buscar producto...">
+                            </div>
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label id="typeLabel">Tipo</label>
+                                    <select id="typeFilter">
+                                        <option value="all">Todos los tipos</option>
+                                        <option value="eBook">📖 eBook</option>
+                                        <option value="Video">🎥 Video</option>
+                                        <option value="Planner">📋 Planner</option>
+                                        <option value="Guia">📘 Guia</option>
+                                        <option value="Aula">🎓 Aula</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label id="languageLabel">Idioma</label>
+                                    <select id="languageFilter">
+                                        <option value="all">Todos los idiomas</option>
+                                        <option value="es">🇪🇸 Español</option>
+                                        <option value="pt">🇧🇷 Português</option>
+                                        <option value="en">🇺🇸 English</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Products List -->
+                        <div id="productsList" class="products-list">
+                            <!-- Products will be dynamically inserted here -->
+                        </div>
+
+                        <!-- No Products Message -->
+                        <div id="noProductsMessage" class="empty-state hidden">
+                            <div class="empty-icon">📋</div>
+                            <h3 id="noContentTitle">Ningún contenido disponible en el filtro actual</h3>
+                            <p id="noContentSubtitle">Intenta ajustar los filtros o explora nuestra tienda</p>
+                            <button class="btn-primary" data-tab="tienda">¡Confira nuestra tienda para nuevos contenidos!</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Bonus -->
+                <div id="tab-bonus" class="tab-content">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2 id="bonusTitle">Mis Bónus</h2>
+                            <div class="bonus-badges">
+                                <span class="section-badge green">2 bónus liberados</span>
+                                <span class="section-badge blue">4 próximos bónus</span>
+                            </div>
+                        </div>
+
+                        <!-- Released Bonuses -->
+                        <div class="bonus-section">
+                            <h3 class="bonus-section-title">
+                                <span class="bonus-icon green">✅</span>
+                                <span id="releasedBonusTitle">Bónus Liberados</span>
+                            </h3>
+                            <div id="releasedBonusList" class="bonus-list">
+                                <!-- Released bonuses will be inserted here -->
+                            </div>
+                        </div>
+
+                        <!-- Upcoming Bonuses -->
+                        <div class="bonus-section">
+                            <h3 class="bonus-section-title">
+                                <span class="bonus-icon blue">⏰</span>
+                                <span id="upcomingBonusTitle">Próximos Bónus</span>
+                            </h3>
+                            <div id="upcomingBonusList" class="bonus-list">
+                                <!-- Upcoming bonuses will be inserted here -->
+                            </div>
+                        </div>
+
+                        <!-- Points Summary -->
+                        <div class="points-card">
+                            <div class="points-icon">🏆</div>
+                            <div class="points-content">
+                                <h3 id="pointsTitle">Tus Puntos de Vitalidad</h3>
+                                <p id="pointsSubtitle">Completa desafíos para ganar más puntos</p>
+                            </div>
+                            <div class="points-value">
+                                <div class="points-number">120</div>
+                                <div class="points-label">puntos</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Desafios -->
+                <div id="tab-desafios" class="tab-content">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2 id="desafiosTitle">Desafíos</h2>
+                            <span class="section-badge">Día 4/7</span>
+                        </div>
+
+                        <!-- Active Challenge -->
+                        <div class="challenge-card">
+                            <div class="challenge-header">
+                                <div class="challenge-info">
+                                    <h3 class="challenge-name">Semana de Vitalidad Total</h3>
+                                    <p class="challenge-duration">7 días totales</p>
+                                </div>
+                                <div class="challenge-progress-circle">
+                                    <div class="progress-value">57%</div>
+                                    <div class="progress-label">Completado</div>
+                                </div>
+                            </div>
+                            
+                            <div class="challenge-progress-section">
+                                <div class="challenge-progress-info">
+                                    <span>Día 4 de 7</span>
+                                    <span>3 días restantes</span>
+                                </div>
+                                <div class="challenge-progress-bar">
+                                    <div class="challenge-progress-fill" style="width: 57%">
+                                        <div class="progress-indicator"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="challenge-dates">
+                                <div class="challenge-date">
+                                    <span class="date-label">Início:</span>
+                                    <span class="date-value">25 dic</span>
+                                </div>
+                                <div class="challenge-date">
+                                    <span class="date-label">Fim:</span>
+                                    <span class="date-value">31 dic</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Daily Tasks -->
+                        <div class="tasks-card">
+                            <div class="tasks-header">
+                                <h3 class="tasks-title">
+                                    <span class="tasks-icon">📅</span>
+                                    <span id="dailyTasksTitle">Tareas de Hoy</span>
+                                </h3>
+                                <div class="tasks-counter">
+                                    <span id="tasksCompleted">2</span>/<span id="tasksTotal">5</span> completadas
+                                </div>
+                            </div>
+
+                            <div id="tasksList" class="tasks-list">
+                                <!-- Tasks will be inserted here -->
+                            </div>
+
+                            <div id="tasksCompleteMessage" class="tasks-complete hidden">
+                                <div class="complete-icon">🎉</div>
+                                <h4 id="completeTitle">¡Bien hecho! Día completado</h4>
+                                <p>¡Sigue así! Estás un día más cerca de tu objetivo.</p>
+                            </div>
+
+                            <button id="viewRewards" class="btn-gradient" data-tab="bonus">
+                                <span>🏆</span>
+                                <span id="rewardsText">Ver recompensas</span>
+                            </button>
+                        </div>
+
+                        <!-- Notifications Toggle -->
+                        <div class="notifications-card">
+                            <div class="notifications-content">
+                                <div class="notifications-icon">🔔</div>
+                                <div class="notifications-text">
+                                    <h3 id="activateNotificationsTitle">Activar notificaciones</h3>
+                                    <p id="dailyRemindersText">Para recordatorios diarios</p>
+                                </div>
+                            </div>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="notificationsToggle" class="toggle-input">
+                                <label for="notificationsToggle" class="toggle-label"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Tienda -->
+                <div id="tab-tienda" class="tab-content">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2 id="tiendaTitle">Tienda</h2>
+                            <span class="section-badge">8 productos</span>
+                        </div>
+
+                        <!-- Store Filters -->
+                        <div class="filters-card">
+                            <h3 id="storeCategoryTitle">Filtrar por categoría</h3>
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label>Categoría</label>
+                                    <select id="categoryFilter">
+                                        <option value="all">Todas las categorías</option>
+                                        <option value="alimentacionSaludable">🥗 Alimentación saludable</option>
+                                        <option value="habitos">🎯 Hábitos</option>
+                                        <option value="desafiosCategoria">🏆 Desafíos</option>
+                                        <option value="extras">✨ Extras</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label>Idioma</label>
+                                    <select id="storeLanguageFilter">
+                                        <option value="all">Todos los idiomas</option>
+                                        <option value="es">🇪🇸 Español</option>
+                                        <option value="pt">🇧🇷 Português</option>
+                                        <option value="en">🇺🇸 English</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Flash Sale Banner -->
+                        <div id="flashSaleBanner" class="flash-sale-banner">
+                            <div class="flash-sale-content">
+                                <h3>🔥 Oferta relámpago</h3>
+                                <p>Aprovecha estos descuentos por tiempo limitado</p>
+                            </div>
+                            <div class="flash-sale-icon">⏰</div>
+                        </div>
+
+                        <!-- Store Products Grid -->
+                        <div id="storeProductsGrid" class="store-products-grid">
+                            <!-- Store products will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Notificaciones -->
+                <div id="tab-notificaciones" class="tab-content">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2 id="notificacionesTitle">Notificaciones</h2>
+                            <div class="notifications-badges">
+                                <span class="section-badge red">3 no leídas</span>
+                                <span class="section-badge gray">6 total</span>
+                            </div>
+                        </div>
+
+                        <!-- Notification Filters -->
+                        <div class="filters-card">
+                            <h3 id="notificationFiltersTitle">Filtrar por tipo</h3>
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label>Tipo de notificación</label>
+                                    <select id="notificationTypeFilter">
+                                        <option value="all">Todas las notificaciones</option>
+                                        <option value="desafios">🏆 Desafíos</option>
+                                        <option value="productos">📚 Productos</option>
+                                        <option value="bonus">🎁 Bónus</option>
+                                        <option value="alertas">⚠️ Alertas</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="unreadOnlyFilter">
+                                        <span class="checkmark"></span>
+                                        <span id="unreadOnlyText">Solo no leídas</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notifications List -->
+                        <div id="notificationsList" class="notifications-list">
+                            <!-- Notifications will be inserted here -->
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="notifications-stats">
+                            <button class="stat-card bonus" data-filter="bonus">
+                                <div class="stat-icon">🎁</div>
+                                <div class="stat-value">2</div>
+                                <div class="stat-label">bonus</div>
+                            </button>
+                            <button class="stat-card desafios" data-filter="desafios">
+                                <div class="stat-icon">🏆</div>
+                                <div class="stat-value">2</div>
+                                <div class="stat-label">desafios</div>
+                            </button>
+                            <button class="stat-card productos" data-filter="productos">
+                                <div class="stat-icon">📚</div>
+                                <div class="stat-value">1</div>
+                                <div class="stat-label">productos</div>
+                            </button>
+                            <button class="stat-card alertas" data-filter="alertas">
+                                <div class="stat-icon">⚠️</div>
+                                <div class="stat-value">1</div>
+                                <div class="stat-label">alertas</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Soporte -->
+                <div id="tab-soporte" class="tab-content">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2 id="soporteTitle">Soporte</h2>
+                            <span class="section-badge">Tiempo de respuesta promedio: 2-5 minutos</span>
+                        </div>
+
+                        <!-- Support Form -->
+                        <div class="support-form-card">
+                            <h3>Nueva Consulta</h3>
+                            
+                            <div class="form-group">
+                                <label id="questionTypeLabel">Tipo de duda</label>
+                                <select id="questionType">
+                                    <option value="">Seleccionar tipo de duda</option>
+                                    <option value="tecnico">🔧 Técnico</option>
+                                    <option value="contenido">📚 Contenido</option>
+                                    <option value="acceso">🔑 Acceso</option>
+                                    <option value="otro">❓ Otro</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="questionLabel">Tu pregunta</label>
+                                <textarea id="supportQuestion" placeholder="Escribe tu duda aquí..." rows="4"></textarea>
+                            </div>
+
+                            <div class="audio-section">
+                                <label id="audioLabel">Mensaje de voz (opcional)</label>
+                                <div id="audioControls" class="audio-controls">
+                                    <button id="recordBtn" class="record-btn">
+                                        <span class="record-icon">🎤</span>
+                                        <span id="recordText">Enviar audio</span>
+                                    </button>
+                                    <div id="recordingStatus" class="recording-status hidden">
+                                        <div class="recording-indicator"></div>
+                                        <span>Grabando...</span>
+                                    </div>
+                                </div>
+                                <div id="audioPlayback" class="audio-playback hidden">
+                                    <div class="audio-info">
+                                        <div class="audio-icon">🎵</div>
+                                        <div class="audio-details">
+                                            <p>Audio enviado con éxito</p>
+                                            <p class="audio-description">Mensaje de voz adjunto</p>
+                                        </div>
+                                    </div>
+                                    <div class="audio-actions">
+                                        <button id="playAudioBtn" class="audio-action-btn">▶</button>
+                                        <button id="deleteAudioBtn" class="audio-action-btn delete">🗑</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button id="submitSupport" class="btn-primary submit-btn" disabled>
+                                <span>💬</span>
+                                <span id="submitText">Enviar</span>
+                            </button>
+                        </div>
+
+                        <!-- AI Processing Message -->
+                        <div id="aiProcessing" class="ai-processing hidden">
+                            <div class="ai-icon">🤖</div>
+                            <div class="ai-content">
+                                <h3>Asistente IA</h3>
+                                <p>Estamos analizando tu pregunta. Aquí tienes algo que puede ayudarte...</p>
+                            </div>
+                            <div class="ai-loading">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                            </div>
+                        </div>
+
+                        <!-- Support History -->
+                        <div class="support-history">
+                            <h3 class="history-title">
+                                <span class="history-icon">📋</span>
+                                <span id="historyTitle">Historial de Dudas</span>
+                            </h3>
+                            <div id="supportHistoryList" class="history-list">
+                                <!-- Support history will be inserted here -->
+                            </div>
+                            <div id="noSupportHistory" class="empty-state">
+                                <div class="empty-icon">💬</div>
+                                <h3>Aún no has enviado ninguna duda</h3>
+                                <p>Hazle tu primera pregunta a nuestro equipo de soporte</p>
+                            </div>
+                        </div>
+
+                        <!-- Support Info Cards -->
+                        <div class="support-info-cards">
+                            <div class="info-card ai">
+                                <div class="info-icon">🤖</div>
+                                <div class="info-content">
+                                    <h3>Asistente IA</h3>
+                                    <p>Respuestas instantáneas 24/7</p>
+                                </div>
+                            </div>
+                            <div class="info-card human">
+                                <div class="info-icon">👥</div>
+                                <div class="info-content">
+                                    <h3>Equipo de Soporte</h3>
+                                    <p>Soporte humano especializado</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Configuraciones -->
+                <div id="tab-configuraciones" class="tab-content">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2 id="configuracionesTitle">Configuraciones</h2>
+                        </div>
+
+                        <!-- General Settings -->
+                        <div class="settings-card">
+                            <h3 class="settings-title">
+                                <span class="settings-icon">⚙️</span>
+                                <span id="generalSettingsTitle">Configuración general</span>
+                            </h3>
+
+                            <!-- Language Settings -->
+                            <div class="setting-section">
+                                <div class="setting-header">
+                                    <div class="setting-info">
+                                        <div class="setting-icon">🌐</div>
+                                        <div class="setting-text">
+                                            <h4 id="languageSettingTitle">Idioma</h4>
+                                            <p id="currentLanguageText">Idioma actual: Español</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="language-options">
+                                    <button class="language-option active" data-lang="es">
+                                        <span class="flag">🇪🇸</span>
+                                        <div class="language-info">
+                                            <div class="language-name">Español</div>
+                                            <div class="language-country">España</div>
+                                        </div>
+                                        <div class="language-check">✓</div>
+                                    </button>
+                                    <button class="language-option" data-lang="pt">
+                                        <span class="flag">🇧🇷</span>
+                                        <div class="language-info">
+                                            <div class="language-name">Português</div>
+                                            <div class="language-country">Brasil</div>
+                                        </div>
+                                    </button>
+                                    <button class="language-option" data-lang="en">
+                                        <span class="flag">🇺🇸</span>
+                                        <div class="language-info">
+                                            <div class="language-name">English</div>
+                                            <div class="language-country">United States</div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Personalization Settings -->
+                        <div class="settings-card">
+                            <h3 class="settings-title">
+                                <span class="settings-icon">🎨</span>
+                                <span id="personalizationTitle">Personalizar</span>
+                            </h3>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-icon dark-mode">🌙</div>
+                                    <div class="setting-text">
+                                        <h4 id="darkModeTitle">Activar modo oscuro</h4>
+                                        <p id="darkModeDesc">Modo claro</p>
+                                    </div>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="darkModeToggle" class="toggle-input">
+                                    <label for="darkModeToggle" class="toggle-label"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notification Settings -->
+                        <div class="settings-card">
+                            <h3 class="settings-title">
+                                <span class="settings-icon">🔔</span>
+                                <span id="notificationSettingsTitle">Notificaciones</span>
+                            </h3>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-icon">📱</div>
+                                    <div class="setting-text">
+                                        <h4 id="pushNotificationsTitle">Recibir notificaciones push</h4>
+                                        <p>Recibir alertas y recordatorios importantes</p>
+                                    </div>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="pushNotificationsToggle" class="toggle-input" checked>
+                                    <label for="pushNotificationsToggle" class="toggle-label"></label>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-icon">🔊</div>
+                                    <div class="setting-text">
+                                        <h4 id="soundNotificationsTitle">Sonidos de notificaciones</h4>
+                                        <p>Reproducir sonidos cuando lleguen notificaciones</p>
+                                    </div>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="soundNotificationsToggle" class="toggle-input" checked>
+                                    <label for="soundNotificationsToggle" class="toggle-label"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Data -->
+                        <div class="settings-card">
+                            <h3 class="settings-title">
+                                <span class="settings-icon">👤</span>
+                                <span id="accountDataTitle">Datos de la cuenta</span>
+                            </h3>
+
+                            <div class="user-profile-card">
+                                <div class="profile-avatar">SE</div>
+                                <div class="profile-info">
+                                    <h4>Sara Emanuelly</h4>
+                                    <p>Plan de Vitalidad Premium</p>
+                                    <div class="profile-status">
+                                        <span class="status-indicator"></span>
+                                        <span>Activa</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="account-details">
+                                <div class="account-field">
+                                    <div class="field-icon">📧</div>
+                                    <div class="field-content">
+                                        <span class="field-label">Email</span>
+                                        <span class="field-value">sara.emanuelly@email.com</span>
+                                    </div>
+                                </div>
+                                <div class="account-field">
+                                    <div class="field-icon">📅</div>
+                                    <div class="field-content">
+                                        <span class="field-label">Fecha de registro</span>
+                                        <span class="field-value">15 de dezembro, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Security Settings -->
+                        <div class="settings-card danger">
+                            <h3 class="settings-title">
+                                <span class="settings-icon">🔒</span>
+                                <span id="securityTitle">Seguridad y privacidad</span>
+                            </h3>
+
+                            <div class="logout-section">
+                                <div class="logout-info">
+                                    <div class="logout-icon-setting">🚪</div>
+                                    <div class="logout-text">
+                                        <h4 id="logoutSettingTitle">Cerrar sesión</h4>
+                                        <p>Cerrar sesión en este dispositivo</p>
+                                    </div>
+                                </div>
+                                <button id="logoutSettingBtn" class="btn-danger">Salir</button>
+                            </div>
+                        </div>
+
+                        <!-- App Info -->
+                        <div class="settings-card">
+                            <h3 class="settings-title">
+                                <span class="settings-icon">ℹ️</span>
+                                <span>Información de la App</span>
+                            </h3>
+
+                            <div class="app-info">
+                                <div class="info-field">
+                                    <div class="field-icon">📱</div>
+                                    <div class="field-content">
+                                        <span class="field-label">Versión</span>
+                                        <span class="field-value">v2.1.0</span>
+                                    </div>
+                                </div>
+                                <div class="info-field">
+                                    <div class="field-icon">⚖️</div>
+                                    <div class="field-content">
+                                        <span class="field-label">Aviso legal</span>
+                                        <button class="link-btn">Ver términos y condiciones</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Support Link -->
+                        <div class="support-link-card">
+                            <div class="support-link-icon">🤝</div>
+                            <div class="support-link-content">
+                                <h3>¿Necesitas ayuda?</h3>
+                                <p>Nuestro equipo de soporte está aquí para ayudarte</p>
+                            </div>
+                            <button class="btn-primary" data-tab="soporte">Contactar soporte</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p id="footerText">App Plan de Vitalidad – Uso personal. Derechos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="auth.js"></script>
+    <script src="user-dashboard.js"></script>
+    <script>
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            if (!authSystem.isAuthenticated() || authSystem.getCurrentUser()?.role !== 'user') {
+                window.location.href = 'app-login.html';
+                return;
+            }
+
+            // Initialize dashboard
+            initializeUserDashboard();
+        });
+    </script>
+</body>
+</html>

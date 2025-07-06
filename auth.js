@@ -6,7 +6,7 @@ const AUTH_CONFIG = {
     SESSION_DURATION: 7 * 24 * 60 * 60 * 1000, // 7 dias em millisegundos
     SESSION_KEY: 'planVitalidad_session',
     ADMIN_ROUTES: ['admin-dashboard.html', 'index.html'],
-    USER_ROUTES: ['app-dashboard.html'],
+    USER_ROUTES: ['app-dashboard.html', 'user-dashboard.html'],
     DEMO_USERS: {
         // Usuários demo para teste
         'admin@planvitalidad.com': {
@@ -209,7 +209,7 @@ class AuthSystem {
 
         // Usuário tentando acessar página de admin
         if (this.currentUser.role === 'user' && isAdminPage) {
-            window.location.href = 'app-dashboard.html';
+            window.location.href = 'user-dashboard.html';
             return;
         }
 
@@ -226,7 +226,7 @@ class AuthSystem {
         if (this.currentUser.role === 'admin') {
             window.location.href = 'admin-dashboard.html';
         } else {
-            window.location.href = 'app-dashboard.html';
+            window.location.href = 'user-dashboard.html';
         }
     }
 
