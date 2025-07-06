@@ -893,7 +893,7 @@
         // Initialize the dashboard
         document.addEventListener('DOMContentLoaded', function() {
             // Check authentication
-            if (!authSystem.isAuthenticated() || authSystem.getCurrentUser()?.role !== 'user') {
+            if (!authSystem.isLoggedIn() || authSystem.getCurrentUser()?.role !== 'user') {
                 window.location.href = 'app-login.html';
                 return;
             }

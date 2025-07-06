@@ -240,10 +240,9 @@ function setupEventListeners() {
     
     // Logout button
     logoutBtn.addEventListener('click', function() {
-        // Add logout logic here
         if (confirm(i18n[currentLanguage].logout + '?')) {
-            console.log('Logout clicked');
-            // Redirect to login page or clear session
+            // Use authSystem logout function
+            authSystem.logout();
         }
     });
     
