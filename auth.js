@@ -40,6 +40,14 @@ class AuthSystem {
 
     // Inicializar sistema
     init() {
+        // Evitar loops de redirecionamento
+        const currentPage = window.location.pathname.split('/').pop();
+        
+        // Se está nas páginas de login, não fazer verificações automáticas
+        if (currentPage.includes('login')) {
+            return;
+        }
+        
         this.checkExistingSession();
         this.setupRouteProtection();
         this.setupSessionTimer();
@@ -55,15 +63,20 @@ class AuthSystem {
                 // Verificar se a sessão não expirou
                 if (session.expiresAt && new Date().getTime() < session.expiresAt) {
                     this.currentUser = session.user;
-                    this.redirectToDashboard();
+                    // Não redirecionar automaticamente se já estiver na página correta
+                    const currentPage = window.location.pathname.split('/').pop();
+                    const shouldRedirect = this.shouldRedirectUser(currentPage);
+                    if (shouldRedirect) {
+                        this.redirectToDashboard();
+                    }
                     return true;
                 } else {
-                    this.logout();
+                    this.clearSession();
                 }
             }
         } catch (error) {
             console.error('Erro ao verificar sessão:', error);
-            this.logout();
+            this.clearSession();
         }
         return false;
     }
@@ -135,14 +148,19 @@ class AuthSystem {
         localStorage.setItem(AUTH_CONFIG.SESSION_KEY, JSON.stringify(sessionData));
     }
 
-    // Logout
-    logout() {
+    // Limpar sessão sem redirecionamento
+    clearSession() {
         this.currentUser = null;
         localStorage.removeItem(AUTH_CONFIG.SESSION_KEY);
         
         if (this.sessionTimer) {
             clearTimeout(this.sessionTimer);
         }
+    }
+
+    // Logout com redirecionamento
+    logout() {
+        this.clearSession();
 
         // Redirecionar para login apropriado
         const currentPage = window.location.pathname;
@@ -151,6 +169,33 @@ class AuthSystem {
         } else {
             window.location.href = 'app-login.html';
         }
+    }
+
+    // Verificar se deve redirecionar usuário
+    shouldRedirectUser(currentPage) {
+        if (!this.currentUser) return false;
+        
+        const isAdminPage = AUTH_CONFIG.ADMIN_ROUTES.some(route => 
+            currentPage.includes(route.replace('.html', '')) || currentPage === route
+        );
+        
+        const isUserPage = AUTH_CONFIG.USER_ROUTES.some(route => 
+            currentPage.includes(route.replace('.html', '')) || currentPage === route
+        );
+
+        // Admin em página de usuário ou vice-versa
+        if (this.currentUser.role === 'admin' && isUserPage) return true;
+        if (this.currentUser.role === 'user' && isAdminPage) return true;
+        
+        // Usuário logado em página de login
+        if (currentPage.includes('login')) return true;
+        
+        // Se não está em nenhuma página específica, precisa ir para dashboard
+        if (!isAdminPage && !isUserPage && !currentPage.includes('login') && currentPage !== '') {
+            return true;
+        }
+        
+        return false;
     }
 
     // Verificar permissões
@@ -185,78 +230,63 @@ class AuthSystem {
             return;
         }
 
-        // Se usuário logado, verificar acesso à página
-        if (this.currentUser) {
-            this.checkPageAccess(currentPage);
-        }
-    }
-
-    // Verificar acesso à página
-    checkPageAccess(currentPage) {
-        const isAdminPage = AUTH_CONFIG.ADMIN_ROUTES.some(route => 
-            currentPage.includes(route.replace('.html', '')) || currentPage === route
-        );
-        
-        const isUserPage = AUTH_CONFIG.USER_ROUTES.some(route => 
-            currentPage.includes(route.replace('.html', '')) || currentPage === route
-        );
-
-        // Admin tentando acessar página de usuário
-        if (this.currentUser.role === 'admin' && isUserPage) {
-            window.location.href = 'admin-dashboard.html';
-            return;
-        }
-
-        // Usuário tentando acessar página de admin
-        if (this.currentUser.role === 'user' && isAdminPage) {
-            window.location.href = 'user-dashboard.html';
-            return;
-        }
-
-        // Usuário em página de login sendo logado
-        if (currentPage.includes('login')) {
+        // Se usuário logado, verificar se precisa redirecionar
+        if (this.currentUser && this.shouldRedirectUser(currentPage)) {
             this.redirectToDashboard();
         }
     }
 
     // Redirecionar para dashboard apropriado
     redirectToDashboard() {
-        if (!this.currentUser) return;
-
-        if (this.currentUser.role === 'admin') {
-            window.location.href = 'admin-dashboard.html';
-        } else {
-            window.location.href = 'user-dashboard.html';
+        if (!this.currentUser) {
+            console.warn('Tentativa de redirecionamento sem usuário logado');
+            return;
         }
+
+        const targetUrl = this.currentUser.role === 'admin' ? 'admin-dashboard.html' : 'user-dashboard.html';
+        console.log(`Redirecionando ${this.currentUser.role} para ${targetUrl}`);
+        
+        // Usar replace para evitar problemas de histórico
+        window.location.replace(targetUrl);
     }
 
     // Redirecionar para login apropriado
     redirectToLogin() {
         const currentPage = window.location.pathname;
-        if (currentPage.includes('admin') || currentPage.includes('index.html')) {
-            window.location.href = 'admin-login.html';
-        } else {
-            window.location.href = 'app-login.html';
-        }
+        const targetUrl = (currentPage.includes('admin') || currentPage.includes('index.html')) 
+            ? 'admin-login.html' 
+            : 'app-login.html';
+        
+        console.log(`Redirecionando para login: ${targetUrl}`);
+        window.location.replace(targetUrl);
     }
 
     // Configurar timer de sessão
     setupSessionTimer() {
-        if (this.currentUser && this.sessionTimer) {
+        // Limpar timer anterior se existir
+        if (this.sessionTimer) {
             clearTimeout(this.sessionTimer);
+            this.sessionTimer = null;
         }
 
-        const sessionData = localStorage.getItem(AUTH_CONFIG.SESSION_KEY);
-        if (sessionData) {
-            const session = JSON.parse(sessionData);
-            const timeUntilExpiry = session.expiresAt - new Date().getTime();
-            
-            if (timeUntilExpiry > 0) {
-                this.sessionTimer = setTimeout(() => {
-                    alert('Sua sessão expirou. Você será redirecionado para o login.');
-                    this.logout();
-                }, timeUntilExpiry);
+        // Só configurar timer se houver usuário logado
+        if (!this.currentUser) return;
+
+        try {
+            const sessionData = localStorage.getItem(AUTH_CONFIG.SESSION_KEY);
+            if (sessionData) {
+                const session = JSON.parse(sessionData);
+                const timeUntilExpiry = session.expiresAt - new Date().getTime();
+                
+                if (timeUntilExpiry > 0) {
+                    this.sessionTimer = setTimeout(() => {
+                        alert('Sua sessão expirou. Você será redirecionado para o login.');
+                        this.logout();
+                    }, timeUntilExpiry);
+                }
             }
+        } catch (error) {
+            console.error('Erro ao configurar timer de sessão:', error);
         }
     }
 
