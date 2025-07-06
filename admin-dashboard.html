@@ -1314,13 +1314,194 @@
 
                 <div class="tab-content" id="notifications">
                     <div class="content-header">
-                        <h2 data-i18n="notifications">Notificações Push</h2>
-                        <p data-i18n="notifications-description">Gerencie as notificações push</p>
+                        <h2 data-i18n="notifications">🔔 Notificações Push</h2>
+                        <p data-i18n="notifications-description">Programe, segmente e dispare notificações PWA</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-bell"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Notifications Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-paper-plane"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="notificationsSent">0</h3>
+                                <p>Enviadas Hoje</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="notificationsScheduled">0</h3>
+                                <p>Programadas</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="subscribedUsers">0</h3>
+                                <p>Usuários Inscritos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-mouse-pointer"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="clickThroughRate">0%</h3>
+                                <p>Taxa de Clique</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Usage Recommendations -->
+                    <div class="recommendations-section">
+                        <div class="recommendations-card">
+                            <h3><i class="fas fa-lightbulb"></i> Recomendações de Uso</h3>
+                            <div class="recommendations-grid">
+                                <div class="recommendation-item">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>Use títulos curtos e diretos para melhor visualização no celular</span>
+                                </div>
+                                <div class="recommendation-item">
+                                    <i class="fas fa-ban"></i>
+                                    <span>Evite spam — o ideal são no máximo 2 notificações por dia</span>
+                                </div>
+                                <div class="recommendation-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Envie notificações entre 9h-21h para melhor engajamento</span>
+                                </div>
+                                <div class="recommendation-item">
+                                    <i class="fas fa-globe"></i>
+                                    <span>Personalize por idioma para melhor conversão</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Notifications Controls -->
+                    <div class="section-controls">
+                        <div class="controls-left">
+                            <button class="btn btn-primary" id="createNotificationBtn">
+                                <i class="fas fa-plus"></i>
+                                Criar Nova Notificação
+                            </button>
+                            <button class="btn btn-secondary" id="templatesBtn">
+                                <i class="fas fa-file-alt"></i>
+                                Modelos Salvos
+                            </button>
+                            <button class="btn btn-info" id="exportNotificationsBtn">
+                                <i class="fas fa-download"></i>
+                                Exportar Relatório
+                            </button>
+                        </div>
+                        <div class="controls-right">
+                            <div class="search-container">
+                                <input type="text" id="notificationsSearchInput" placeholder="Buscar notificações...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Notifications Filters -->
+                    <div class="filters-container">
+                        <div class="filter-group">
+                            <label for="notificationsStatusFilter">Status:</label>
+                            <select id="notificationsStatusFilter">
+                                <option value="">Todos</option>
+                                <option value="scheduled">📅 Programada</option>
+                                <option value="sent">✅ Enviada</option>
+                                <option value="cancelled">❌ Cancelada</option>
+                                <option value="failed">⚠️ Falhou</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="notificationsLanguageFilter">Idioma:</label>
+                            <select id="notificationsLanguageFilter">
+                                <option value="">Todos</option>
+                                <option value="es">🇪🇸 Español</option>
+                                <option value="pt">🇧🇷 Português</option>
+                                <option value="en">🇺🇸 English</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="notificationsSegmentFilter">Segmento:</label>
+                            <select id="notificationsSegmentFilter">
+                                <option value="">Todos</option>
+                                <option value="all">👥 Todos os Usuários</option>
+                                <option value="free">🆓 Gratuitos</option>
+                                <option value="premium">👑 Premium</option>
+                                <option value="event">🎯 Por Evento</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="notificationsDateFromFilter">Data Início:</label>
+                            <input type="date" id="notificationsDateFromFilter">
+                        </div>
+                        <div class="filter-group">
+                            <label for="notificationsDateToFilter">Data Fim:</label>
+                            <input type="date" id="notificationsDateToFilter">
+                        </div>
+                    </div>
+                    
+                    <!-- Notifications Table -->
+                    <div class="notifications-container">
+                        <div class="notifications-table-container">
+                            <table class="notifications-table" id="notificationsTable">
+                                <thead>
+                                    <tr>
+                                        <th>📋 Título</th>
+                                        <th>💬 Mensagem</th>
+                                        <th>📅 Data/Hora</th>
+                                        <th>🗣️ Idioma</th>
+                                        <th>👥 Segmento</th>
+                                        <th>📊 Status</th>
+                                        <th>📈 Estatísticas</th>
+                                        <th>⚙️ Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="notificationsTableBody">
+                                    <!-- Notifications will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="table-loading" id="notificationsLoading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Carregando notificações...</p>
+                        </div>
+                        
+                        <div class="no-notifications" id="noNotificationsMessage" style="display: none;">
+                            <i class="fas fa-bell-slash"></i>
+                            <h3>Nenhuma notificação encontrada</h3>
+                            <p>Não há notificações cadastradas ou que correspondam aos filtros selecionados.</p>
+                            <button class="btn btn-primary" onclick="notificationsManager.openCreateNotificationModal()">
+                                <i class="fas fa-plus"></i>
+                                Criar Primeira Notificação
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="notificationsPaginationInfo">Mostrando 0 de 0 notificações</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn btn-small" id="notificationsPrevPageBtn" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                                Anterior
+                            </button>
+                            <span class="page-numbers" id="notificationsPageNumbers"></span>
+                            <button class="btn btn-small" id="notificationsNextPageBtn" disabled>
+                                Próximo
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -1946,6 +2127,409 @@
     </div>
 
     <!-- Challenge Modals -->
+    <!-- Notifications Modals -->
+    <!-- Create/Edit Notification Modal -->
+    <div class="modal large" id="notificationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="notificationModalTitle">Criar Nova Notificação</h3>
+                <button class="modal-close" id="notificationModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="notificationForm">
+                    <input type="hidden" id="notificationId" name="notificationId">
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-info-circle"></i> Informações Básicas</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="notificationInternalTitle">Título Interno *</label>
+                                <input type="text" id="notificationInternalTitle" name="internalTitle" required placeholder="Ex: Lembrete dia 3 do desafio">
+                                <small class="form-help">Para identificação interna - não será exibido aos usuários</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="notificationLanguage">Idioma *</label>
+                                <select id="notificationLanguage" name="language" required>
+                                    <option value="">Selecione o idioma</option>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="pt">🇧🇷 Português</option>
+                                    <option value="en">🇺🇸 English</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notificationTitle">Título da Notificação *</label>
+                            <input type="text" id="notificationTitle" name="title" required placeholder="Ex: ¡Es hora de tu desafío!" maxlength="50">
+                            <div class="char-counter">
+                                <span id="titleCharCount">0</span>/50 caracteres
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notificationMessage">Mensagem *</label>
+                            <textarea id="notificationMessage" name="message" required placeholder="Ex: ¡No olvides completar tu actividad del día 3!" maxlength="140" rows="3"></textarea>
+                            <div class="char-counter">
+                                <span id="messageCharCount">0</span>/140 caracteres
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-cog"></i> Configurações</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="notificationSound" name="sound" checked>
+                                        <span class="checkbox-custom"></span>
+                                        🔊 Incluir som na notificação
+                                        <small>Reproduz som padrão do sistema</small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="notificationLink">Link Interno (Opcional)</label>
+                                <select id="notificationLink" name="link">
+                                    <option value="">Nenhum link</option>
+                                    <option value="/challenges">🏆 Desafios</option>
+                                    <option value="/products">🛍️ Produtos</option>
+                                    <option value="/bonus">🎁 Bônus</option>
+                                    <option value="/profile">👤 Perfil</option>
+                                    <option value="/store">🏪 Loja</option>
+                                    <option value="custom">🔗 Link Personalizado</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" id="customLinkGroup" style="display: none;">
+                            <label for="notificationCustomLink">URL Personalizada</label>
+                            <input type="url" id="notificationCustomLink" name="customLink" placeholder="https://exemplo.com/pagina">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notificationImage">Imagem (Opcional)</label>
+                            <div class="file-upload-area" id="notificationImageUploadArea">
+                                <input type="file" id="notificationImage" name="image" accept="image/*" style="display: none;">
+                                <div class="upload-placeholder">
+                                    <i class="fas fa-image"></i>
+                                    <p>Clique para selecionar imagem</p>
+                                    <small>PNG, JPG até 2MB (recomendado: 512x512px)</small>
+                                </div>
+                                <div class="upload-preview" id="notificationImagePreview" style="display: none;">
+                                    <img id="notificationImagePreviewImg" src="" alt="Preview">
+                                    <button type="button" class="remove-file" onclick="notificationsManager.removeFile('image')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-users"></i> Segmentação</h4>
+                        
+                        <div class="form-group">
+                            <label for="notificationSegment">Público Alvo *</label>
+                            <select id="notificationSegment" name="segment" required>
+                                <option value="">Selecione o segmento</option>
+                                <option value="all">👥 Todos os usuários</option>
+                                <option value="free">🆓 Apenas usuários gratuitos</option>
+                                <option value="premium">👑 Apenas usuários premium</option>
+                                <option value="event">🎯 Por evento/comportamento</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group" id="eventSegmentGroup" style="display: none;">
+                            <label for="notificationEvent">Evento/Comportamento</label>
+                            <select id="notificationEvent" name="event">
+                                <option value="">Selecione o evento</option>
+                                <option value="challenge_day_1">✅ Concluiu Dia 1 do desafio</option>
+                                <option value="challenge_day_3">✅ Concluiu Dia 3 do desafio</option>
+                                <option value="challenge_day_7">✅ Concluiu Dia 7 do desafio</option>
+                                <option value="downloaded_planner">📋 Baixou um planner</option>
+                                <option value="purchased_product">🛍️ Comprou um produto</option>
+                                <option value="inactive_3_days">😴 Não acessou há 3 dias</option>
+                                <option value="inactive_7_days">😴 Não acessou há 7 dias</option>
+                                <option value="new_user">🆕 Usuário novo (primeiras 24h)</option>
+                                <option value="birthday">🎂 Aniversário do usuário</option>
+                            </select>
+                        </div>
+                        
+                        <div class="segment-preview" id="segmentPreview">
+                            <div class="preview-content">
+                                <i class="fas fa-users"></i>
+                                <span id="segmentCount">Selecione um segmento para ver a estimativa</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-clock"></i> Agendamento</h4>
+                        
+                        <div class="form-group">
+                            <label for="notificationScheduleType">Tipo de Envio *</label>
+                            <select id="notificationScheduleType" name="scheduleType" required>
+                                <option value="">Selecione o tipo</option>
+                                <option value="immediate">⚡ Enviar imediatamente</option>
+                                <option value="scheduled">📅 Agendar para data específica</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group" id="scheduledDateGroup" style="display: none;">
+                            <label for="notificationScheduledDate">Data e Hora do Envio</label>
+                            <input type="datetime-local" id="notificationScheduledDate" name="scheduledDate">
+                            <small class="form-help">A notificação será enviada automaticamente nesta data</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-save"></i> Salvar como Modelo</h4>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="saveAsTemplate" name="saveAsTemplate">
+                                    <span class="checkbox-custom"></span>
+                                    💾 Salvar como modelo para reutilizar
+                                    <small>Permite usar esta notificação como base para futuras campanhas</small>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" id="templateNameGroup" style="display: none;">
+                            <label for="templateName">Nome do Modelo</label>
+                            <input type="text" id="templateName" name="templateName" placeholder="Ex: Lembrete Desafio Diário">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="notificationModalCancel">Cancelar</button>
+                <button type="button" class="btn btn-info" id="notificationPreviewBtn">
+                    <i class="fas fa-eye"></i>
+                    Visualizar
+                </button>
+                <button type="submit" class="btn btn-primary" id="notificationModalSave" form="notificationForm">
+                    <i class="fas fa-save"></i>
+                    Salvar e Agendar
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification Preview Modal -->
+    <div class="modal medium" id="notificationPreviewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Visualização da Notificação</h3>
+                <button class="modal-close" id="notificationPreviewModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="preview-section">
+                    <h4><i class="fas fa-mobile-alt"></i> Como aparecerá no dispositivo</h4>
+                    
+                    <div class="notification-preview-container">
+                        <div class="notification-preview-mobile">
+                            <div class="notification-preview-item">
+                                <div class="notification-icon">
+                                    <img id="previewIcon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23007bff'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E" alt="App Icon">
+                                </div>
+                                <div class="notification-content">
+                                    <div class="notification-title" id="previewTitle">Título da Notificação</div>
+                                    <div class="notification-message" id="previewMessage">Mensagem da notificação aparecerá aqui</div>
+                                    <div class="notification-time">agora</div>
+                                </div>
+                                <div class="notification-sound-indicator" id="previewSoundIndicator" style="display: none;">
+                                    <i class="fas fa-volume-up"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="preview-details">
+                    <h4><i class="fas fa-info-circle"></i> Detalhes do Envio</h4>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <label>Idioma:</label>
+                            <span id="previewLanguage">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Segmento:</label>
+                            <span id="previewSegment">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Usuários estimados:</label>
+                            <span id="previewUserCount">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Agendamento:</label>
+                            <span id="previewSchedule">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Link:</label>
+                            <span id="previewLink">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Som:</label>
+                            <span id="previewSound">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="notificationPreviewModalCancel">Fechar</button>
+                <button type="button" class="btn btn-primary" id="sendFromPreviewBtn">
+                    <i class="fas fa-paper-plane"></i>
+                    Confirmar e Enviar
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification Statistics Modal -->
+    <div class="modal large" id="notificationStatsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="notificationStatsModalTitle">Estatísticas da Notificação</h3>
+                <button class="modal-close" id="notificationStatsModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="stats-overview">
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-paper-plane"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="statsSent">0</h3>
+                                <p>Enviadas</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="statsDelivered">0</h3>
+                                <p>Entregues</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-mouse-pointer"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="statsClicked">0</h3>
+                                <p>Cliques</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="statsClickRate">0%</h3>
+                                <p>Taxa de Clique</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-breakdown">
+                    <div class="breakdown-section">
+                        <h4><i class="fas fa-mobile-alt"></i> Por Dispositivo</h4>
+                        <div class="device-stats">
+                            <div class="device-stat">
+                                <span class="device-label">📱 Mobile</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="mobileProgress" style="width: 0%"></div>
+                                </div>
+                                <span class="device-percentage" id="mobilePercentage">0%</span>
+                            </div>
+                            <div class="device-stat">
+                                <span class="device-label">💻 Desktop</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="desktopProgress" style="width: 0%"></div>
+                                </div>
+                                <span class="device-percentage" id="desktopPercentage">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="breakdown-section">
+                        <h4><i class="fas fa-clock"></i> Horário de Cliques</h4>
+                        <canvas id="clickTimeChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+                
+                <div class="delivery-status">
+                    <h4><i class="fas fa-list"></i> Status de Entrega</h4>
+                    <div class="status-table-container">
+                        <table class="status-table">
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Quantidade</th>
+                                    <th>Percentual</th>
+                                </tr>
+                            </thead>
+                            <tbody id="deliveryStatusTableBody">
+                                <!-- Status data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="notificationStatsModalCancel">Fechar</button>
+                <button type="button" class="btn btn-primary" id="exportStatsBtn">
+                    <i class="fas fa-download"></i>
+                    Exportar Relatório
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Templates Modal -->
+    <div class="modal large" id="templatesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Modelos de Notificação</h3>
+                <button class="modal-close" id="templatesModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="templates-grid" id="templatesGrid">
+                    <!-- Templates will be populated here -->
+                </div>
+                
+                <div class="no-templates" id="noTemplatesMessage" style="display: none;">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Nenhum modelo salvo</h3>
+                    <p>Você ainda não salvou nenhum modelo de notificação.</p>
+                    <button class="btn btn-primary" onclick="notificationsManager.closeTemplatesModal()">
+                        <i class="fas fa-plus"></i>
+                        Criar Primeira Notificação
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="templatesModalCancel">Fechar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Sales Modals -->
     <!-- Manual Sale Modal -->
     <div class="modal large" id="manualSaleModal">
@@ -2668,8 +3252,10 @@
     <script src="challenges-management.js"></script>
     <script src="store-management.js"></script>
     <script src="sales-management.js"></script>
+    <script src="notifications-management.js"></script>
     <link rel="stylesheet" href="store-styles.css">
     <link rel="stylesheet" href="sales-styles.css">
+    <link rel="stylesheet" href="notifications-styles.css">
     <script>
         // Verificar autenticação ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
