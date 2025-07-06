@@ -681,15 +681,20 @@ class ChallengesManager {
     }
     
     openCreateChallengeModal() {
+        console.log('Opening create challenge modal...');
         this.currentEditingChallenge = null;
         this.openChallengeModal();
     }
     
     openChallengeModal(challenge = null) {
+        console.log('Opening challenge modal for:', challenge ? 'edit' : 'create');
         const modal = document.getElementById('challengeModal');
         const modalTitle = document.getElementById('challengeModalTitle');
         
-        if (!modal) return;
+        if (!modal) {
+            console.error('Challenge modal not found!');
+            return;
+        }
         
         if (challenge) {
             modalTitle.textContent = 'Editar Desafio';
@@ -700,6 +705,7 @@ class ChallengesManager {
         }
         
         modal.classList.add('show');
+        console.log('Modal should be visible now');
     }
     
     closeChallengeModal() {
@@ -707,6 +713,52 @@ class ChallengesManager {
         if (modal) {
             modal.classList.remove('show');
             this.currentEditingChallenge = null;
+        }
+    }
+    
+    populateChallengeForm(challenge) {
+        document.getElementById('challengeId').value = challenge.id;
+        document.getElementById('challengeName').value = challenge.name;
+        document.getElementById('challengeDescription').value = challenge.description;
+        document.getElementById('challengeDuration').value = challenge.duration;
+        document.getElementById('challengeLanguage').value = challenge.language;
+        document.getElementById('challengeVisibility').value = challenge.visibility;
+        document.getElementById('challengeProgressUnlockable').checked = challenge.progressUnlockable;
+        document.getElementById('challengeReleaseType').value = challenge.releaseType;
+        document.getElementById('challengeStatus').value = challenge.status;
+        
+        // Handle release type specific fields
+        const releaseTypeSelect = document.getElementById('challengeReleaseType');
+        if (releaseTypeSelect) {
+            releaseTypeSelect.dispatchEvent(new Event('change'));
+        }
+        
+        if (challenge.delayDays) {
+            document.getElementById('challengeDelayDays').value = challenge.delayDays;
+        }
+        
+        if (challenge.scheduledDate) {
+            document.getElementById('challengeScheduledDate').value = challenge.scheduledDate;
+        }
+    }
+    
+    clearChallengeForm() {
+        document.getElementById('challengeForm').reset();
+        document.getElementById('challengeId').value = '';
+        
+        // Hide conditional fields
+        const delayDaysGroup = document.getElementById('challengeDelayDaysGroup');
+        const scheduledDateGroup = document.getElementById('challengeScheduledDateGroup');
+        if (delayDaysGroup) delayDaysGroup.style.display = 'none';
+        if (scheduledDateGroup) scheduledDateGroup.style.display = 'none';
+        
+        // Clear file previews
+        const challengeImageUploadArea = document.getElementById('challengeImageUploadArea');
+        if (challengeImageUploadArea) {
+            const placeholder = challengeImageUploadArea.querySelector('.upload-placeholder');
+            const preview = challengeImageUploadArea.querySelector('.upload-preview');
+            if (placeholder) placeholder.style.display = 'block';
+            if (preview) preview.style.display = 'none';
         }
     }
     
@@ -758,6 +810,239 @@ class ChallengesManager {
         // Open days configuration modal
         this.openDaysConfigurationModal(newChallenge);
         this.showNotification(`Desafio ${newChallenge.name} criado com sucesso`, 'success');
+    }
+    
+    updateChallenge(challengeData) {
+        const challengeIndex = this.challenges.findIndex(c => c.id === this.currentEditingChallenge.id);
+        if (challengeIndex > -1) {
+            this.challenges[challengeIndex] = {
+                ...this.challenges[challengeIndex],
+                ...challengeData
+            };
+            
+            this.applyFilters();
+            this.closeChallengeModal();
+            this.showNotification(`Desafio ${challengeData.name} atualizado com sucesso`, 'success');
+        }
+    }
+    
+    openProgressModal(challenge) {
+        const modal = document.getElementById('challengeProgressModal');
+        const progressChallengeName = document.getElementById('progressChallengeName');
+        const progressParticipants = document.getElementById('progressParticipants');
+        const progressCompletionRate = document.getElementById('progressCompletionRate');
+        const progressAverageDays = document.getElementById('progressAverageDays');
+        
+        if (!modal) return;
+        
+        if (progressChallengeName) progressChallengeName.textContent = challenge.name;
+        if (progressParticipants) progressParticipants.textContent = challenge.participants;
+        if (progressCompletionRate) progressCompletionRate.textContent = challenge.completionRate + '%';
+        if (progressAverageDays) progressAverageDays.textContent = Math.round(challenge.duration * challenge.completionRate / 100);
+        
+        // Generate demo participants data
+        this.generateDemoParticipants(challenge);
+        
+        modal.classList.add('show');
+    }
+    
+    closeProgressModal() {
+        const modal = document.getElementById('challengeProgressModal');
+        if (modal) {
+            modal.classList.remove('show');
+        }
+    }
+    
+    generateDemoParticipants(challenge) {
+        const participantsTableBody = document.getElementById('participantsTableBody');
+        if (!participantsTableBody) return;
+        
+        const demoNames = ['Ana Silva', 'Carlos Santos', 'Maria Oliveira', 'João Costa', 'Lucia Fernandez'];
+        participantsTableBody.innerHTML = '';
+        
+        for (let i = 0; i < Math.min(5, challenge.participants); i++) {
+            const progress = Math.floor(Math.random() * challenge.duration) + 1;
+            const progressPercent = Math.round((progress / challenge.duration) * 100);
+            const lastAccess = new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toLocaleDateString('pt-BR');
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${demoNames[i] || 'Usuário ' + (i + 1)}</td>
+                <td>
+                    <div class="participant-progress">
+                        <div class="participant-progress-bar">
+                            <div class="participant-progress-fill" style="width: ${progressPercent}%"></div>
+                        </div>
+                        <span class="participant-progress-text">${progressPercent}%</span>
+                    </div>
+                </td>
+                <td>${progress}/${challenge.duration}</td>
+                <td>${lastAccess}</td>
+            `;
+            participantsTableBody.appendChild(row);
+        }
+    }
+    
+    exportProgressReport() {
+        const challenge = this.currentEditingChallenge;
+        if (!challenge) return;
+        
+        const csvContent = 'Nome,Progresso,Dias Concluídos,Último Acesso\n' +
+            'Ana Silva,85%,25/30,15/12/2024\n' +
+            'Carlos Santos,60%,18/30,14/12/2024\n' +
+            'Maria Oliveira,90%,27/30,16/12/2024';
+        
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        
+        if (link.download !== undefined) {
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `progresso-${challenge.name.replace(/\s+/g, '-').toLowerCase()}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            this.showNotification('Relatório de progresso exportado com sucesso', 'success');
+        }
+    }
+    
+    openDeleteChallengeModal(challenge) {
+        const modal = document.getElementById('confirmDeleteChallengeModal');
+        const deleteChallengeName = document.getElementById('deleteChallengeName');
+        const deleteChallengeParticipants = document.getElementById('deleteChallengeParticipants');
+        
+        if (!modal) return;
+        
+        if (deleteChallengeName) deleteChallengeName.textContent = challenge.name;
+        if (deleteChallengeParticipants) deleteChallengeParticipants.textContent = `${challenge.participants} participantes`;
+        
+        modal.classList.add('show');
+    }
+    
+    closeDeleteChallengeModal() {
+        const modal = document.getElementById('confirmDeleteChallengeModal');
+        if (modal) {
+            modal.classList.remove('show');
+            this.currentDeleteChallenge = null;
+        }
+    }
+    
+    confirmDeleteChallenge() {
+        if (!this.currentDeleteChallenge) return;
+        
+        const challengeIndex = this.challenges.findIndex(c => c.id === this.currentDeleteChallenge.id);
+        if (challengeIndex > -1) {
+            const challengeName = this.currentDeleteChallenge.name;
+            this.challenges.splice(challengeIndex, 1);
+            this.applyFilters();
+            this.showNotification(`Desafio ${challengeName} excluído com sucesso`, 'success');
+        }
+        
+        this.closeDeleteChallengeModal();
+    }
+    
+    exportChallenges() {
+        const csvContent = this.generateChallengesCSV();
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        
+        if (link.download !== undefined) {
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `desafios-${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            this.showNotification('Lista de desafios exportada com sucesso', 'success');
+        }
+    }
+    
+    generateChallengesCSV() {
+        const headers = ['Nome', 'Duração', 'Idioma', 'Visibilidade', 'Participantes', 'Taxa Conclusão', 'Status'];
+        const rows = this.filteredChallenges.map(challenge => [
+            challenge.name,
+            challenge.duration + ' dias',
+            challenge.language.toUpperCase(),
+            challenge.visibility,
+            challenge.participants,
+            challenge.completionRate + '%',
+            challenge.status
+        ]);
+        
+        const csvContent = [headers, ...rows]
+            .map(row => row.map(field => `"${field}"`).join(','))
+            .join('\n');
+            
+        return '\uFEFF' + csvContent;
+    }
+    
+    updatePagination() {
+        const totalPages = Math.ceil(this.filteredChallenges.length / this.challengesPerPage);
+        const startIndex = (this.currentPage - 1) * this.challengesPerPage;
+        const endIndex = Math.min(startIndex + this.challengesPerPage, this.filteredChallenges.length);
+        
+        // Update pagination info
+        const paginationInfo = document.getElementById('challengesPaginationInfo');
+        if (paginationInfo) {
+            paginationInfo.textContent = `Mostrando ${startIndex + 1}-${endIndex} de ${this.filteredChallenges.length} desafios`;
+        }
+        
+        // Update pagination buttons
+        const prevPageBtn = document.getElementById('challengesPrevPageBtn');
+        const nextPageBtn = document.getElementById('challengesNextPageBtn');
+        
+        if (prevPageBtn) {
+            prevPageBtn.disabled = this.currentPage <= 1;
+        }
+        if (nextPageBtn) {
+            nextPageBtn.disabled = this.currentPage >= totalPages;
+        }
+        
+        // Update page numbers
+        const pageNumbers = document.getElementById('challengesPageNumbers');
+        if (pageNumbers) {
+            pageNumbers.innerHTML = '';
+            
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= this.currentPage - 2 && i <= this.currentPage + 2)) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.className = `page-number ${i === this.currentPage ? 'active' : ''}`;
+                    pageBtn.textContent = i;
+                    pageBtn.addEventListener('click', () => this.goToPage(i));
+                    pageNumbers.appendChild(pageBtn);
+                } else if (i === this.currentPage - 3 || i === this.currentPage + 3) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.textContent = '...';
+                    ellipsis.style.padding = '8px 4px';
+                    ellipsis.style.color = 'var(--gray-500)';
+                    pageNumbers.appendChild(ellipsis);
+                }
+            }
+        }
+    }
+    
+    goToPage(page) {
+        this.currentPage = page;
+        this.renderChallenges();
+    }
+    
+    goToPreviousPage() {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+            this.renderChallenges();
+        }
+    }
+    
+    goToNextPage() {
+        const totalPages = Math.ceil(this.filteredChallenges.length / this.challengesPerPage);
+        if (this.currentPage < totalPages) {
+            this.currentPage++;
+            this.renderChallenges();
+        }
     }
     
     openDaysConfigurationModal(challenge) {
