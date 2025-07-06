@@ -1507,25 +1507,785 @@
 
                 <div class="tab-content" id="integrations">
                     <div class="content-header">
-                        <h2 data-i18n="integrations">Integrações e APIs</h2>
-                        <p data-i18n="integrations-description">Gerencie integrações e APIs</p>
+                        <h2 data-i18n="integrations">🔌 Integrações e APIs</h2>
+                        <p data-i18n="integrations-description">Configure e teste conexões externas do sistema</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-plug"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Integration Status Overview -->
+                    <div class="integration-overview">
+                        <div class="overview-stats">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-plug"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="activeIntegrations">0</h4>
+                                    <p>Integrações Ativas</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="workingIntegrations">0</h4>
+                                    <p>Funcionando</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="failedIntegrations">0</h4>
+                                    <p>Com Erro</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="lastSync">-</h4>
+                                    <p>Última Sincronização</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Integrations Grid -->
+                    <div class="integrations-grid">
+                        <!-- OpenAI Integration -->
+                        <div class="integration-block">
+                            <div class="integration-header">
+                                <div class="integration-info">
+                                    <i class="fas fa-robot"></i>
+                                    <div>
+                                        <h3>OpenAI</h3>
+                                        <p>Suporte com IA e automações inteligentes</p>
+                                    </div>
+                                </div>
+                                <div class="integration-status">
+                                    <span class="status-badge disconnected" id="openaiStatus">Desconectado</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="openaiToggle">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="integration-content" id="openaiContent">
+                                <form id="openaiForm">
+                                    <div class="form-group">
+                                        <label for="openaiApiKey">Chave de API da OpenAI *</label>
+                                        <div class="input-with-tooltip">
+                                            <input type="password" id="openaiApiKey" name="apiKey" placeholder="sk-...">
+                                            <div class="tooltip">
+                                                <i class="fas fa-info-circle"></i>
+                                                <span class="tooltip-text">Encontre sua chave em platform.openai.com/api-keys</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="openaiTemperature">Temperatura da Resposta</label>
+                                            <select id="openaiTemperature" name="temperature">
+                                                <option value="0.1">0.1 - Muito Conservadora</option>
+                                                <option value="0.3">0.3 - Conservadora</option>
+                                                <option value="0.5" selected>0.5 - Equilibrada</option>
+                                                <option value="0.7">0.7 - Criativa</option>
+                                                <option value="1.0">1.0 - Muito Criativa</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="openaiTone">Tom de Voz Preferido</label>
+                                            <select id="openaiTone" name="tone">
+                                                <option value="">Padrão</option>
+                                                <option value="empathetic">Empático</option>
+                                                <option value="informative">Informativo</option>
+                                                <option value="direct">Direto</option>
+                                                <option value="friendly">Amigável</option>
+                                                <option value="professional">Profissional</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="openaiLanguage">Idioma das Respostas da IA</label>
+                                        <select id="openaiLanguage" name="language">
+                                            <option value="es">🇪🇸 Español</option>
+                                            <option value="pt" selected>🇧🇷 Português</option>
+                                            <option value="en">🇺🇸 English</option>
+                                        </select>
+                                    </div>
+                                    <div class="integration-actions">
+                                        <button type="button" class="btn btn-secondary" id="testOpenaiBtn">
+                                            <i class="fas fa-flask"></i>
+                                            Testar Conexão
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save"></i>
+                                            Salvar
+                                        </button>
+                                    </div>
+                                </form>
+                                <div class="integration-logs" id="openaiLogs">
+                                    <h4><i class="fas fa-list"></i> Logs Recentes</h4>
+                                    <div class="logs-content">
+                                        <div class="log-item">
+                                            <span class="log-time">--:--</span>
+                                            <span class="log-message">Aguardando configuração...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Kiwify Integration -->
+                        <div class="integration-block">
+                            <div class="integration-header">
+                                <div class="integration-info">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <div>
+                                        <h3>Kiwify</h3>
+                                        <p>Integração de vendas e pagamentos</p>
+                                    </div>
+                                </div>
+                                <div class="integration-status">
+                                    <span class="status-badge disconnected" id="kiwifyStatus">Desconectado</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="kiwifyToggle">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="integration-content" id="kiwifyContent">
+                                <form id="kiwifyForm">
+                                    <div class="form-group">
+                                        <label for="kiwifyApiKey">Chave da API da Kiwify *</label>
+                                        <div class="input-with-tooltip">
+                                            <input type="password" id="kiwifyApiKey" name="apiKey" placeholder="kw_...">
+                                            <div class="tooltip">
+                                                <i class="fas fa-info-circle"></i>
+                                                <span class="tooltip-text">Acesse Configurações > Integrações no painel Kiwify</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="kiwifySalesWebhook">URL do Webhook de Vendas</label>
+                                        <input type="url" id="kiwifySalesWebhook" name="salesWebhook" placeholder="https://seu-dominio.com/webhook/sales">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="kiwifyRefundWebhook">URL do Webhook de Reembolso</label>
+                                        <input type="url" id="kiwifyRefundWebhook" name="refundWebhook" placeholder="https://seu-dominio.com/webhook/refunds">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="kiwifySecurityToken">Token de Segurança</label>
+                                        <input type="password" id="kiwifySecurityToken" name="securityToken" placeholder="Token para validação de webhooks">
+                                    </div>
+                                    <div class="integration-actions">
+                                        <button type="button" class="btn btn-secondary" id="testKiwifyBtn">
+                                            <i class="fas fa-flask"></i>
+                                            Testar Webhook
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save"></i>
+                                            Salvar
+                                        </button>
+                                    </div>
+                                </form>
+                                <div class="integration-logs" id="kiwifyLogs">
+                                    <h4><i class="fas fa-list"></i> Status da Integração</h4>
+                                    <div class="logs-content">
+                                        <div class="log-item">
+                                            <span class="log-label">Última venda:</span>
+                                            <span class="log-value">Nenhuma</span>
+                                        </div>
+                                        <div class="log-item">
+                                            <span class="log-label">Último erro:</span>
+                                            <span class="log-value">Nenhum</span>
+                                        </div>
+                                        <div class="log-item">
+                                            <span class="log-label">Status da API:</span>
+                                            <span class="log-value">Desconectado</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Zapier Integration -->
+                        <div class="integration-block">
+                            <div class="integration-header">
+                                <div class="integration-info">
+                                    <i class="fas fa-bolt"></i>
+                                    <div>
+                                        <h3>Zapier</h3>
+                                        <p>Automações externas e workflows</p>
+                                    </div>
+                                </div>
+                                <div class="integration-status">
+                                    <span class="status-badge disconnected" id="zapierStatus">Inativo</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="zapierToggle">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="integration-content" id="zapierContent">
+                                <form id="zapierForm">
+                                    <div class="form-group">
+                                        <label for="zapierIncomingWebhook">Webhook Zapier (Entrada)</label>
+                                        <div class="input-with-tooltip">
+                                            <input type="url" id="zapierIncomingWebhook" name="incomingWebhook" placeholder="https://hooks.zapier.com/hooks/catch/...">
+                                            <div class="tooltip">
+                                                <i class="fas fa-info-circle"></i>
+                                                <span class="tooltip-text">URL para enviar dados do Plan de Vitalidad para Zapier</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zapierOutgoingWebhook">Webhook Zapier (Saída)</label>
+                                        <div class="input-with-tooltip">
+                                            <input type="url" id="zapierOutgoingWebhook" name="outgoingWebhook" placeholder="https://seu-dominio.com/webhook/zapier">
+                                            <div class="tooltip">
+                                                <i class="fas fa-info-circle"></i>
+                                                <span class="tooltip-text">URL para receber dados do Zapier</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zapierSecret">Token ou Secret (Opcional)</label>
+                                        <input type="password" id="zapierSecret" name="secret" placeholder="Token de segurança para validação">
+                                    </div>
+                                    <div class="integration-actions">
+                                        <button type="button" class="btn btn-secondary" id="testZapierBtn">
+                                            <i class="fas fa-play"></i>
+                                            Ativar Automações
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save"></i>
+                                            Salvar
+                                        </button>
+                                    </div>
+                                </form>
+                                <div class="integration-logs" id="zapierLogs">
+                                    <h4><i class="fas fa-list"></i> Status da Integração</h4>
+                                    <div class="logs-content">
+                                        <div class="log-item">
+                                            <span class="log-label">Status:</span>
+                                            <span class="log-value">Inativo</span>
+                                        </div>
+                                        <div class="log-item">
+                                            <span class="log-label">Último disparo:</span>
+                                            <span class="log-value">Nenhum</span>
+                                        </div>
+                                        <div class="log-item">
+                                            <span class="log-label">Automações ativas:</span>
+                                            <span class="log-value">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Firebase Integration -->
+                        <div class="integration-block">
+                            <div class="integration-header">
+                                <div class="integration-info">
+                                    <i class="fas fa-database"></i>
+                                    <div>
+                                        <h3>Firebase</h3>
+                                        <p>Autenticação e banco de dados</p>
+                                    </div>
+                                </div>
+                                <div class="integration-status">
+                                    <span class="status-badge disconnected" id="firebaseStatus">Desconectado</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="firebaseToggle">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="integration-content" id="firebaseContent">
+                                <form id="firebaseForm">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="firebaseApiKey">API Key *</label>
+                                            <input type="password" id="firebaseApiKey" name="apiKey" placeholder="AIza...">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="firebaseAuthDomain">Auth Domain *</label>
+                                            <input type="text" id="firebaseAuthDomain" name="authDomain" placeholder="projeto.firebaseapp.com">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="firebaseProjectId">Project ID *</label>
+                                            <input type="text" id="firebaseProjectId" name="projectId" placeholder="meu-projeto">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="firebaseMessagingSenderId">Messaging Sender ID</label>
+                                            <input type="text" id="firebaseMessagingSenderId" name="messagingSenderId" placeholder="123456789">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="firebaseAppId">App ID *</label>
+                                            <input type="text" id="firebaseAppId" name="appId" placeholder="1:123:web:abc">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="firebaseDatabaseUrl">URL do Realtime Database (Opcional)</label>
+                                            <input type="url" id="firebaseDatabaseUrl" name="databaseUrl" placeholder="https://projeto-default-rtdb.firebaseio.com/">
+                                        </div>
+                                    </div>
+                                    <div class="integration-actions">
+                                        <button type="button" class="btn btn-secondary" id="testFirebaseBtn">
+                                            <i class="fas fa-flask"></i>
+                                            Testar Conexão
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save"></i>
+                                            Salvar e Conectar
+                                        </button>
+                                    </div>
+                                </form>
+                                <div class="integration-logs" id="firebaseLogs">
+                                    <h4><i class="fas fa-list"></i> Status da Conexão</h4>
+                                    <div class="logs-content">
+                                        <div class="log-item">
+                                            <span class="log-label">Autenticação:</span>
+                                            <span class="log-value">Desconectado</span>
+                                        </div>
+                                        <div class="log-item">
+                                            <span class="log-label">Firestore:</span>
+                                            <span class="log-value">Desconectado</span>
+                                        </div>
+                                        <div class="log-item">
+                                            <span class="log-label">Realtime DB:</span>
+                                            <span class="log-value">Não configurado</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Custom Integration -->
+                        <div class="integration-block">
+                            <div class="integration-header">
+                                <div class="integration-info">
+                                    <i class="fas fa-plus-circle"></i>
+                                    <div>
+                                        <h3>Integração Personalizada</h3>
+                                        <p>Adicione outras integrações futuras</p>
+                                    </div>
+                                </div>
+                                <div class="integration-status">
+                                    <span class="status-badge disconnected" id="customStatus">Não configurado</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="customToggle">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="integration-content" id="customContent">
+                                <form id="customForm">
+                                    <div class="form-group">
+                                        <label for="customName">Nome da Integração</label>
+                                        <input type="text" id="customName" name="name" placeholder="Ex: MailChimp, ConvertKit, etc.">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="customApiKey">Chave de API</label>
+                                        <input type="password" id="customApiKey" name="apiKey" placeholder="Chave da API do serviço">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="customEndpoint">Endpoint da API</label>
+                                        <input type="url" id="customEndpoint" name="endpoint" placeholder="https://api.servico.com/v1/">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="customWebhook">URL do Webhook</label>
+                                        <input type="url" id="customWebhook" name="webhook" placeholder="https://seu-dominio.com/webhook/custom">
+                                    </div>
+                                    <div class="integration-actions">
+                                        <button type="button" class="btn btn-secondary" id="testCustomBtn">
+                                            <i class="fas fa-flask"></i>
+                                            Testar
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save"></i>
+                                            Salvar
+                                        </button>
+                                    </div>
+                                </form>
+                                <div class="integration-logs" id="customLogs">
+                                    <h4><i class="fas fa-list"></i> Logs da API</h4>
+                                    <div class="logs-content">
+                                        <div class="log-item">
+                                            <span class="log-label">Último retorno:</span>
+                                            <span class="log-value">Nenhum</span>
+                                        </div>
+                                        <div class="log-item">
+                                            <span class="log-label">Status de falha:</span>
+                                            <span class="log-value">Nenhum</span>
+                                        </div>
+                                        <div class="log-item">
+                                            <span class="log-label">Status OK:</span>
+                                            <span class="log-value">Não testado</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Integration Alerts -->
+                    <div class="integration-alerts" id="integrationAlerts" style="display: none;">
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div class="alert-content">
+                                <strong>Falha de Integração!</strong>
+                                <span id="integrationAlertMessage">A integração com Kiwify está falhando. Verifique as credenciais.</span>
+                            </div>
+                            <button class="alert-action" onclick="integrationsManager.reconnectIntegration('kiwify')">
+                                <i class="fas fa-sync"></i>
+                                Reconectar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Export Integration Data -->
+                    <div class="integration-export">
+                        <div class="export-card">
+                            <h3><i class="fas fa-download"></i> Exportar Dados de Conexão</h3>
+                            <p>Exporte as configurações de integração para backup ou migração.</p>
+                            <div class="export-actions">
+                                <button class="btn btn-secondary" id="exportIntegrationsBtn">
+                                    <i class="fas fa-file-export"></i>
+                                    Exportar Configurações
+                                </button>
+                                <button class="btn btn-info" id="importIntegrationsBtn">
+                                    <i class="fas fa-file-import"></i>
+                                    Importar Configurações
+                                </button>
+                            </div>
+                            <input type="file" id="importIntegrationsFile" accept=".json" style="display: none;">
+                            <small class="form-help">⚠️ Disponível apenas para administradores autorizados</small>
+                        </div>
                     </div>
                 </div>
 
                 <div class="tab-content" id="reports">
                     <div class="content-header">
-                        <h2 data-i18n="reports">Relatórios</h2>
-                        <p data-i18n="reports-description">Visualize relatórios e análises</p>
+                        <h2 data-i18n="reports">📈 Relatórios e Analytics</h2>
+                        <p data-i18n="reports-description">Análises detalhadas de vendas, engajamento e performance</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-chart-bar"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Alerts Section -->
+                    <div class="alerts-section" id="alertsSection" style="display: none;">
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div class="alert-content">
+                                <strong>Atenção!</strong>
+                                <span id="alertMessage">Detectada queda de 40% nas visualizações dos bônus nos últimos 7 dias.</span>
+                            </div>
+                            <button class="alert-close" onclick="reportsManager.closeAlert()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Filters and Controls -->
+                    <div class="reports-controls">
+                        <div class="controls-left">
+                            <div class="filter-group">
+                                <label for="reportsDateFilter">Período:</label>
+                                <select id="reportsDateFilter">
+                                    <option value="7">Últimos 7 dias</option>
+                                    <option value="30" selected>Últimos 30 dias</option>
+                                    <option value="90">Últimos 90 dias</option>
+                                    <option value="custom">Período personalizado</option>
+                                </select>
+                            </div>
+                            <div class="filter-group" id="customDateGroup" style="display: none;">
+                                <input type="date" id="reportsDateFrom">
+                                <span>até</span>
+                                <input type="date" id="reportsDateTo">
+                            </div>
+                            <div class="filter-group">
+                                <label for="reportsLanguageFilter">Idioma:</label>
+                                <select id="reportsLanguageFilter">
+                                    <option value="">Todos</option>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="pt">🇧🇷 Português</option>
+                                    <option value="en">🇺🇸 English</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="reportsUserTypeFilter">Tipo de Usuário:</label>
+                                <select id="reportsUserTypeFilter">
+                                    <option value="">Todos</option>
+                                    <option value="free">🆓 Gratuito</option>
+                                    <option value="premium">👑 Premium</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="controls-right">
+                            <button class="btn btn-secondary" id="saveReportBtn">
+                                <i class="fas fa-star"></i>
+                                Salvar como Favorito
+                            </button>
+                            <button class="btn btn-info" id="exportExcelBtn">
+                                <i class="fas fa-file-excel"></i>
+                                Exportar Excel
+                            </button>
+                            <button class="btn btn-primary" id="generatePdfBtn">
+                                <i class="fas fa-file-pdf"></i>
+                                Gerar PDF
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Reports Sections -->
+                    <div class="reports-grid">
+                        <!-- Sales Section -->
+                        <div class="report-section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-shopping-cart"></i> Relatório de Vendas</h3>
+                                <button class="section-toggle" onclick="reportsManager.toggleSection('sales')">
+                                    <i class="fas fa-chevron-up"></i>
+                                </button>
+                            </div>
+                            <div class="section-content" id="salesSection">
+                                <div class="section-stats">
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-dollar-sign"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h4 id="totalRevenue">$0</h4>
+                                            <p>Receita Total</p>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-shopping-bag"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h4 id="totalSales">0</h4>
+                                            <p>Total de Vendas</p>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-crown"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h4 id="bestSellingProduct">-</h4>
+                                            <p>Produto Mais Vendido</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="charts-container">
+                                    <div class="chart-card">
+                                        <h4>Vendas por Produto (Últimos 30 dias)</h4>
+                                        <canvas id="salesByProductChart" width="400" height="200"></canvas>
+                                    </div>
+                                    <div class="chart-card">
+                                        <h4>Vendas por Idioma</h4>
+                                        <canvas id="salesByLanguageChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+                                
+                                <div class="data-table">
+                                    <h4>Receita por Plano</h4>
+                                    <table class="reports-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Plano</th>
+                                                <th>Vendas</th>
+                                                <th>Receita</th>
+                                                <th>% do Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="revenueByPlanTable">
+                                            <!-- Data will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Engagement Section -->
+                        <div class="report-section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-trophy"></i> Engajamento com Desafios</h3>
+                                <button class="section-toggle" onclick="reportsManager.toggleSection('engagement')">
+                                    <i class="fas fa-chevron-up"></i>
+                                </button>
+                            </div>
+                            <div class="section-content" id="engagementSection">
+                                <div class="section-stats">
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-users"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h4 id="mostPopularChallenge">-</h4>
+                                            <p>Desafio Mais Popular</p>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-percentage"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h4 id="highestCompletionRate">0%</h4>
+                                            <p>Maior Taxa de Conclusão</p>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-calendar-day"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h4 id="avgDaysCompleted">0</h4>
+                                            <p>Média de Dias Concluídos</p>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-clock"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h4 id="activeUsers24h">0</h4>
+                                            <p>Usuários Ativos (24h)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="charts-container">
+                                    <div class="chart-card">
+                                        <h4>Inscritos por Desafio</h4>
+                                        <canvas id="challengeSubscriptionsChart" width="400" height="200"></canvas>
+                                    </div>
+                                    <div class="chart-card">
+                                        <h4>Taxa de Conclusão por Desafio</h4>
+                                        <canvas id="challengeCompletionChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Digital Products Section -->
+                        <div class="report-section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-book"></i> Acessos a Produtos Digitais</h3>
+                                <button class="section-toggle" onclick="reportsManager.toggleSection('products')">
+                                    <i class="fas fa-chevron-up"></i>
+                                </button>
+                            </div>
+                            <div class="section-content" id="productsSection">
+                                <div class="section-stats">
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-eye"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h4 id="totalProductViews">0</h4>
+                                            <p>Total de Acessos</p>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h4 id="mostAccessedProduct">-</h4>
+                                            <p>Mais Acessado da Semana</p>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-book-reader"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h4 id="readingRate">0%</h4>
+                                            <p>Taxa de Leitura</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="charts-container">
+                                    <div class="chart-card">
+                                        <h4>Acessos por eBook/Bônus</h4>
+                                        <canvas id="productAccessChart" width="400" height="200"></canvas>
+                                    </div>
+                                    <div class="chart-card">
+                                        <h4>Gratuitos vs Premium</h4>
+                                        <canvas id="accessByPlanChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Bonus Section -->
+                        <div class="report-section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-gift"></i> Relatório de Bônus</h3>
+                                <button class="section-toggle" onclick="reportsManager.toggleSection('bonus')">
+                                    <i class="fas fa-chevron-up"></i>
+                                </button>
+                            </div>
+                            <div class="section-content" id="bonusSection">
+                                <div class="section-stats">
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-download"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h4 id="mostDownloadedBonus">-</h4>
+                                            <p>Bônus Mais Baixado</p>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-unlock"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h4 id="totalUnlocks">0</h4>
+                                            <p>Total de Desbloqueios</p>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-heart"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h4 id="highestEngagementBonus">-</h4>
+                                            <p>Maior Engajamento</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="charts-container">
+                                    <div class="chart-card">
+                                        <h4>Downloads por Bônus</h4>
+                                        <canvas id="bonusDownloadsChart" width="400" height="200"></canvas>
+                                    </div>
+                                    <div class="chart-card">
+                                        <h4>Engajamento por Bônus</h4>
+                                        <canvas id="bonusEngagementChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Saved Reports -->
+                    <div class="saved-reports-section">
+                        <h3><i class="fas fa-star"></i> Relatórios Favoritos</h3>
+                        <div class="saved-reports-grid" id="savedReportsGrid">
+                            <!-- Saved reports will be populated here -->
+                        </div>
                     </div>
                 </div>
 
@@ -3253,9 +4013,13 @@
     <script src="store-management.js"></script>
     <script src="sales-management.js"></script>
     <script src="notifications-management.js"></script>
+    <script src="reports-management.js"></script>
+    <script src="integrations-management.js"></script>
     <link rel="stylesheet" href="store-styles.css">
     <link rel="stylesheet" href="sales-styles.css">
     <link rel="stylesheet" href="notifications-styles.css">
+    <link rel="stylesheet" href="reports-styles.css">
+    <link rel="stylesheet" href="integrations-styles.css">
     <script>
         // Verificar autenticação ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
