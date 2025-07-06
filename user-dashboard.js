@@ -934,8 +934,286 @@ class UserDashboard {
     }
 
     renderStore() {
-        // Implement store rendering
-        console.log('Rendering store...');
+        this.loadStoreProducts();
+    }
+
+    loadStoreProducts() {
+        // Simulação de produtos da loja integrados com o sistema administrativo
+        const storeProducts = [
+            {
+                id: 1,
+                name: "Guía Completa de Alimentación Saludable",
+                language: "es",
+                description: "Una guía completa para transformar tu alimentación con recetas saludables, planes de comida y consejos nutricionales.",
+                type: "ebook",
+                price: 29.99,
+                currency: "USD",
+                visibility: "both",
+                saleLink: "https://kiwify.com/alimentacion-saludable",
+                cover: "https://via.placeholder.com/300x200/4CAF50/white?text=Guía+Alimentación",
+                status: "active",
+                featured: true
+            },
+            {
+                id: 2,
+                name: "Planner Premium de 90 Dias",
+                language: "pt",
+                description: "Planner completo para organizar sua vida, estabelecer metas e acompanhar seu progresso durante 90 dias.",
+                type: "planner",
+                price: 47.90,
+                currency: "BRL",
+                visibility: "premium",
+                saleLink: "https://kiwify.com/planner-90-dias",
+                cover: "https://via.placeholder.com/300x200/FF9800/white?text=Planner+90+Dias",
+                status: "active",
+                featured: true
+            },
+            {
+                id: 3,
+                name: "21-Day Transformation Challenge",
+                language: "en",
+                description: "Complete digital guide with workouts, meal plans, and mindset coaching for a 21-day transformation.",
+                type: "combo",
+                price: 67.00,
+                currency: "USD",
+                visibility: "both",
+                saleLink: "https://stripe.com/checkout/21-day-challenge",
+                cover: "https://via.placeholder.com/300x200/9C27B0/white?text=21+Day+Challenge",
+                status: "active",
+                featured: false
+            },
+            {
+                id: 4,
+                name: "Guía Especial de Meditación",
+                language: "es",
+                description: "Guía completa de meditación con audios guiados, técnicas de respiración y ejercicios de mindfulness.",
+                type: "guide",
+                price: 19.99,
+                currency: "USD",
+                visibility: "free",
+                saleLink: "https://kiwify.com/meditacion-guia",
+                cover: "https://via.placeholder.com/300x200/2196F3/white?text=Guía+Meditación",
+                status: "active",
+                featured: false
+            },
+            {
+                id: 5,
+                name: "Complete Wellness Bundle",
+                language: "en",
+                description: "Ultimate wellness package including fitness plans, nutrition guides, and mental health resources.",
+                type: "combo",
+                price: 97.00,
+                currency: "USD",
+                visibility: "both",
+                saleLink: "https://stripe.com/checkout/wellness-bundle",
+                cover: "https://via.placeholder.com/300x200/E91E63/white?text=Wellness+Bundle",
+                status: "active",
+                featured: true
+            }
+        ];
+
+        this.storeProducts = storeProducts;
+        this.filteredStoreProducts = [...storeProducts];
+        this.renderStoreContent();
+    }
+
+    renderStoreContent() {
+        // Filtrar produtos baseado no idioma do usuário e visibilidade
+        const userLanguage = this.currentLanguage;
+        const userPlan = 'premium'; // Simular plano do usuário
+        
+        const availableProducts = this.storeProducts.filter(product => {
+            const languageMatch = product.language === userLanguage;
+            const visibilityMatch = product.visibility === 'both' || 
+                                  (product.visibility === 'free') ||
+                                  (product.visibility === 'premium' && userPlan === 'premium');
+            const statusMatch = product.status === 'active';
+            
+            return languageMatch && visibilityMatch && statusMatch;
+        });
+
+        this.renderFeaturedProducts(availableProducts);
+        this.renderAllStoreProducts(availableProducts);
+        this.updateStoreCounter(availableProducts.length);
+    }
+
+    renderFeaturedProducts(products) {
+        const featuredProducts = products.filter(product => product.featured);
+        const featuredGrid = document.getElementById('featuredProductsGrid');
+        
+        if (!featuredGrid) return;
+
+        if (featuredProducts.length === 0) {
+            document.getElementById('featuredProducts').style.display = 'none';
+            return;
+        }
+
+        document.getElementById('featuredProducts').style.display = 'block';
+        
+        featuredGrid.innerHTML = featuredProducts.map(product => `
+            <div class="store-product-card featured" data-product-id="${product.id}">
+                <div class="store-product-image">
+                    <img src="${product.cover}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x200/ccc/666?text=Producto'">
+                    <div class="store-featured-badge">
+                        <i class="fas fa-star"></i> Destaque
+                    </div>
+                </div>
+                <div class="store-product-info">
+                    <div class="store-product-header">
+                        <h3 class="store-product-title">${product.name}</h3>
+                    </div>
+                    <div class="store-product-badges">
+                        <span class="store-product-badge language">${this.getLanguageFlag(product.language)}</span>
+                        <span class="store-product-badge type">${this.getTypeIcon(product.type)}</span>
+                    </div>
+                    <p class="store-product-description">${product.description}</p>
+                    <div class="store-product-footer">
+                        <div class="store-product-price">${this.formatPrice(product.price, product.currency)}</div>
+                        <div class="store-product-actions">
+                            <a href="${product.saleLink}" target="_blank" class="store-buy-btn">
+                                <i class="fas fa-shopping-cart"></i>
+                                ${this.getTranslation('comprarAhora', 'Comprar ahora')}
+                            </a>
+                            <button class="store-info-btn" onclick="userDashboard.showProductModal(${product.id})">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    renderAllStoreProducts(products) {
+        const storeGrid = document.getElementById('storeProductsGrid');
+        const emptyState = document.getElementById('emptyStoreState');
+        
+        if (!storeGrid) return;
+
+        if (products.length === 0) {
+            storeGrid.style.display = 'none';
+            if (emptyState) emptyState.style.display = 'block';
+            return;
+        }
+
+        if (emptyState) emptyState.style.display = 'none';
+        storeGrid.style.display = 'grid';
+        
+        storeGrid.innerHTML = products.map(product => `
+            <div class="store-product-card ${product.featured ? 'featured' : ''}" data-product-id="${product.id}">
+                <div class="store-product-image">
+                    <img src="${product.cover}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x200/ccc/666?text=Producto'">
+                    ${product.featured ? '<div class="store-featured-badge"><i class="fas fa-star"></i> Destaque</div>' : ''}
+                </div>
+                <div class="store-product-info">
+                    <div class="store-product-header">
+                        <h3 class="store-product-title">${product.name}</h3>
+                    </div>
+                    <div class="store-product-badges">
+                        <span class="store-product-badge language">${this.getLanguageFlag(product.language)}</span>
+                        <span class="store-product-badge type">${this.getTypeIcon(product.type)}</span>
+                    </div>
+                    <p class="store-product-description">${product.description}</p>
+                    <div class="store-product-footer">
+                        <div class="store-product-price">${this.formatPrice(product.price, product.currency)}</div>
+                        <div class="store-product-actions">
+                            <a href="${product.saleLink}" target="_blank" class="store-buy-btn">
+                                <i class="fas fa-shopping-cart"></i>
+                                ${this.getTranslation('comprarAhora', 'Comprar ahora')}
+                            </a>
+                            <button class="store-info-btn" onclick="userDashboard.showProductModal(${product.id})">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    showProductModal(productId) {
+        const product = this.storeProducts.find(p => p.id === productId);
+        if (!product) return;
+
+        // Criar modal dinamicamente
+        const modal = document.createElement('div');
+        modal.className = 'store-product-modal';
+        modal.innerHTML = `
+            <div class="store-product-modal-content">
+                <div class="store-product-modal-header">
+                    <img src="${product.cover}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/600x250/ccc/666?text=Producto'">
+                    <button class="store-product-modal-close" onclick="this.closest('.store-product-modal').remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="store-product-modal-body">
+                    <h2 class="store-product-modal-title">${product.name}</h2>
+                    <div class="store-product-badges">
+                        <span class="store-product-badge language">${this.getLanguageFlag(product.language)}</span>
+                        <span class="store-product-badge type">${this.getTypeIcon(product.type)}</span>
+                    </div>
+                    <p class="store-product-modal-description">${product.description}</p>
+                    <div class="store-product-modal-price">${this.formatPrice(product.price, product.currency)}</div>
+                    <div class="store-product-modal-actions">
+                        <a href="${product.saleLink}" target="_blank" class="store-buy-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            ${this.getTranslation('comprarAhora', 'Comprar ahora')}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        // Fechar modal ao clicar fora
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.remove();
+            }
+        });
+    }
+
+    updateStoreCounter(count) {
+        const badge = document.querySelector('#tab-tienda .section-badge');
+        if (badge) {
+            badge.textContent = `${count} ${this.getTranslation('productos', 'productos')}`;
+        }
+    }
+
+    getLanguageFlag(language) {
+        const flags = {
+            'es': '🇪🇸 ES',
+            'pt': '🇧🇷 PT',
+            'en': '🇺🇸 EN'
+        };
+        return flags[language] || language;
+    }
+
+    getTypeIcon(type) {
+        const icons = {
+            'ebook': '📖 eBook',
+            'combo': '📦 Combo',
+            'planner': '📋 Planner',
+            'guide': '📚 Guía',
+            'bonus': '🎁 Bônus',
+            'other': '🔗 Outro'
+        };
+        return icons[type] || type;
+    }
+
+    formatPrice(price, currency) {
+        const symbols = {
+            'USD': '$',
+            'EUR': '€',
+            'BRL': 'R$'
+        };
+        
+        return `${symbols[currency] || currency} ${price.toFixed(2)}`;
+    }
+
+    getTranslation(key, defaultValue) {
+        return this.translations[this.currentLanguage][key] || defaultValue;
     }
 
     renderNotifications() {
@@ -958,8 +1236,52 @@ class UserDashboard {
     }
 
     filterStoreProducts() {
-        // Implement store product filtering
-        console.log('Filtering store products...');
+        if (!this.storeProducts) return;
+
+        const categoryFilter = document.getElementById('categoryFilter');
+        const storeLanguageFilter = document.getElementById('storeLanguageFilter');
+        
+        const selectedCategory = categoryFilter ? categoryFilter.value : 'all';
+        const selectedLanguage = storeLanguageFilter ? storeLanguageFilter.value : 'all';
+        
+        let filteredProducts = [...this.storeProducts];
+        
+        // Filtrar por categoria
+        if (selectedCategory !== 'all') {
+            const categoryMap = {
+                'alimentacionSaludable': ['ebook', 'guide'],
+                'habitos': ['planner'],
+                'desafiosCategoria': ['combo'],
+                'extras': ['bonus', 'other']
+            };
+            
+            const allowedTypes = categoryMap[selectedCategory] || [];
+            filteredProducts = filteredProducts.filter(product => 
+                allowedTypes.includes(product.type)
+            );
+        }
+        
+        // Filtrar por idioma
+        if (selectedLanguage !== 'all') {
+            filteredProducts = filteredProducts.filter(product => 
+                product.language === selectedLanguage
+            );
+        }
+        
+        // Aplicar filtros de visibilidade e status
+        const userPlan = 'premium'; // Simular plano do usuário
+        filteredProducts = filteredProducts.filter(product => {
+            const visibilityMatch = product.visibility === 'both' || 
+                                  (product.visibility === 'free') ||
+                                  (product.visibility === 'premium' && userPlan === 'premium');
+            const statusMatch = product.status === 'active';
+            
+            return visibilityMatch && statusMatch;
+        });
+        
+        this.renderFeaturedProducts(filteredProducts);
+        this.renderAllStoreProducts(filteredProducts);
+        this.updateStoreCounter(filteredProducts.length);
     }
 
     filterNotifications() {

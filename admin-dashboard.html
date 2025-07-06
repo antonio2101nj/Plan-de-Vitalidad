@@ -903,13 +903,184 @@
 
                 <div class="tab-content" id="store">
                     <div class="content-header">
-                        <h2 data-i18n="store">Loja (Tienda)</h2>
-                        <p data-i18n="store-description">Gerencie a loja do aplicativo</p>
+                        <h2 data-i18n="store">🛍️ Loja (Tienda)</h2>
+                        <p data-i18n="store-description">Gerencie produtos digitais à venda</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-store"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Store Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="storeActiveProducts">0</h3>
+                                <p>Produtos Ativos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="storePremiumProducts">0</h3>
+                                <p>Produtos Premium</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="storeFeaturedProducts">0</h3>
+                                <p>Produtos Destaque</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="storeTotalProducts">0</h3>
+                                <p>Total de Produtos</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Store Controls -->
+                    <div class="section-controls">
+                        <div class="controls-left">
+                            <button class="btn btn-primary" id="createStoreProductBtn">
+                                <i class="fas fa-plus"></i>
+                                Adicionar Novo Produto
+                            </button>
+                            <button class="btn btn-secondary" id="exportStoreProductsBtn">
+                                <i class="fas fa-download"></i>
+                                Exportar Lista
+                            </button>
+                        </div>
+                        <div class="controls-right">
+                            <div class="search-container">
+                                <input type="text" id="storeSearchInput" placeholder="Buscar produtos...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Store Filters -->
+                    <div class="filters-container">
+                        <div class="filter-group">
+                            <label for="storeLanguageFilter">Idioma:</label>
+                            <select id="storeLanguageFilter">
+                                <option value="">Todos</option>
+                                <option value="es">🇪🇸 Español</option>
+                                <option value="pt">🇧🇷 Português</option>
+                                <option value="en">🇺🇸 English</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="storeTypeFilter">Tipo:</label>
+                            <select id="storeTypeFilter">
+                                <option value="">Todos</option>
+                                <option value="ebook">📖 eBook</option>
+                                <option value="combo">📦 Combo</option>
+                                <option value="planner">📋 Planner Premium</option>
+                                <option value="guide">📚 Guia Especial</option>
+                                <option value="bonus">🎁 Bônus</option>
+                                <option value="other">🔗 Outro</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="storeStatusFilter">Status:</label>
+                            <select id="storeStatusFilter">
+                                <option value="">Todos</option>
+                                <option value="active">✅ Ativo</option>
+                                <option value="inactive">❌ Inativo</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="storeVisibilityFilter">Visibilidade:</label>
+                            <select id="storeVisibilityFilter">
+                                <option value="">Todos</option>
+                                <option value="free">🆓 Gratuito</option>
+                                <option value="premium">👑 Premium</option>
+                                <option value="both">👥 Ambos</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- View Toggle -->
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="storeCardViewBtn" data-view="cards">
+                            <i class="fas fa-th-large"></i>
+                            Cards
+                        </button>
+                        <button class="view-btn" id="storeTableViewBtn" data-view="table">
+                            <i class="fas fa-list"></i>
+                            Tabela
+                        </button>
+                    </div>
+                    
+                    <!-- Store Products Container -->
+                    <div class="store-container">
+                        <!-- Cards View -->
+                        <div class="store-grid" id="storeGrid">
+                            <!-- Store product cards will be populated here -->
+                        </div>
+                        
+                        <!-- Table View -->
+                        <div class="store-table-container" id="storeTableContainer" style="display: none;">
+                            <table class="store-table" id="storeTable">
+                                <thead>
+                                    <tr>
+                                        <th>🛍️ Produto</th>
+                                        <th>🗣️ Idioma</th>
+                                        <th>💰 Preço</th>
+                                        <th>📦 Tipo</th>
+                                        <th>👥 Visibilidade</th>
+                                        <th>⭐ Destaque</th>
+                                        <th>✅ Status</th>
+                                        <th>⚙️ Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="storeTableBody">
+                                    <!-- Store products will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="table-loading" id="storeLoading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Carregando produtos...</p>
+                        </div>
+                        
+                        <div class="no-products" id="noStoreProductsMessage" style="display: none;">
+                            <i class="fas fa-store"></i>
+                            <h3>Nenhum produto encontrado</h3>
+                            <p>Não há produtos cadastrados ou que correspondam aos filtros selecionados.</p>
+                            <button class="btn btn-primary" onclick="storeManager.openCreateProductModal()">
+                                <i class="fas fa-plus"></i>
+                                Criar Primeiro Produto
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="storePaginationInfo">Mostrando 0 de 0 produtos</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn btn-small" id="storePrevPageBtn" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                                Anterior
+                            </button>
+                            <span class="page-numbers" id="storePageNumbers"></span>
+                            <button class="btn btn-small" id="storeNextPageBtn" disabled>
+                                Próximo
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -1559,6 +1730,196 @@
     </div>
 
     <!-- Challenge Modals -->
+    <!-- Store Product Modals -->
+    <!-- Create/Edit Store Product Modal -->
+    <div class="modal extra-large" id="storeProductModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="storeProductModalTitle">Adicionar Novo Produto</h3>
+                <button class="modal-close" id="storeProductModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="storeProductForm">
+                    <input type="hidden" id="storeProductId" name="productId">
+                    
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-info-circle"></i> Informações Básicas</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="storeProductName">Nome do Produto *</label>
+                                <input type="text" id="storeProductName" name="name" required placeholder="Ex: Guia Completo de Alimentação Saudável">
+                            </div>
+                            <div class="form-group">
+                                <label for="storeProductLanguage">Idioma Principal *</label>
+                                <select id="storeProductLanguage" name="language" required>
+                                    <option value="">Selecione o idioma</option>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="pt">🇧🇷 Português</option>
+                                    <option value="en">🇺🇸 English</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="storeProductDescription">Breve Descrição *</label>
+                            <textarea id="storeProductDescription" name="description" rows="4" required placeholder="Descreva o produto de forma atrativa para o cliente..."></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="storeProductType">Tipo do Produto *</label>
+                                <select id="storeProductType" name="type" required>
+                                    <option value="">Selecione o tipo</option>
+                                    <option value="ebook">📖 eBook</option>
+                                    <option value="combo">📦 Combo</option>
+                                    <option value="planner">📋 Planner Premium</option>
+                                    <option value="guide">📚 Guia Especial</option>
+                                    <option value="bonus">🎁 Bônus</option>
+                                    <option value="other">🔗 Outro</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="storeProductPrice">Preço do Produto *</label>
+                                <div class="price-input-container">
+                                    <select id="storeProductCurrency" name="currency" required>
+                                        <option value="USD">💵 USD</option>
+                                        <option value="EUR">💶 EUR</option>
+                                        <option value="BRL">💳 BRL</option>
+                                    </select>
+                                    <input type="number" id="storeProductPrice" name="price" step="0.01" min="0" required placeholder="0.00">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="storeProductVisibility">Visibilidade *</label>
+                                <select id="storeProductVisibility" name="visibility" required>
+                                    <option value="">Selecione a visibilidade</option>
+                                    <option value="free">🆓 Usuários Gratuitos</option>
+                                    <option value="premium">👑 Usuários Premium</option>
+                                    <option value="both">👥 Ambos</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="storeProductSaleLink">Link Externo para Compra *</label>
+                                <input type="url" id="storeProductSaleLink" name="saleLink" required placeholder="https://kiwify.com/seu-produto ou https://stripe.com/checkout">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Images Upload -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-images"></i> Imagens do Produto</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="storeProductCover">Imagem de Apresentação *</label>
+                                <div class="file-upload-area" id="storeProductCoverUploadArea">
+                                    <input type="file" id="storeProductCover" name="cover" accept="image/*" style="display: none;">
+                                    <div class="upload-placeholder">
+                                        <i class="fas fa-image"></i>
+                                        <p>Clique para selecionar imagem principal</p>
+                                        <small>PNG, JPG até 5MB (recomendado: 800x600px)</small>
+                                    </div>
+                                    <div class="upload-preview" id="storeProductCoverPreview" style="display: none;">
+                                        <img id="storeProductCoverPreviewImg" src="" alt="Preview">
+                                        <button type="button" class="remove-file" onclick="storeManager.removeFile('cover')">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="storeProductMockup">Imagem Adicional (Opcional)</label>
+                                <div class="file-upload-area" id="storeProductMockupUploadArea">
+                                    <input type="file" id="storeProductMockup" name="mockup" accept="image/*" style="display: none;">
+                                    <div class="upload-placeholder">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        <p>Clique para selecionar imagem adicional</p>
+                                        <small>PNG, JPG até 5MB (para carrossel)</small>
+                                    </div>
+                                    <div class="upload-preview" id="storeProductMockupPreview" style="display: none;">
+                                        <img id="storeProductMockupPreviewImg" src="" alt="Preview">
+                                        <button type="button" class="remove-file" onclick="storeManager.removeFile('mockup')">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Settings -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-cog"></i> Configurações do Produto</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="storeProductStatus">Status *</label>
+                                <select id="storeProductStatus" name="status" required>
+                                    <option value="active">✅ Ativo</option>
+                                    <option value="inactive">❌ Inativo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="storeProductFeatured" name="featured">
+                                        <span class="checkbox-custom"></span>
+                                        ⭐ Marcar como Destaque
+                                        <small>Produto aparecerá em destaque na home do app</small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="storeProductModalCancel">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="storeProductModalSave" form="storeProductForm">
+                    <i class="fas fa-save"></i>
+                    Salvar Produto
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirm Delete Store Product Modal -->
+    <div class="modal" id="confirmDeleteStoreProductModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão</h3>
+                <button class="modal-close" id="confirmDeleteStoreProductClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="confirm-delete-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h4>Tem certeza que deseja excluir este produto?</h4>
+                    <p>Esta ação não pode ser desfeita. O produto será removido permanentemente da loja e não estará mais disponível para compra.</p>
+                    <div class="product-info">
+                        <strong id="deleteStoreProductName"></strong>
+                        <span id="deleteStoreProductType"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="confirmDeleteStoreProductCancel">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteStoreProductConfirm">
+                    <i class="fas fa-trash"></i>
+                    Excluir Produto
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Create/Edit Challenge Modal -->
     <div class="modal extra-large" id="challengeModal">
         <div class="modal-content">
@@ -1881,6 +2242,8 @@
     <script src="products-management.js"></script>
     <script src="bonus-management.js"></script>
     <script src="challenges-management.js"></script>
+    <script src="store-management.js"></script>
+    <link rel="stylesheet" href="store-styles.css">
     <script>
         // Verificar autenticação ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
