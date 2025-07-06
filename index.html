@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Vitalidad - Admin</title>
+    <meta name="description" content="Painel administrativo para gerenciar o aplicativo de saúde e bem-estar">
+    <meta name="theme-color" content="#10B981">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-leaf"></i>
+                    <span class="logo-text">Plan de Vitalidad</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-menu">
+                <ul class="menu-list">
+                    <li class="menu-item active" data-tab="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="menu-text" data-i18n="dashboard">Dashboard</span>
+                    </li>
+                    <li class="menu-item" data-tab="users">
+                        <i class="fas fa-users"></i>
+                        <span class="menu-text" data-i18n="users">Usuários</span>
+                    </li>
+                    <li class="menu-item" data-tab="digital-products">
+                        <i class="fas fa-laptop"></i>
+                        <span class="menu-text" data-i18n="digital-products">Produtos Digitais</span>
+                    </li>
+                    <li class="menu-item" data-tab="bonus-materials">
+                        <i class="fas fa-gift"></i>
+                        <span class="menu-text" data-i18n="bonus-materials">Bônus e Materiais Extras</span>
+                    </li>
+                    <li class="menu-item" data-tab="content">
+                        <i class="fas fa-file-alt"></i>
+                        <span class="menu-text" data-i18n="content">Conteúdos</span>
+                    </li>
+                    <li class="menu-item" data-tab="challenges">
+                        <i class="fas fa-trophy"></i>
+                        <span class="menu-text" data-i18n="challenges">Desafios</span>
+                    </li>
+                    <li class="menu-item" data-tab="creatives">
+                        <i class="fas fa-palette"></i>
+                        <span class="menu-text" data-i18n="creatives">Criativos e Campanhas</span>
+                    </li>
+                    <li class="menu-item" data-tab="carousel">
+                        <i class="fas fa-images"></i>
+                        <span class="menu-text" data-i18n="carousel">Imagens do Carrossel</span>
+                    </li>
+                    <li class="menu-item" data-tab="store">
+                        <i class="fas fa-store"></i>
+                        <span class="menu-text" data-i18n="store">Loja (Tienda)</span>
+                    </li>
+                    <li class="menu-item" data-tab="sales">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="menu-text" data-i18n="sales">Vendas - Kiwify</span>
+                    </li>
+                    <li class="menu-item" data-tab="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="menu-text" data-i18n="notifications">Notificações Push</span>
+                    </li>
+                    <li class="menu-item" data-tab="integrations">
+                        <i class="fas fa-plug"></i>
+                        <span class="menu-text" data-i18n="integrations">Integrações e APIs</span>
+                    </li>
+                    <li class="menu-item" data-tab="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        <span class="menu-text" data-i18n="reports">Relatórios</span>
+                    </li>
+                    <li class="menu-item" data-tab="autoresponder">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <span class="menu-text" data-i18n="autoresponder">Autoresponder</span>
+                    </li>
+                    <li class="menu-item" data-tab="app-customization">
+                        <i class="fas fa-paint-brush"></i>
+                        <span class="menu-text" data-i18n="app-customization">Personalização do App</span>
+                    </li>
+                    <li class="menu-item" data-tab="gamification">
+                        <i class="fas fa-gamepad"></i>
+                        <span class="menu-text" data-i18n="gamification">Gamificação</span>
+                    </li>
+                    <li class="menu-item" data-tab="general-settings">
+                        <i class="fas fa-cog"></i>
+                        <span class="menu-text" data-i18n="general-settings">Configurações Gerais</span>
+                    </li>
+                    <li class="menu-item" data-tab="support">
+                        <i class="fas fa-robot"></i>
+                        <span class="menu-text" data-i18n="support">Central de Suporte com IA</span>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title" data-i18n="dashboard">Dashboard</h1>
+                </div>
+                
+                <div class="header-right">
+                    <!-- Language Selector -->
+                    <div class="language-selector">
+                        <button class="language-btn" id="languageBtn">
+                            <i class="fas fa-globe"></i>
+                            <span id="currentLanguage">PT</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="language-dropdown" id="languageDropdown">
+                            <div class="language-option" data-lang="pt">
+                                <span class="flag">🇧🇷</span>
+                                <span>Português</span>
+                            </div>
+                            <div class="language-option" data-lang="es">
+                                <span class="flag">🇪🇸</span>
+                                <span>Español</span>
+                            </div>
+                            <div class="language-option" data-lang="en">
+                                <span class="flag">🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    
+                    <!-- Logout Button -->
+                    <button class="logout-btn" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span data-i18n="logout">Sair</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="content-area">
+                <!-- Dashboard Tab -->
+                <div class="tab-content active" id="dashboard">
+                    <div class="content-header">
+                        <h2 data-i18n="dashboard">Dashboard</h2>
+                        <p data-i18n="dashboard-description">Visão geral do seu aplicativo de saúde e bem-estar</p>
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>1,234</h3>
+                                <p data-i18n="total-users">Usuários Totais</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>87%</h3>
+                                <p data-i18n="engagement-rate">Taxa de Engajamento</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>456</h3>
+                                <p data-i18n="completed-challenges">Desafios Concluídos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>R$ 12.345</h3>
+                                <p data-i18n="monthly-revenue">Receita Mensal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Tab Contents (Placeholder) -->
+                <div class="tab-content" id="users">
+                    <div class="content-header">
+                        <h2 data-i18n="users">Usuários</h2>
+                        <p data-i18n="users-description">Gerencie os usuários do seu aplicativo</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-users"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <!-- Add more tab contents as needed -->
+                <div class="tab-content" id="digital-products">
+                    <div class="content-header">
+                        <h2 data-i18n="digital-products">Produtos Digitais</h2>
+                        <p data-i18n="digital-products-description">Gerencie seus produtos digitais</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-laptop"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <!-- Placeholder for other tabs -->
+                <div class="tab-content" id="bonus-materials">
+                    <div class="content-header">
+                        <h2 data-i18n="bonus-materials">Bônus e Materiais Extras</h2>
+                        <p data-i18n="bonus-materials-description">Gerencie materiais extras e bônus</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-gift"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <!-- Continue with other tabs... -->
+                <div class="tab-content" id="content">
+                    <div class="content-header">
+                        <h2 data-i18n="content">Conteúdos</h2>
+                        <p data-i18n="content-description">Gerencie o conteúdo do aplicativo</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-file-alt"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="challenges">
+                    <div class="content-header">
+                        <h2 data-i18n="challenges">Desafios</h2>
+                        <p data-i18n="challenges-description">Gerencie os desafios do aplicativo</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-trophy"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="creatives">
+                    <div class="content-header">
+                        <h2 data-i18n="creatives">Criativos e Campanhas</h2>
+                        <p data-i18n="creatives-description">Gerencie criativos e campanhas</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-palette"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="carousel">
+                    <div class="content-header">
+                        <h2 data-i18n="carousel">Imagens do Carrossel</h2>
+                        <p data-i18n="carousel-description">Gerencie as imagens do carrossel</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-images"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="store">
+                    <div class="content-header">
+                        <h2 data-i18n="store">Loja (Tienda)</h2>
+                        <p data-i18n="store-description">Gerencie a loja do aplicativo</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-store"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="sales">
+                    <div class="content-header">
+                        <h2 data-i18n="sales">Vendas - Kiwify</h2>
+                        <p data-i18n="sales-description">Gerencie as vendas via Kiwify</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="notifications">
+                    <div class="content-header">
+                        <h2 data-i18n="notifications">Notificações Push</h2>
+                        <p data-i18n="notifications-description">Gerencie as notificações push</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-bell"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="integrations">
+                    <div class="content-header">
+                        <h2 data-i18n="integrations">Integrações e APIs</h2>
+                        <p data-i18n="integrations-description">Gerencie integrações e APIs</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-plug"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="reports">
+                    <div class="content-header">
+                        <h2 data-i18n="reports">Relatórios</h2>
+                        <p data-i18n="reports-description">Visualize relatórios e análises</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="autoresponder">
+                    <div class="content-header">
+                        <h2 data-i18n="autoresponder">Autoresponder</h2>
+                        <p data-i18n="autoresponder-description">Configure o autoresponder</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="app-customization">
+                    <div class="content-header">
+                        <h2 data-i18n="app-customization">Personalização do App</h2>
+                        <p data-i18n="app-customization-description">Personalize a aparência do aplicativo</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-paint-brush"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="gamification">
+                    <div class="content-header">
+                        <h2 data-i18n="gamification">Gamificação</h2>
+                        <p data-i18n="gamification-description">Configure a gamificação do aplicativo</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-gamepad"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="general-settings">
+                    <div class="content-header">
+                        <h2 data-i18n="general-settings">Configurações Gerais</h2>
+                        <p data-i18n="general-settings-description">Configure as opções gerais do sistema</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-cog"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="support">
+                    <div class="content-header">
+                        <h2 data-i18n="support">Central de Suporte com IA</h2>
+                        <p data-i18n="support-description">Central de suporte com inteligência artificial</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fas fa-robot"></i>
+                        <h3 data-i18n="coming-soon">Em breve...</h3>
+                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Overlay for mobile -->
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
