@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="challenges-styles.css">
     <link rel="stylesheet" href="customization-styles.css">
+    <link rel="stylesheet" href="support-styles.css">
     
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -3600,13 +3601,306 @@
 
                 <div class="tab-content" id="support">
                     <div class="content-header">
-                        <h2 data-i18n="support">Central de Suporte com IA</h2>
-                        <p data-i18n="support-description">Central de suporte com inteligência artificial</p>
+                        <h2 data-i18n="support">🤖 Central de Suporte com IA</h2>
+                        <p data-i18n="support-description">Sistema inteligente para responder dúvidas dos usuários com IA ou suporte manual</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-robot"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Support Overview Stats -->
+                    <div class="support-overview">
+                        <div class="support-stats">
+                            <div class="stat-card ai">
+                                <div class="stat-icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="aiResponses">0</h4>
+                                    <p>Respostas por IA</p>
+                                </div>
+                            </div>
+                            <div class="stat-card manual">
+                                <div class="stat-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="manualResponses">0</h4>
+                                    <p>Respostas Manuais</p>
+                                </div>
+                            </div>
+                            <div class="stat-card pending">
+                                <div class="stat-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="pendingTickets">0</h4>
+                                    <p>Aguardando Resposta</p>
+                                </div>
+                            </div>
+                            <div class="stat-card resolved">
+                                <div class="stat-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="resolvedTickets">0</h4>
+                                    <p>Tickets Resolvidos</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="satisfactionRating">0</h4>
+                                    <p>Satisfação Média</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-ticket-alt"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="totalTickets">0</h4>
+                                    <p>Total de Tickets</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Support Configuration and Inbox -->
+                    <div class="support-container">
+                        <!-- AI Configuration Section -->
+                        <div class="support-section">
+                            <div class="support-section-header ai">
+                                <h3><i class="fas fa-brain"></i> Configuração da IA</h3>
+                                <button class="btn btn-light btn-small" id="saveSettingsBtn">
+                                    <i class="fas fa-save"></i> Salvar
+                                </button>
+                            </div>
+                            <div class="support-section-content">
+                                <div class="ai-config-grid">
+                                    <!-- AI Toggle -->
+                                    <div class="ai-toggle" id="aiToggle">
+                                        <div class="ai-toggle-info">
+                                            <h4>Ativar IA como Padrão</h4>
+                                            <p>Responder automaticamente com inteligência artificial</p>
+                                            <div class="api-status" id="apiStatus">
+                                                <i class="fas fa-times-circle"></i> API Desconectada
+                                            </div>
+                                        </div>
+                                        <div class="toggle-switch" id="aiToggleSwitch"></div>
+                                    </div>
+                                    
+                                    <!-- API Configuration -->
+                                    <div class="form-group">
+                                        <label>Conexão OpenAI</label>
+                                        <div class="form-row">
+                                            <button class="btn btn-secondary" id="testApiBtn">
+                                                <i class="fas fa-plug"></i> Testar Conexão
+                                            </button>
+                                        </div>
+                                        <small class="form-help">API Key será carregada automaticamente das integrações</small>
+                                    </div>
+                                    
+                                    <!-- Response Language -->
+                                    <div class="form-group">
+                                        <label for="responseLanguage">Idioma Padrão das Respostas</label>
+                                        <select id="responseLanguage">
+                                            <option value="es">🇪🇸 Español</option>
+                                            <option value="pt">🇧🇷 Português</option>
+                                            <option value="en">🇺🇸 English</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <!-- AI Tone -->
+                                    <div class="form-group">
+                                        <label>Tom da IA</label>
+                                        <div class="tone-selector">
+                                            <div class="tone-option active" data-tone="empathetic">
+                                                <i class="fas fa-heart"></i>
+                                                <span>Empático</span>
+                                            </div>
+                                            <div class="tone-option" data-tone="technical">
+                                                <i class="fas fa-cogs"></i>
+                                                <span>Técnico</span>
+                                            </div>
+                                            <div class="tone-option" data-tone="direct">
+                                                <i class="fas fa-bolt"></i>
+                                                <span>Direto</span>
+                                            </div>
+                                            <div class="tone-option" data-tone="cultural">
+                                                <i class="fas fa-globe"></i>
+                                                <span>Cultural</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Training Data -->
+                                    <div class="form-group">
+                                        <label>Treinamento Base da IA</label>
+                                        <div class="training-editor">
+                                            <div class="training-editor-header">
+                                                <h5><i class="fas fa-database"></i> Base de Conhecimento</h5>
+                                                <div class="training-stats">
+                                                    <span id="wordCount">0 palavras</span>
+                                                    <span id="charCount">0 caracteres</span>
+                                                    <span id="lineCount">0 linhas</span>
+                                                </div>
+                                            </div>
+                                            <div class="training-editor-content">
+                                                <textarea id="trainingData" placeholder="Cole aqui o conteúdo dos seus produtos (transcrições de eBooks, resumos de bônus, explicações de desafios, termos de política, FAQ, etc.) para treinar a IA com informações específicas do seu negócio...
+
+Exemplo:
+- Nosso eBook principal fala sobre alimentação saudável...
+- Os desafios premium incluem exercícios de 30 dias...
+- Nossa política de reembolso é de 7 dias...
+- Para problemas técnicos, primeiro orientar a reiniciar o app..."></textarea>
+                                            </div>
+                                        </div>
+                                        <small class="form-help">Quanto mais específico e detalhado, melhores serão as respostas da IA</small>
+                                    </div>
+                                    
+                                    <!-- Limits -->
+                                    <div class="form-group">
+                                        <label>Limites de Resposta</label>
+                                        <div class="limits-grid">
+                                            <div class="form-group">
+                                                <label for="dailyLimit">Limite Diário Total</label>
+                                                <input type="number" id="dailyLimit" min="1" max="1000" value="50">
+                                                <small>Máximo de respostas IA por dia</small>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="userLimit">Limite por Usuário</label>
+                                                <input type="number" id="userLimit" min="1" max="50" value="10">
+                                                <small>Máximo por usuário/dia</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Auto Response -->
+                                    <div class="form-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="autoResponse" checked>
+                                            <span class="checkbox-custom"></span>
+                                            Resposta automática instantânea
+                                            <small>Responder imediatamente quando uma mensagem for recebida</small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Manual Support Section -->
+                        <div class="support-section">
+                            <div class="support-section-header manual">
+                                <h3><i class="fas fa-headset"></i> Suporte Manual</h3>
+                                <div class="inbox-filters">
+                                    <button class="filter-btn active" data-filter="all">Todos</button>
+                                    <button class="filter-btn" data-filter="pending">Pendentes</button>
+                                    <button class="filter-btn" data-filter="responded">Respondidos</button>
+                                    <button class="filter-btn" data-filter="escalated">Encaminhados</button>
+                                </div>
+                            </div>
+                            <div class="support-section-content">
+                                <div class="support-inbox" id="supportInbox">
+                                    <!-- Tickets will be populated here -->
+                                    <div class="loading">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        Carregando tickets...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Statistics Dashboard -->
+                    <div class="support-stats-dashboard">
+                        <div class="stats-chart">
+                            <h4><i class="fas fa-chart-line"></i> Tendência de Tickets</h4>
+                            <div class="chart-placeholder">
+                                Gráfico de tickets por período
+                            </div>
+                        </div>
+                        <div class="stats-chart">
+                            <h4><i class="fas fa-chart-pie"></i> Tópicos Mais Perguntados</h4>
+                            <div class="chart-placeholder">
+                                Gráfico de categorias de dúvidas
+                            </div>
+                        </div>
+                        <div class="stats-chart">
+                            <h4><i class="fas fa-clock"></i> Tempo Médio de Resposta</h4>
+                            <div class="chart-placeholder">
+                                Análise de performance do suporte
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Response Editor Modal -->
+                <div class="response-editor" id="responseEditor">
+                    <div class="response-editor-modal">
+                        <div class="response-editor-header">
+                            <h3><i class="fas fa-reply"></i> Responder Ticket</h3>
+                            <button class="btn btn-light btn-small" id="closeResponseEditor">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="response-editor-content">
+                            <!-- Original Message -->
+                            <div class="original-message" id="originalMessage">
+                                <!-- Will be populated dynamically -->
+                            </div>
+                            
+                            <!-- Conversation History -->
+                            <div class="conversation-history" id="conversationHistory">
+                                <!-- Will be populated dynamically -->
+                            </div>
+                            
+                            <!-- Response Tools -->
+                            <div class="response-tools">
+                                <button class="btn btn-secondary btn-small" id="aiSuggestResponse">
+                                    <i class="fas fa-magic"></i> Sugerir Resposta IA
+                                </button>
+                                <button class="btn btn-secondary btn-small" id="translateResponse">
+                                    <i class="fas fa-language"></i> Traduzir
+                                </button>
+                            </div>
+                            
+                            <!-- Quick Responses -->
+                            <div class="quick-responses">
+                                <h5><i class="fas fa-bolt"></i> Respostas Rápidas</h5>
+                                <div class="quick-response-grid" id="quickResponseGrid">
+                                    <!-- Will be populated dynamically -->
+                                </div>
+                            </div>
+                            
+                            <!-- Response Text Area -->
+                            <textarea class="response-textarea" id="responseTextarea" placeholder="Digite sua resposta aqui..."></textarea>
+                            
+                            <!-- FAQ Integration -->
+                            <div class="faq-integration">
+                                <h5><i class="fas fa-question-circle"></i> Adicionar ao FAQ</h5>
+                                <p>Esta resposta pode ser útil para outros usuários? Considere adicionar ao FAQ.</p>
+                            </div>
+                            
+                            <!-- Response Actions -->
+                            <div class="response-actions">
+                                <div class="response-actions-left">
+                                    <button class="btn btn-warning btn-small" id="escalateTicket">
+                                        <i class="fas fa-arrow-up"></i> Encaminhar
+                                    </button>
+                                    <button class="btn btn-info btn-small" id="addToFaq">
+                                        <i class="fas fa-plus"></i> Adicionar ao FAQ
+                                    </button>
+                                </div>
+                                <div class="response-actions-right">
+                                    <button class="btn btn-success btn-small" id="markResolved">
+                                        <i class="fas fa-check"></i> Marcar como Resolvido
+                                    </button>
+                                    <button class="btn btn-primary" id="sendResponse">
+                                        <i class="fas fa-paper-plane"></i> Enviar Resposta
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>
@@ -6314,6 +6608,7 @@
     <script src="content-management.js"></script>
     <script src="app-customization.js"></script>
     <script src="fix-customization-display.js"></script>
+    <script src="support-management.js"></script>
     <link rel="stylesheet" href="store-styles.css">
     <link rel="stylesheet" href="sales-styles.css">
     <link rel="stylesheet" href="notifications-styles.css">
