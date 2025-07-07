@@ -116,10 +116,125 @@
         .api-status.connected { color: #00d4aa; }
         .api-status.disconnected { color: #e74c3c; }
         
+        /* ===== AUTORESPONDER STYLES ===== */
+        .autoresponder-overview { margin-bottom: 2rem; }
+        .autoresponder-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .autoresponder-stats .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px; padding: 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3); transition: all 0.3s ease; }
+        .autoresponder-stats .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4); }
+        .autoresponder-stats .stat-card.emails { background: linear-gradient(135deg, #00d4aa 0%, #00a693 100%); }
+        .autoresponder-stats .stat-card.automations { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .autoresponder-stats .stat-card.sent { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #333; }
+        .autoresponder-stats .stat-card.opened { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; }
+        .autoresponder-stats .stat-card .stat-icon { background: rgba(255, 255, 255, 0.2); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .autoresponder-stats .stat-card .stat-content h4 { margin: 0; font-size: 1.25rem; font-weight: 600; }
+        .autoresponder-stats .stat-card .stat-content p { margin: 0.25rem 0 0 0; opacity: 0.9; font-size: 0.9rem; }
+        .autoresponder-container { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2rem; }
+        .autoresponder-section { background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); overflow: hidden; margin-bottom: 2rem; }
+        .autoresponder-section-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .autoresponder-section-header.emails { background: linear-gradient(135deg, #00d4aa 0%, #00a693 100%); }
+        .autoresponder-section-header.automations { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .autoresponder-section-header.integrations { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .autoresponder-section-header h3 { margin: 0; display: flex; align-items: center; gap: 0.5rem; flex: 1; }
+        .autoresponder-section-content { padding: 1.5rem; }
+        .create-email-btn { background: linear-gradient(135deg, #00d4aa 0%, #00a693 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; }
+        .create-email-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 212, 170, 0.3); }
+        .email-list { display: grid; gap: 1rem; }
+        .email-item { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 1.5rem; transition: all 0.3s ease; cursor: pointer; }
+        .email-item:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transform: translateY(-2px); }
+        .email-item.active { border-color: #00d4aa; background: #f0fdf4; }
+        .email-item.inactive { opacity: 0.6; }
+        .email-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+        .email-title { font-weight: 600; font-size: 1.1rem; color: #1f2937; margin: 0; }
+        .email-subject { color: #6b7280; font-size: 0.9rem; margin: 0.25rem 0 0 0; }
+        .email-meta { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+        .email-language { background: #eff6ff; color: #1d4ed8; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 500; }
+        .email-trigger { background: #f3e8ff; color: #7c3aed; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 500; }
+        .email-status { padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 500; }
+        .email-status.active { background: #d1fae5; color: #065f46; }
+        .email-status.inactive { background: #fee2e2; color: #991b1b; }
+        .email-stats { display: flex; gap: 1.5rem; align-items: center; margin-bottom: 1rem; font-size: 0.9rem; color: #6b7280; }
+        .email-actions { display: flex; gap: 0.5rem; }
+        .email-actions .btn { font-size: 0.8rem; padding: 0.25rem 0.75rem; }
+        .rich-text-editor { border: 2px solid #e9ecef; border-radius: 8px; overflow: hidden; }
+        .editor-toolbar { background: #f8f9fa; padding: 0.75rem; border-bottom: 1px solid #e9ecef; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .editor-btn { background: none; border: 1px solid #d1d5db; padding: 0.5rem; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
+        .editor-btn:hover { background: #e5e7eb; }
+        .editor-btn.active { background: #6366f1; color: white; border-color: #6366f1; }
+        .editor-separator { width: 1px; background: #d1d5db; margin: 0 0.5rem; }
+        .editor-content { min-height: 200px; padding: 1rem; border: none; outline: none; font-family: inherit; font-size: 0.9rem; line-height: 1.6; }
+        .editor-content:empty::before { content: attr(placeholder); color: #9ca3af; }
+        .target-selector { display: grid; gap: 0.75rem; margin-top: 0.5rem; }
+        .target-option { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+        .target-option:hover { border-color: #6366f1; background: #f8fafc; }
+        .target-option.selected { border-color: #6366f1; background: #eff6ff; }
+        .target-option input[type="radio"] { display: none; }
+        .target-option .radio-custom { width: 20px; height: 20px; border: 2px solid #d1d5db; border-radius: 50%; position: relative; transition: all 0.3s ease; }
+        .target-option.selected .radio-custom { border-color: #6366f1; }
+        .target-option.selected .radio-custom::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #6366f1; border-radius: 50%; }
+        .target-option .option-info h4 { margin: 0 0 0.25rem 0; font-size: 0.9rem; font-weight: 600; color: #374151; }
+        .target-option .option-info p { margin: 0; font-size: 0.8rem; color: #6b7280; }
+        .schedule-selector { display: grid; gap: 0.75rem; margin-top: 0.5rem; }
+        .schedule-option { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+        .schedule-option:hover { border-color: #f59e0b; background: #fffbeb; }
+        .schedule-option.selected { border-color: #f59e0b; background: #fffbeb; }
+        .schedule-option input[type="radio"] { display: none; }
+        .schedule-option .radio-custom { width: 20px; height: 20px; border: 2px solid #d1d5db; border-radius: 50%; position: relative; transition: all 0.3s ease; }
+        .schedule-option.selected .radio-custom { border-color: #f59e0b; }
+        .schedule-option.selected .radio-custom::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #f59e0b; border-radius: 50%; }
+        .schedule-details { margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; display: none; }
+        .schedule-details.active { display: block; }
+        .automation-events { display: grid; gap: 1rem; }
+        .event-item { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 1.5rem; transition: all 0.3s ease; }
+        .event-item.active { border-color: #f093fb; background: #fdf2f8; }
+        .event-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+        .event-toggle { position: relative; width: 50px; height: 25px; background: #ddd; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; }
+        .event-toggle.active { background: #f093fb; }
+        .event-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 21px; height: 21px; background: white; border-radius: 50%; transition: all 0.3s ease; }
+        .event-toggle.active::after { transform: translateX(25px); }
+        .event-info h4 { margin: 0 0 0.25rem 0; font-size: 1rem; font-weight: 600; color: #374151; }
+        .event-info p { margin: 0; font-size: 0.9rem; color: #6b7280; }
+        .event-config { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e9ecef; display: none; }
+        .event-config.active { display: block; }
+        .integration-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .integration-card { background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 12px; padding: 1.5rem; text-align: center; transition: all 0.3s ease; }
+        .integration-card:hover { border-color: #6366f1; transform: translateY(-2px); }
+        .integration-card.connected { border-color: #10b981; background: #f0fdf4; }
+        .integration-icon { width: 60px; height: 60px; margin: 0 auto 1rem; background: #e5e7eb; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .integration-card.connected .integration-icon { background: #d1fae5; color: #065f46; }
+        .integration-name { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.5rem; color: #374151; }
+        .integration-status { font-size: 0.9rem; color: #6b7280; margin-bottom: 1rem; }
+        .integration-card.connected .integration-status { color: #065f46; }
+        .search-filters { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; align-items: center; }
+        .search-box { position: relative; flex: 1; min-width: 250px; }
+        .search-box input { width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.9rem; }
+        .search-box i { position: absolute; top: 50%; left: 0.75rem; transform: translateY(-50%); color: #6b7280; }
+        .filter-select { padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.9rem; background: white; min-width: 150px; }
+        .email-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
+        .email-modal.active { display: flex; }
+        .email-modal-content { background: white; border-radius: 12px; width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); }
+        .email-modal-header { background: linear-gradient(135deg, #00d4aa 0%, #00a693 100%); color: white; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+        .email-modal-body { padding: 2rem; }
+        .email-modal-footer { padding: 1.5rem 2rem; border-top: 1px solid #e9ecef; display: flex; gap: 1rem; justify-content: flex-end; }
+        .stats-dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .stats-chart { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+        .stats-chart h4 { margin: 0 0 1rem 0; color: #333; }
+        .chart-placeholder { height: 200px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #666; font-style: italic; }
+        .notification { position: fixed; top: 20px; right: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); padding: 1rem; z-index: 1001; transform: translateX(100%); transition: transform 0.3s ease; }
+        .notification.show { transform: translateX(0); }
+        .notification.success { border-left: 4px solid #28a745; }
+        .notification.error { border-left: 4px solid #dc3545; }
+        .notification.warning { border-left: 4px solid #ffc107; }
+        .notification.info { border-left: 4px solid #17a2b8; }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .customization-container, .support-container { grid-template-columns: 1fr; }
-            .overview-stats, .support-stats { grid-template-columns: 1fr; }
+            .overview-stats, .support-stats, .autoresponder-stats { grid-template-columns: 1fr; }
+            .integration-grid { grid-template-columns: 1fr; }
+            .search-filters { flex-direction: column; align-items: stretch; }
+            .search-box { min-width: auto; }
+            .email-modal-content { margin: 1rem; max-width: none; }
+            .stats-dashboard { grid-template-columns: 1fr; }
         }
     </style>
     
@@ -2953,13 +3068,305 @@
 
                 <div class="tab-content" id="autoresponder">
                     <div class="content-header">
-                        <h2 data-i18n="autoresponder">Autoresponder</h2>
-                        <p data-i18n="autoresponder-description">Configure o autoresponder</p>
+                        <h2 data-i18n="autoresponder">📬 Autoresponder</h2>
+                        <p data-i18n="autoresponder-description">Crie e gerencie e-mails automáticos para leads e compradores</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-envelope-open-text"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Autoresponder Overview -->
+                    <div class="autoresponder-overview">
+                        <div class="autoresponder-stats" id="autoresponderStats">
+                            <!-- Stats will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Autoresponder Container -->
+                    <div class="autoresponder-container">
+                        <!-- Email Creation Section -->
+                        <div class="autoresponder-section">
+                            <div class="autoresponder-section-header emails">
+                                <h3><i class="fas fa-envelope"></i> Cadastro de E-mails Automáticos</h3>
+                                <button class="create-email-btn" id="createEmailBtn">
+                                    <i class="fas fa-plus"></i>
+                                    Criar Novo E-mail Automático
+                                </button>
+                            </div>
+                            <div class="autoresponder-section-content">
+                                <!-- Search and Filters -->
+                                <div class="search-filters">
+                                    <div class="search-box">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" id="emailSearch" placeholder="Buscar por assunto ou título...">
+                                    </div>
+                                    <select class="filter-select" id="statusFilter">
+                                        <option value="all">Todos os Status</option>
+                                        <option value="active">Ativos</option>
+                                        <option value="inactive">Inativos</option>
+                                    </select>
+                                    <select class="filter-select" id="languageFilter">
+                                        <option value="all">Todos os Idiomas</option>
+                                        <option value="spanish">Español</option>
+                                        <option value="portuguese">Português</option>
+                                        <option value="english">English</option>
+                                    </select>
+                                    <select class="filter-select" id="triggerFilter">
+                                        <option value="all">Todos os Gatilhos</option>
+                                        <option value="immediate">Imediato</option>
+                                        <option value="after_register">Após Cadastro</option>
+                                        <option value="after_purchase">Após Compra</option>
+                                        <option value="weekly">Semanal</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- Email List -->
+                                <div class="email-list" id="emailList">
+                                    <!-- Email items will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Automation Events Section -->
+                        <div class="autoresponder-section">
+                            <div class="autoresponder-section-header automations">
+                                <h3><i class="fas fa-cogs"></i> Automação por Eventos</h3>
+                            </div>
+                            <div class="autoresponder-section-content">
+                                <div class="automation-events" id="automationsList">
+                                    <!-- Automation events will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Integration Settings Section -->
+                        <div class="autoresponder-section">
+                            <div class="autoresponder-section-header integrations">
+                                <h3><i class="fas fa-plug"></i> Integrações Externas</h3>
+                            </div>
+                            <div class="autoresponder-section-content">
+                                <div class="integration-grid" id="integrationsList">
+                                    <!-- Integration cards will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Statistics Dashboard -->
+                        <div class="autoresponder-section">
+                            <div class="autoresponder-section-header">
+                                <h3><i class="fas fa-chart-bar"></i> Estatísticas por E-mail</h3>
+                            </div>
+                            <div class="autoresponder-section-content">
+                                <div class="stats-dashboard">
+                                    <div class="stats-chart">
+                                        <h4>Taxa de Abertura por Idioma</h4>
+                                        <div class="chart-placeholder">
+                                            Gráfico de taxa de abertura por idioma
+                                        </div>
+                                    </div>
+                                    <div class="stats-chart">
+                                        <h4>E-mails Enviados (Últimos 30 dias)</h4>
+                                        <div class="chart-placeholder">
+                                            Gráfico de linha de e-mails enviados
+                                        </div>
+                                    </div>
+                                    <div class="stats-chart">
+                                        <h4>Performance por Gatilho</h4>
+                                        <div class="chart-placeholder">
+                                            Gráfico de barras por tipo de gatilho
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Email Creation/Edit Modal -->
+                    <div class="email-modal" id="emailModal">
+                        <div class="email-modal-content">
+                            <div class="email-modal-header">
+                                <h3 id="emailModalTitle">Criar Novo E-mail Automático</h3>
+                                <button class="btn btn-secondary" onclick="autoresponderManager.closeEmailModal()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="email-modal-body">
+                                <form id="emailForm">
+                                    <div class="form-group">
+                                        <label for="emailTitle">Título Interno *</label>
+                                        <input type="text" id="emailTitle" name="title" required placeholder="Ex: Boas-vindas - Novo Usuário">
+                                        <small class="form-help">Nome interno para identificar o e-mail (não visível para o usuário)</small>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="emailSubject">Assunto do E-mail *</label>
+                                        <input type="text" id="emailSubject" name="subject" required placeholder="Ex: ¡Bienvenido al Plan de Vitalidad! 🌟">
+                                        <small class="form-help">Assunto que aparecerá na caixa de entrada do usuário</small>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="emailLanguage">Idioma do E-mail</label>
+                                        <select id="emailLanguage" name="language" required>
+                                            <option value="spanish">🇪🇸 Español</option>
+                                            <option value="portuguese">🇧🇷 Português</option>
+                                            <option value="english">🇺🇸 English</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Corpo do E-mail *</label>
+                                        <div class="rich-text-editor">
+                                            <div class="editor-toolbar">
+                                                <button type="button" class="editor-btn" data-command="bold" title="Negrito">
+                                                    <i class="fas fa-bold"></i>
+                                                </button>
+                                                <button type="button" class="editor-btn" data-command="italic" title="Itálico">
+                                                    <i class="fas fa-italic"></i>
+                                                </button>
+                                                <button type="button" class="editor-btn" data-command="underline" title="Sublinhado">
+                                                    <i class="fas fa-underline"></i>
+                                                </button>
+                                                <div class="editor-separator"></div>
+                                                <button type="button" class="editor-btn" data-command="insertUnorderedList" title="Lista">
+                                                    <i class="fas fa-list-ul"></i>
+                                                </button>
+                                                <button type="button" class="editor-btn" data-command="insertOrderedList" title="Lista Numerada">
+                                                    <i class="fas fa-list-ol"></i>
+                                                </button>
+                                                <div class="editor-separator"></div>
+                                                <button type="button" class="editor-btn" data-command="createLink" title="Link">
+                                                    <i class="fas fa-link"></i>
+                                                </button>
+                                                <button type="button" class="editor-btn" data-command="unlink" title="Remover Link">
+                                                    <i class="fas fa-unlink"></i>
+                                                </button>
+                                            </div>
+                                            <div class="editor-content" contenteditable="true" 
+                                                 placeholder="Digite o conteúdo do seu e-mail aqui..."></div>
+                                        </div>
+                                        <small class="form-help">Use a barra de ferramentas para formatar o texto</small>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Disparar Para</label>
+                                        <div class="target-selector">
+                                            <div class="target-option">
+                                                <input type="radio" name="target" value="all_subscribers" id="target_all">
+                                                <div class="radio-custom"></div>
+                                                <div class="option-info">
+                                                    <h4>Todos os Inscritos</h4>
+                                                    <p>Enviar para todos os usuários cadastrados</p>
+                                                </div>
+                                            </div>
+                                            <div class="target-option">
+                                                <input type="radio" name="target" value="buyers_only" id="target_buyers">
+                                                <div class="radio-custom"></div>
+                                                <div class="option-info">
+                                                    <h4>Apenas Compradores</h4>
+                                                    <p>Apenas usuários que compraram produtos</p>
+                                                </div>
+                                            </div>
+                                            <div class="target-option">
+                                                <input type="radio" name="target" value="free_users" id="target_free">
+                                                <div class="radio-custom"></div>
+                                                <div class="option-info">
+                                                    <h4>Apenas Usuários Gratuitos</h4>
+                                                    <p>Usuários que não fizeram compras</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Agendamento</label>
+                                        <div class="schedule-selector">
+                                            <div class="schedule-option">
+                                                <input type="radio" name="schedule" value="immediate" id="schedule_immediate">
+                                                <div class="radio-custom"></div>
+                                                <div class="option-info">
+                                                    <h4>Imediato</h4>
+                                                    <p>Enviar assim que o gatilho for ativado</p>
+                                                </div>
+                                            </div>
+                                            <div class="schedule-option">
+                                                <input type="radio" name="schedule" value="after_register" id="schedule_register">
+                                                <div class="radio-custom"></div>
+                                                <div class="option-info">
+                                                    <h4>Após Inscrição</h4>
+                                                    <p>Disparar após X dias da inscrição</p>
+                                                </div>
+                                            </div>
+                                            <div class="schedule-option">
+                                                <input type="radio" name="schedule" value="after_purchase" id="schedule_purchase">
+                                                <div class="radio-custom"></div>
+                                                <div class="option-info">
+                                                    <h4>Após Venda Confirmada</h4>
+                                                    <p>Disparar após confirmação de compra</p>
+                                                </div>
+                                            </div>
+                                            <div class="schedule-option">
+                                                <input type="radio" name="schedule" value="weekly" id="schedule_weekly">
+                                                <div class="radio-custom"></div>
+                                                <div class="option-info">
+                                                    <h4>Periodicidade</h4>
+                                                    <p>Enviar semanalmente ou mensalmente</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="schedule-details" id="after_register-details">
+                                            <div class="form-row">
+                                                <div class="form-group">
+                                                    <label>Dias após inscrição</label>
+                                                    <input type="number" min="0" max="365" value="1" placeholder="1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="schedule-details" id="after_purchase-details">
+                                            <div class="form-row">
+                                                <div class="form-group">
+                                                    <label>Minutos após compra</label>
+                                                    <input type="number" min="0" max="1440" value="30" placeholder="30">
+                                                    <small class="form-help">0 = imediato, 60 = 1 hora, 1440 = 1 dia</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="schedule-details" id="weekly-details">
+                                            <div class="form-row">
+                                                <div class="form-group">
+                                                    <label>Frequência</label>
+                                                    <select>
+                                                        <option value="weekly">Semanal</option>
+                                                        <option value="monthly">Mensal</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Dia da semana</label>
+                                                    <select>
+                                                        <option value="monday">Segunda-feira</option>
+                                                        <option value="tuesday">Terça-feira</option>
+                                                        <option value="wednesday">Quarta-feira</option>
+                                                        <option value="thursday">Quinta-feira</option>
+                                                        <option value="friday">Sexta-feira</option>
+                                                        <option value="saturday">Sábado</option>
+                                                        <option value="sunday">Domingo</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="email-modal-footer">
+                                <button class="btn btn-secondary" onclick="autoresponderManager.closeEmailModal()">
+                                    <i class="fas fa-times"></i>
+                                    Cancelar
+                                </button>
+                                <button class="btn btn-primary" onclick="autoresponderManager.saveEmail()">
+                                    <i class="fas fa-save"></i>
+                                    Salvar E-mail
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -7041,8 +7448,329 @@ Exemplo:
             }
         }
 
+        // Autoresponder Manager Inline
+        class AutoresponderManagerInline {
+            constructor() {
+                this.isInitialized = false;
+                this.emails = JSON.parse(localStorage.getItem('autoresponder_emails') || '[]');
+                this.automations = JSON.parse(localStorage.getItem('autoresponder_automations') || '[]');
+                this.integrations = JSON.parse(localStorage.getItem('autoresponder_integrations') || '{}');
+                this.stats = JSON.parse(localStorage.getItem('autoresponder_stats') || '{}');
+                this.currentEmailId = null;
+                this.currentFilter = 'all';
+                this.currentSearch = '';
+            }
+
+            init() {
+                if (this.isInitialized) return;
+                console.log('📬 Autoresponder Manager Inline inicializado');
+                this.loadExampleData();
+                this.renderStats();
+                this.renderEmailList();
+                this.renderAutomations();
+                this.renderIntegrations();
+                this.bindEvents();
+                this.isInitialized = true;
+            }
+
+            loadExampleData() {
+                if (this.emails.length === 0) {
+                    this.emails = [
+                        {
+                            id: 1,
+                            title: 'Boas-vindas - Novo Usuário',
+                            subject: '¡Bienvenido al Plan de Vitalidad! 🌟',
+                            content: '<h2>¡Hola!</h2><p>Te damos la bienvenida a nuestro Plan de Vitalidad. Estamos emocionados de acompañarte en este viaje hacia una vida más saludable.</p>',
+                            language: 'spanish',
+                            target: 'all_subscribers',
+                            schedule: 'immediate',
+                            status: 'active',
+                            created: new Date().toISOString(),
+                            stats: { sent: 245, opened: 178, clicked: 89 }
+                        },
+                        {
+                            id: 2,
+                            title: 'Confirmação de Compra',
+                            subject: 'Obrigado pela sua compra! Seu acesso está liberado',
+                            content: '<h2>Parabéns!</h2><p>Sua compra foi confirmada com sucesso. Agora você tem acesso completo ao Plan de Vitalidad.</p>',
+                            language: 'portuguese',
+                            target: 'buyers_only',
+                            schedule: 'after_purchase',
+                            status: 'active',
+                            created: new Date().toISOString(),
+                            stats: { sent: 89, opened: 76, clicked: 54 }
+                        }
+                    ];
+
+                    this.automations = [
+                        { id: 1, name: 'Sequência de Boas-vindas', event: 'user_register', emails: [1], active: true, delay: 0 },
+                        { id: 2, name: 'Pós-compra', event: 'purchase_confirmed', emails: [2], active: true, delay: 30 }
+                    ];
+
+                    this.integrations = {
+                        mailerlite: { connected: false, apiKey: '' },
+                        brevo: { connected: false, apiKey: '' },
+                        convertkit: { connected: false, apiKey: '' },
+                        zapier: { connected: false, webhook: '' }
+                    };
+
+                    this.stats = {
+                        totalEmails: 2,
+                        totalAutomations: 2,
+                        totalSent: 334,
+                        openRate: 73.2
+                    };
+
+                    this.saveData();
+                }
+            }
+
+            saveData() {
+                localStorage.setItem('autoresponder_emails', JSON.stringify(this.emails));
+                localStorage.setItem('autoresponder_automations', JSON.stringify(this.automations));
+                localStorage.setItem('autoresponder_integrations', JSON.stringify(this.integrations));
+                localStorage.setItem('autoresponder_stats', JSON.stringify(this.stats));
+            }
+
+            renderStats() {
+                const statsContainer = document.getElementById('autoresponderStats');
+                if (!statsContainer) return;
+
+                statsContainer.innerHTML = `
+                    <div class="stat-card emails">
+                        <div class="stat-icon">📧</div>
+                        <div class="stat-content">
+                            <h4>${this.stats.totalEmails || 0}</h4>
+                            <p>E-mails Criados</p>
+                        </div>
+                    </div>
+                    <div class="stat-card automations">
+                        <div class="stat-icon">🔄</div>
+                        <div class="stat-content">
+                            <h4>${this.stats.totalAutomations || 0}</h4>
+                            <p>Automações Ativas</p>
+                        </div>
+                    </div>
+                    <div class="stat-card sent">
+                        <div class="stat-icon">📤</div>
+                        <div class="stat-content">
+                            <h4>${this.stats.totalSent || 0}</h4>
+                            <p>E-mails Enviados</p>
+                        </div>
+                    </div>
+                    <div class="stat-card opened">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-content">
+                            <h4>${this.stats.openRate || 0}%</h4>
+                            <p>Taxa de Abertura</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderEmailList() {
+                const emailList = document.getElementById('emailList');
+                if (!emailList) return;
+
+                emailList.innerHTML = this.emails.map(email => `
+                    <div class="email-item ${email.status}">
+                        <div class="email-header">
+                            <div>
+                                <h4 class="email-title">${email.title}</h4>
+                                <p class="email-subject">${email.subject}</p>
+                            </div>
+                            <div class="email-actions">
+                                <button class="btn btn-sm btn-primary" onclick="autoresponderManagerInline.editEmail(${email.id})">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <button class="btn btn-sm ${email.status === 'active' ? 'btn-warning' : 'btn-success'}" 
+                                        onclick="autoresponderManagerInline.toggleEmailStatus(${email.id})">
+                                    <i class="fas fa-power-off"></i> ${email.status === 'active' ? 'Pausar' : 'Ativar'}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="email-meta">
+                            <span class="email-language">${this.getLanguageLabel(email.language)}</span>
+                            <span class="email-trigger">${this.getTriggerLabel(email.schedule)}</span>
+                            <span class="email-status ${email.status}">${email.status === 'active' ? 'Ativo' : 'Inativo'}</span>
+                        </div>
+                        ${email.stats ? `
+                        <div class="email-stats">
+                            <span><i class="fas fa-paper-plane"></i> ${email.stats.sent} enviados</span>
+                            <span><i class="fas fa-envelope-open"></i> ${email.stats.opened} abertos</span>
+                            <span><i class="fas fa-percentage"></i> ${Math.round((email.stats.opened / email.stats.sent) * 100)}% abertura</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                `).join('');
+            }
+
+            renderAutomations() {
+                const automationsList = document.getElementById('automationsList');
+                if (!automationsList) return;
+
+                const events = [
+                    { id: 'user_register', name: 'Novo usuário se cadastra', description: 'Disparado quando um usuário cria uma conta' },
+                    { id: 'purchase_confirmed', name: 'Compra confirmada', description: 'Disparado quando uma compra é confirmada na Kiwify' },
+                    { id: 'product_unlocked', name: 'Produto desbloqueado', description: 'Disparado quando um produto específico é liberado' },
+                    { id: 'challenge_completed', name: 'Desafio concluído', description: 'Disparado quando um usuário completa um desafio' }
+                ];
+
+                automationsList.innerHTML = events.map(event => {
+                    const automation = this.automations.find(a => a.event === event.id);
+                    const isActive = automation && automation.active;
+                    
+                    return `
+                        <div class="event-item ${isActive ? 'active' : ''}">
+                            <div class="event-header">
+                                <div class="event-info">
+                                    <h4>${event.name}</h4>
+                                    <p>${event.description}</p>
+                                </div>
+                                <div class="event-toggle ${isActive ? 'active' : ''}" 
+                                     onclick="autoresponderManagerInline.toggleAutomation('${event.id}')"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            renderIntegrations() {
+                const integrationsList = document.getElementById('integrationsList');
+                if (!integrationsList) return;
+
+                const integrations = [
+                    { id: 'mailerlite', name: 'MailerLite', icon: '📧', description: 'Plataforma de email marketing' },
+                    { id: 'brevo', name: 'Brevo (Sendinblue)', icon: '💌', description: 'Ferramenta completa de marketing' },
+                    { id: 'convertkit', name: 'ConvertKit', icon: '📬', description: 'Email marketing para criadores' },
+                    { id: 'zapier', name: 'Zapier', icon: '⚡', description: 'Automação entre aplicativos' }
+                ];
+
+                integrationsList.innerHTML = integrations.map(integration => {
+                    const config = this.integrations[integration.id] || { connected: false };
+                    
+                    return `
+                        <div class="integration-card ${config.connected ? 'connected' : ''}">
+                            <div class="integration-icon">${integration.icon}</div>
+                            <h4 class="integration-name">${integration.name}</h4>
+                            <p class="integration-status">
+                                ${config.connected ? 'Conectado' : 'Não conectado'}
+                            </p>
+                            <p style="font-size: 0.8rem; color: #666; margin-bottom: 1rem;">
+                                ${integration.description}
+                            </p>
+                            <button class="btn ${config.connected ? 'btn-warning' : 'btn-primary'}" 
+                                    onclick="autoresponderManagerInline.configureIntegration('${integration.id}')">
+                                <i class="fas fa-${config.connected ? 'edit' : 'plug'}"></i> 
+                                ${config.connected ? 'Configurar' : 'Conectar'}
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            bindEvents() {
+                const createBtn = document.getElementById('createEmailBtn');
+                if (createBtn) {
+                    createBtn.addEventListener('click', () => this.openEmailModal());
+                }
+
+                const modal = document.getElementById('emailModal');
+                if (modal) {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) this.closeEmailModal();
+                    });
+                }
+            }
+
+            openEmailModal(emailId = null) {
+                const modal = document.getElementById('emailModal');
+                if (modal) {
+                    modal.classList.add('active');
+                }
+            }
+
+            closeEmailModal() {
+                const modal = document.getElementById('emailModal');
+                if (modal) {
+                    modal.classList.remove('active');
+                }
+            }
+
+            editEmail(emailId) {
+                this.openEmailModal(emailId);
+            }
+
+            toggleEmailStatus(emailId) {
+                const email = this.emails.find(e => e.id === emailId);
+                if (email) {
+                    email.status = email.status === 'active' ? 'inactive' : 'active';
+                    this.saveData();
+                    this.renderEmailList();
+                    this.showNotification(`E-mail ${email.status === 'active' ? 'ativado' : 'pausado'} com sucesso!`);
+                }
+            }
+
+            toggleAutomation(eventId) {
+                let automation = this.automations.find(a => a.event === eventId);
+                if (automation) {
+                    automation.active = !automation.active;
+                } else {
+                    automation = {
+                        id: Date.now(),
+                        name: `Automação ${eventId}`,
+                        event: eventId,
+                        emails: [],
+                        active: true,
+                        delay: 0
+                    };
+                    this.automations.push(automation);
+                }
+
+                this.saveData();
+                this.renderAutomations();
+                this.renderStats();
+            }
+
+            configureIntegration(integrationId) {
+                const value = window.prompt('Digite sua API Key ou configuração:');
+                if (value !== null) {
+                    this.integrations[integrationId] = {
+                        connected: value.length > 0,
+                        apiKey: value
+                    };
+                    this.saveData();
+                    this.renderIntegrations();
+                    this.showNotification(`${integrationId} ${value ? 'conectado' : 'desconectado'} com sucesso!`);
+                }
+            }
+
+            getLanguageLabel(language) {
+                const labels = {
+                    'spanish': '🇪🇸 Espanhol',
+                    'portuguese': '🇧🇷 Português',
+                    'english': '🇺🇸 Inglês'
+                };
+                return labels[language] || language;
+            }
+
+            getTriggerLabel(schedule) {
+                const labels = {
+                    'immediate': '⚡ Imediato',
+                    'after_register': '👤 Após cadastro',
+                    'after_purchase': '💳 Após compra',
+                    'weekly': '📅 Semanal'
+                };
+                return labels[schedule] || schedule;
+            }
+
+            showNotification(message) {
+                console.log('AUTORESPONDER:', message);
+            }
+        }
+
         // Initialize inline systems
-        let appCustomizationInline, supportManagerInline;
+        let appCustomizationInline, supportManagerInline, autoresponderManagerInline;
 
         document.addEventListener('DOMContentLoaded', function() {
             const originalSwitchTab = window.switchTab;
@@ -7061,6 +7789,13 @@ Exemplo:
                         setTimeout(() => {
                             supportManagerInline = new SupportManagerInline();
                             supportManagerInline.init();
+                        }, 100);
+                    }
+
+                    if (tabId === 'autoresponder' && !autoresponderManagerInline) {
+                        setTimeout(() => {
+                            autoresponderManagerInline = new AutoresponderManagerInline();
+                            autoresponderManagerInline.init();
                         }, 100);
                     }
                 };
