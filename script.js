@@ -168,6 +168,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load saved preferences
     loadPreferences();
     
+    // Initialize customization manager
+    if (typeof AppCustomizationManager !== 'undefined') {
+        // Will be initialized when switching to the customization tab
+        console.log('App Customization Manager available');
+    }
+    
     // Register service worker for PWA
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('service-worker.js')
