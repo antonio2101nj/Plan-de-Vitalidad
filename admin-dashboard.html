@@ -2315,13 +2315,280 @@
 
                 <div class="tab-content" id="gamification">
                     <div class="content-header">
-                        <h2 data-i18n="gamification">Gamificação</h2>
-                        <p data-i18n="gamification-description">Configure a gamificação do aplicativo</p>
+                        <h2 data-i18n="gamification">🎮 Gamificação</h2>
+                        <p data-i18n="gamification-description">Sistema completo de pontos, conquistas e recompensas</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-gamepad"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Gamification Overview Stats -->
+                    <div class="gamification-overview">
+                        <div class="overview-stats">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="totalPointsAwarded">0</h4>
+                                    <p>Pontos Distribuídos</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="totalAchievements">0</h4>
+                                    <p>Conquistas Ativas</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-medal"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="totalUnlockedAchievements">0</h4>
+                                    <p>Conquistas Desbloqueadas</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-gift"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="totalRewards">0</h4>
+                                    <p>Recompensas Disponíveis</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Gamification Tabs -->
+                    <div class="gamification-tabs">
+                        <button class="gamification-tab active" data-section="rules">
+                            <i class="fas fa-cog"></i>
+                            Regras de Pontuação
+                        </button>
+                        <button class="gamification-tab" data-section="achievements">
+                            <i class="fas fa-trophy"></i>
+                            Conquistas e Selos
+                        </button>
+                        <button class="gamification-tab" data-section="progress">
+                            <i class="fas fa-chart-line"></i>
+                            Progresso dos Usuários
+                        </button>
+                        <button class="gamification-tab" data-section="rewards">
+                            <i class="fas fa-gift"></i>
+                            Sistema de Recompensas
+                        </button>
+                        <button class="gamification-tab" data-section="ranking">
+                            <i class="fas fa-crown"></i>
+                            Ranking
+                        </button>
+                    </div>
+                    
+                    <!-- Rules Section -->
+                    <div class="gamification-section active" id="rulesSection">
+                        <div class="section-header">
+                            <h3><i class="fas fa-cog"></i> Regras de Pontuação</h3>
+                            <button class="btn btn-primary" id="createRuleBtn">
+                                <i class="fas fa-plus"></i>
+                                Adicionar Nova Regra
+                            </button>
+                        </div>
+                        
+                        <div class="rules-container">
+                            <div class="rules-grid" id="rulesGrid">
+                                <!-- Rules will be populated here -->
+                            </div>
+                            
+                            <div class="no-rules" id="noRulesMessage" style="display: none;">
+                                <i class="fas fa-cog"></i>
+                                <h4>Nenhuma regra configurada</h4>
+                                <p>Crie regras de pontuação para engajar seus usuários.</p>
+                                <button class="btn btn-primary" onclick="gamificationManager.openCreateRuleModal()">
+                                    <i class="fas fa-plus"></i>
+                                    Criar Primeira Regra
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Achievements Section -->
+                    <div class="gamification-section" id="achievementsSection">
+                        <div class="section-header">
+                            <h3><i class="fas fa-trophy"></i> Conquistas e Selos</h3>
+                            <button class="btn btn-primary" id="createAchievementBtn">
+                                <i class="fas fa-plus"></i>
+                                Criar Nova Conquista
+                            </button>
+                        </div>
+                        
+                        <div class="achievements-container">
+                            <div class="achievements-grid" id="achievementsGrid">
+                                <!-- Achievements will be populated here -->
+                            </div>
+                            
+                            <div class="no-achievements" id="noAchievementsMessage" style="display: none;">
+                                <i class="fas fa-trophy"></i>
+                                <h4>Nenhuma conquista criada</h4>
+                                <p>Crie conquistas para motivar seus usuários.</p>
+                                <button class="btn btn-primary" onclick="gamificationManager.openCreateAchievementModal()">
+                                    <i class="fas fa-plus"></i>
+                                    Criar Primeira Conquista
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Section -->
+                    <div class="gamification-section" id="progressSection">
+                        <div class="section-header">
+                            <h3><i class="fas fa-chart-line"></i> Progresso dos Usuários</h3>
+                            <div class="section-controls">
+                                <button class="btn btn-secondary" id="exportProgressBtn">
+                                    <i class="fas fa-download"></i>
+                                    Exportar Progresso
+                                </button>
+                                <button class="btn btn-info" id="refreshProgressBtn">
+                                    <i class="fas fa-sync"></i>
+                                    Atualizar
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Progress Filters -->
+                        <div class="progress-filters">
+                            <div class="filter-group">
+                                <label for="progressUserFilter">Usuário:</label>
+                                <input type="text" id="progressUserFilter" placeholder="Nome ou e-mail...">
+                            </div>
+                            <div class="filter-group">
+                                <label for="progressLanguageFilter">Idioma:</label>
+                                <select id="progressLanguageFilter">
+                                    <option value="">Todos</option>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="pt">🇧🇷 Português</option>
+                                    <option value="en">🇺🇸 English</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="progressPlanFilter">Plano:</label>
+                                <select id="progressPlanFilter">
+                                    <option value="">Todos</option>
+                                    <option value="free">🆓 Gratuito</option>
+                                    <option value="premium">👑 Premium</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="progressAchievementFilter">Conquista:</label>
+                                <select id="progressAchievementFilter">
+                                    <option value="">Todas</option>
+                                    <!-- Will be populated dynamically -->
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-container">
+                            <div class="progress-table-container">
+                                <table class="progress-table" id="progressTable">
+                                    <thead>
+                                        <tr>
+                                            <th>👤 Usuário</th>
+                                            <th>⭐ Pontuação</th>
+                                            <th>🏆 Conquistas</th>
+                                            <th>📊 Progresso</th>
+                                            <th>🕒 Última Atividade</th>
+                                            <th>⚙️ Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="progressTableBody">
+                                        <!-- Progress data will be populated here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="no-progress" id="noProgressMessage" style="display: none;">
+                                <i class="fas fa-chart-line"></i>
+                                <h4>Nenhum progresso encontrado</h4>
+                                <p>Não há dados de gamificação para exibir.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rewards Section -->
+                    <div class="gamification-section" id="rewardsSection">
+                        <div class="section-header">
+                            <h3><i class="fas fa-gift"></i> Sistema de Recompensas</h3>
+                            <button class="btn btn-primary" id="createRewardBtn">
+                                <i class="fas fa-plus"></i>
+                                Criar Nova Recompensa
+                            </button>
+                        </div>
+                        
+                        <div class="rewards-container">
+                            <div class="rewards-grid" id="rewardsGrid">
+                                <!-- Rewards will be populated here -->
+                            </div>
+                            
+                            <div class="no-rewards" id="noRewardsMessage" style="display: none;">
+                                <i class="fas fa-gift"></i>
+                                <h4>Nenhuma recompensa configurada</h4>
+                                <p>Crie recompensas para motivar seus usuários.</p>
+                                <button class="btn btn-primary" onclick="gamificationManager.openCreateRewardModal()">
+                                    <i class="fas fa-plus"></i>
+                                    Criar Primeira Recompensa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ranking Section -->
+                    <div class="gamification-section" id="rankingSection">
+                        <div class="section-header">
+                            <h3><i class="fas fa-crown"></i> Ranking de Usuários</h3>
+                            <div class="section-controls">
+                                <select id="rankingPeriodFilter">
+                                    <option value="week">Esta Semana</option>
+                                    <option value="month" selected>Este Mês</option>
+                                    <option value="year">Este Ano</option>
+                                    <option value="all">Todos os Tempos</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="ranking-container">
+                            <div class="podium-container">
+                                <div class="podium">
+                                    <div class="podium-place second" id="secondPlace">
+                                        <div class="podium-user">
+                                            <div class="podium-avatar">2</div>
+                                            <div class="podium-name">-</div>
+                                            <div class="podium-points">0 pts</div>
+                                        </div>
+                                        <div class="podium-base silver">2º</div>
+                                    </div>
+                                    <div class="podium-place first" id="firstPlace">
+                                        <div class="podium-user">
+                                            <div class="podium-avatar">👑</div>
+                                            <div class="podium-name">-</div>
+                                            <div class="podium-points">0 pts</div>
+                                        </div>
+                                        <div class="podium-base gold">1º</div>
+                                    </div>
+                                    <div class="podium-place third" id="thirdPlace">
+                                        <div class="podium-user">
+                                            <div class="podium-avatar">3</div>
+                                            <div class="podium-name">-</div>
+                                            <div class="podium-points">0 pts</div>
+                                        </div>
+                                        <div class="podium-base bronze">3º</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="ranking-list" id="rankingList">
+                                <!-- Ranking list will be populated here -->
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -3974,6 +4241,449 @@
         </div>
     </div>
     
+    <!-- Gamification Modals -->
+    
+    <!-- Create/Edit Rule Modal -->
+    <div class="modal large" id="ruleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="ruleModalTitle">Criar Nova Regra de Pontuação</h3>
+                <button class="modal-close" id="ruleModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="ruleForm">
+                    <input type="hidden" id="ruleId" name="ruleId">
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-info-circle"></i> Informações da Regra</h4>
+                        
+                        <div class="form-group">
+                            <label for="ruleName">Nome da Ação *</label>
+                            <input type="text" id="ruleName" name="name" required placeholder="Ex: Concluir o dia 1 do desafio">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="rulePoints">Pontos Concedidos *</label>
+                                <input type="number" id="rulePoints" name="points" required min="1" max="1000" placeholder="10">
+                            </div>
+                            <div class="form-group">
+                                <label for="ruleFrequency">Frequência *</label>
+                                <select id="ruleFrequency" name="frequency" required>
+                                    <option value="">Selecione a frequência</option>
+                                    <option value="once">Única vez</option>
+                                    <option value="daily">Diária</option>
+                                    <option value="repeat">Por repetição</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ruleUserType">Tipo de Usuário *</label>
+                                <select id="ruleUserType" name="userType" required>
+                                    <option value="">Selecione o tipo</option>
+                                    <option value="all">Todos</option>
+                                    <option value="free">Gratuito</option>
+                                    <option value="premium">Premium</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="ruleLanguage">Idioma</label>
+                                <select id="ruleLanguage" name="language">
+                                    <option value="">Todos os idiomas</option>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="pt">🇧🇷 Português</option>
+                                    <option value="en">🇺🇸 English</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="ruleDescription">Descrição (Opcional)</label>
+                            <textarea id="ruleDescription" name="description" placeholder="Descrição adicional da regra..." rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="ruleStatus">Status *</label>
+                            <select id="ruleStatus" name="status" required>
+                                <option value="active">✅ Ativa</option>
+                                <option value="inactive">❌ Inativa</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="ruleModalCancel">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="ruleModalSave" form="ruleForm">
+                    <i class="fas fa-save"></i>
+                    Salvar Regra
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create/Edit Achievement Modal -->
+    <div class="modal large" id="achievementModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="achievementModalTitle">Criar Nova Conquista</h3>
+                <button class="modal-close" id="achievementModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="achievementForm">
+                    <input type="hidden" id="achievementId" name="achievementId">
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-trophy"></i> Informações da Conquista</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="achievementName">Nome da Conquista *</label>
+                                <input type="text" id="achievementName" name="name" required placeholder="Ex: Desafiante Constante">
+                            </div>
+                            <div class="form-group">
+                                <label for="achievementLanguage">Idioma *</label>
+                                <select id="achievementLanguage" name="language" required>
+                                    <option value="">Selecione o idioma</option>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="pt">🇧🇷 Português</option>
+                                    <option value="en">🇺🇸 English</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="achievementDescription">Descrição *</label>
+                            <textarea id="achievementDescription" name="description" required placeholder="Ex: Você concluiu 7 dias seguidos" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="achievementBadge">Imagem do Selo/Medalha</label>
+                            <div class="file-upload-area" id="achievementBadgeUploadArea">
+                                <input type="file" id="achievementBadge" name="badge" accept="image/*" style="display: none;">
+                                <div class="upload-placeholder">
+                                    <i class="fas fa-medal"></i>
+                                    <p>Clique para selecionar imagem do selo</p>
+                                    <small>PNG, JPG até 5MB (recomendado: 200x200px)</small>
+                                </div>
+                                <div class="upload-preview" id="achievementBadgePreview" style="display: none;">
+                                    <img id="achievementBadgePreviewImg" src="" alt="Preview">
+                                    <button type="button" class="remove-file" onclick="gamificationManager.removeFile('badge')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-target"></i> Critério de Desbloqueio</h4>
+                        
+                        <div class="form-group">
+                            <label for="achievementCriteriaType">Tipo de Critério *</label>
+                            <select id="achievementCriteriaType" name="criteriaType" required>
+                                <option value="">Selecione o critério</option>
+                                <option value="points">Pontuação acumulada</option>
+                                <option value="challenges">Desafios completos</option>
+                                <option value="days">Dias consecutivos</option>
+                                <option value="bonus">Bônus acessados</option>
+                                <option value="streak">Sequência de atividades</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="achievementCriteriaValue">Valor do Critério *</label>
+                                <input type="number" id="achievementCriteriaValue" name="criteriaValue" required min="1" placeholder="Ex: 70">
+                            </div>
+                            <div class="form-group">
+                                <label for="achievementRewardType">Tipo de Recompensa *</label>
+                                <select id="achievementRewardType" name="rewardType" required>
+                                    <option value="">Selecione o tipo</option>
+                                    <option value="visual">Visual (apenas selo)</option>
+                                    <option value="content">Destrava conteúdo</option>
+                                    <option value="points">Pontos extras</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" id="achievementRewardDetailsGroup" style="display: none;">
+                            <label for="achievementRewardDetails">Detalhes da Recompensa</label>
+                            <textarea id="achievementRewardDetails" name="rewardDetails" placeholder="Descreva o que será desbloqueado..." rows="2"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="achievementStatus">Status *</label>
+                            <select id="achievementStatus" name="status" required>
+                                <option value="active">✅ Ativa</option>
+                                <option value="inactive">❌ Inativa</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="achievementModalCancel">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="achievementModalSave" form="achievementForm">
+                    <i class="fas fa-save"></i>
+                    Salvar Conquista
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create/Edit Reward Modal -->
+    <div class="modal large" id="rewardModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="rewardModalTitle">Criar Nova Recompensa</h3>
+                <button class="modal-close" id="rewardModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="rewardForm">
+                    <input type="hidden" id="rewardId" name="rewardId">
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-gift"></i> Informações da Recompensa</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="rewardName">Nome da Recompensa *</label>
+                                <input type="text" id="rewardName" name="name" required placeholder="Ex: Planner Secreto">
+                            </div>
+                            <div class="form-group">
+                                <label for="rewardPointsRequired">Pontuação Mínima *</label>
+                                <input type="number" id="rewardPointsRequired" name="pointsRequired" required min="1" placeholder="100">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="rewardDescription">Descrição *</label>
+                            <textarea id="rewardDescription" name="description" required placeholder="Descreva a recompensa..." rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="rewardType">Tipo de Conteúdo *</label>
+                                <select id="rewardType" name="type" required>
+                                    <option value="">Selecione o tipo</option>
+                                    <option value="pdf">📄 PDF</option>
+                                    <option value="video">🎥 Vídeo</option>
+                                    <option value="image">🖼️ Imagem</option>
+                                    <option value="link">🔗 Link Externo</option>
+                                    <option value="text">📝 Texto</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="rewardVisibility">Visibilidade *</label>
+                                <select id="rewardVisibility" name="visibility" required>
+                                    <option value="">Selecione a visibilidade</option>
+                                    <option value="all">Todos</option>
+                                    <option value="premium">Premium</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-upload"></i> Conteúdo da Recompensa</h4>
+                        
+                        <div class="form-group" id="rewardFileGroup">
+                            <label for="rewardFile">Arquivo da Recompensa</label>
+                            <div class="file-upload-area" id="rewardFileUploadArea">
+                                <input type="file" id="rewardFile" name="file" style="display: none;">
+                                <div class="upload-placeholder">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Clique para selecionar arquivo</p>
+                                    <small>PDF, MP4, JPG, PNG até 50MB</small>
+                                </div>
+                                <div class="upload-preview" id="rewardFilePreview" style="display: none;">
+                                    <div class="file-info">
+                                        <i class="fas fa-file" id="rewardFileIcon"></i>
+                                        <div class="file-details">
+                                            <span class="file-name" id="rewardFileName"></span>
+                                            <span class="file-size" id="rewardFileSize"></span>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="remove-file" onclick="gamificationManager.removeFile('rewardFile')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" id="rewardLinkGroup" style="display: none;">
+                            <label for="rewardLink">Link da Recompensa</label>
+                            <input type="url" id="rewardLink" name="link" placeholder="https://exemplo.com/recompensa">
+                        </div>
+                        
+                        <div class="form-group" id="rewardTextGroup" style="display: none;">
+                            <label for="rewardTextContent">Conteúdo de Texto</label>
+                            <textarea id="rewardTextContent" name="textContent" placeholder="Digite o conteúdo da recompensa..." rows="5"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="rewardStatus">Status *</label>
+                            <select id="rewardStatus" name="status" required>
+                                <option value="active">✅ Ativa</option>
+                                <option value="inactive">❌ Inativa</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="rewardModalCancel">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="rewardModalSave" form="rewardForm">
+                    <i class="fas fa-save"></i>
+                    Salvar Recompensa
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- User Progress Detail Modal -->
+    <div class="modal large" id="userProgressModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="userProgressModalTitle">Progresso Detalhado</h3>
+                <button class="modal-close" id="userProgressModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="user-progress-details">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-details">
+                            <h4 id="progressUserName">Nome do Usuário</h4>
+                            <p id="progressUserEmail">email@exemplo.com</p>
+                            <div class="user-stats">
+                                <span class="stat">
+                                    <i class="fas fa-star"></i>
+                                    <span id="progressUserPoints">0</span> pontos
+                                </span>
+                                <span class="stat">
+                                    <i class="fas fa-trophy"></i>
+                                    <span id="progressUserAchievements">0</span> conquistas
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-sections">
+                        <div class="progress-section">
+                            <h5><i class="fas fa-history"></i> Histórico de Pontos</h5>
+                            <div class="points-history" id="pointsHistory">
+                                <!-- Points history will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="progress-section">
+                            <h5><i class="fas fa-medal"></i> Conquistas Desbloqueadas</h5>
+                            <div class="achievements-list" id="userAchievementsList">
+                                <!-- User achievements will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="progress-section">
+                            <h5><i class="fas fa-chart-bar"></i> Progresso nos Desafios</h5>
+                            <div class="challenges-progress" id="challengesProgress">
+                                <!-- Challenges progress will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="userProgressModalCancel">Fechar</button>
+                <button type="button" class="btn btn-primary" id="awardPointsBtn">
+                    <i class="fas fa-plus"></i>
+                    Conceder Pontos
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Award Points Modal -->
+    <div class="modal" id="awardPointsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Conceder Pontos Manualmente</h3>
+                <button class="modal-close" id="awardPointsModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="awardPointsForm">
+                    <input type="hidden" id="awardUserId" name="userId">
+                    
+                    <div class="form-group">
+                        <label for="awardPointsAmount">Quantidade de Pontos *</label>
+                        <input type="number" id="awardPointsAmount" name="points" required min="1" max="1000" placeholder="50">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="awardPointsReason">Motivo *</label>
+                        <input type="text" id="awardPointsReason" name="reason" required placeholder="Ex: Participação especial">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="awardPointsDescription">Descrição (Opcional)</label>
+                        <textarea id="awardPointsDescription" name="description" placeholder="Descrição adicional..." rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="awardPointsModalCancel">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="awardPointsModalSave" form="awardPointsForm">
+                    <i class="fas fa-gift"></i>
+                    Conceder Pontos
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirm Delete Gamification Modal -->
+    <div class="modal" id="confirmDeleteGamificationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão</h3>
+                <button class="modal-close" id="confirmDeleteGamificationClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="confirm-delete-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h4 id="deleteGamificationTitle">Tem certeza que deseja excluir?</h4>
+                    <p id="deleteGamificationMessage">Esta ação não pode ser desfeita.</p>
+                    <div class="item-info">
+                        <strong id="deleteGamificationName"></strong>
+                        <span id="deleteGamificationDetails"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="confirmDeleteGamificationCancel">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteGamificationConfirm">
+                    <i class="fas fa-trash"></i>
+                    Excluir
+                </button>
+            </div>
+        </div>
+    </div>
+    
     <!-- Confirm Delete Challenge Modal -->
     <div class="modal" id="confirmDeleteChallengeModal">
         <div class="modal-content">
@@ -4015,11 +4725,13 @@
     <script src="notifications-management.js"></script>
     <script src="reports-management.js"></script>
     <script src="integrations-management.js"></script>
+    <script src="gamification-management.js"></script>
     <link rel="stylesheet" href="store-styles.css">
     <link rel="stylesheet" href="sales-styles.css">
     <link rel="stylesheet" href="notifications-styles.css">
     <link rel="stylesheet" href="reports-styles.css">
     <link rel="stylesheet" href="integrations-styles.css">
+    <link rel="stylesheet" href="gamification-styles.css">
     <script>
         // Verificar autenticação ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
