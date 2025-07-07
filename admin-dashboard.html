@@ -879,13 +879,352 @@
 
                 <div class="tab-content" id="creatives">
                     <div class="content-header">
-                        <h2 data-i18n="creatives">Criativos e Campanhas</h2>
-                        <p data-i18n="creatives-description">Gerencie criativos e campanhas</p>
+                        <h2 data-i18n="creatives">🎨 Criativos e Campanhas</h2>
+                        <p data-i18n="creatives-description">Repositório visual e gerador de criativos com IA</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-palette"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Creatives Overview Stats -->
+                    <div class="creatives-overview">
+                        <div class="overview-stats">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-images"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="totalCreatives">0</h4>
+                                    <p>Total de Criativos</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="activeCreatives">0</h4>
+                                    <p>Criativos Ativos</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="aiCreatives">0</h4>
+                                    <p>Gerados por IA</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="featuredCreatives">0</h4>
+                                    <p>Criativos Destaque</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Creatives Tabs -->
+                    <div class="creatives-tabs">
+                        <button class="creatives-tab active" data-section="gallery">
+                            <i class="fas fa-th-large"></i>
+                            Galeria de Criativos
+                        </button>
+                        <button class="creatives-tab" data-section="ai-generator">
+                            <i class="fas fa-magic"></i>
+                            Gerador com IA
+                        </button>
+                        <button class="creatives-tab" data-section="analytics">
+                            <i class="fas fa-chart-bar"></i>
+                            Análise de Performance
+                        </button>
+                    </div>
+                    
+                    <!-- Gallery Section -->
+                    <div class="creatives-section active" id="gallerySection">
+                        <div class="section-header">
+                            <h3><i class="fas fa-th-large"></i> Galeria de Criativos</h3>
+                            <button class="btn btn-primary" id="addCreativeBtn">
+                                <i class="fas fa-plus"></i>
+                                Adicionar Novo Criativo
+                            </button>
+                        </div>
+                        
+                        <!-- Filters -->
+                        <div class="creatives-filters">
+                            <div class="filter-group">
+                                <label for="creativesSearchFilter">Buscar:</label>
+                                <input type="text" id="creativesSearchFilter" placeholder="Nome ou descrição...">
+                            </div>
+                            <div class="filter-group">
+                                <label for="creativesTypeFilter">Tipo:</label>
+                                <select id="creativesTypeFilter">
+                                    <option value="">Todos os tipos</option>
+                                    <option value="feed">📱 Feed</option>
+                                    <option value="story">📖 Story</option>
+                                    <option value="carousel">🎠 Carrossel</option>
+                                    <option value="mockup">📱 Mockup</option>
+                                    <option value="landing">🌐 Página de Vendas</option>
+                                    <option value="members">👥 Área de Membros</option>
+                                    <option value="banner">🏷️ Banner</option>
+                                    <option value="ad">📢 Anúncio</option>
+                                    <option value="other">🔧 Outro</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="creativesLanguageFilter">Idioma:</label>
+                                <select id="creativesLanguageFilter">
+                                    <option value="">Todos os idiomas</option>
+                                    <option value="pt">🇧🇷 Português</option>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="en">🇺🇸 English</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="creativesStatusFilter">Status:</label>
+                                <select id="creativesStatusFilter">
+                                    <option value="">Todos</option>
+                                    <option value="active">✅ Ativo</option>
+                                    <option value="inactive">❌ Inativo</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="creativesSourceFilter">Origem:</label>
+                                <select id="creativesSourceFilter">
+                                    <option value="">Todas</option>
+                                    <option value="manual">👤 Manual</option>
+                                    <option value="ai">🤖 IA</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- View Toggle -->
+                        <div class="view-controls">
+                            <div class="view-toggle">
+                                <button class="view-btn active" data-view="grid">
+                                    <i class="fas fa-th"></i>
+                                    Grade
+                                </button>
+                                <button class="view-btn" data-view="list">
+                                    <i class="fas fa-list"></i>
+                                    Lista
+                                </button>
+                            </div>
+                            <div class="sort-controls">
+                                <select id="creativesSortFilter">
+                                    <option value="newest">Mais recentes</option>
+                                    <option value="oldest">Mais antigos</option>
+                                    <option value="name">Nome A-Z</option>
+                                    <option value="type">Por tipo</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="creatives-container">
+                            <div class="creatives-grid" id="creativesGrid">
+                                <!-- Creatives will be populated here -->
+                            </div>
+                            
+                            <div class="creatives-list" id="creativesList" style="display: none;">
+                                <!-- List view will be populated here -->
+                            </div>
+                            
+                            <div class="no-creatives" id="noCreativesMessage" style="display: none;">
+                                <i class="fas fa-images"></i>
+                                <h4>Nenhum criativo encontrado</h4>
+                                <p>Crie seu primeiro criativo ou ajuste os filtros.</p>
+                                <button class="btn btn-primary" onclick="creativesManager.openAddCreativeModal()">
+                                    <i class="fas fa-plus"></i>
+                                    Criar Primeiro Criativo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Generator Section -->
+                    <div class="creatives-section" id="ai-generatorSection">
+                        <div class="section-header">
+                            <h3><i class="fas fa-magic"></i> Gerador de Criativos com IA</h3>
+                            <div class="ai-status">
+                                <span class="status-indicator" id="aiStatusIndicator">
+                                    <i class="fas fa-circle"></i>
+                                    API Conectada
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="ai-generator-container">
+                            <div class="ai-form-section">
+                                <div class="ai-form-card">
+                                    <h4><i class="fas fa-brain"></i> Configuração do Criativo</h4>
+                                    
+                                    <form id="aiGeneratorForm">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="aiLanguage">Idioma *</label>
+                                                <select id="aiLanguage" name="language" required>
+                                                    <option value="">Selecione o idioma</option>
+                                                    <option value="pt">🇧🇷 Português</option>
+                                                    <option value="es">🇪🇸 Español</option>
+                                                    <option value="en">🇺🇸 English</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="aiObjective">Objetivo da Campanha *</label>
+                                                <select id="aiObjective" name="objective" required>
+                                                    <option value="">Selecione o objetivo</option>
+                                                    <option value="engagement">📈 Engajamento no Instagram</option>
+                                                    <option value="conversion">💰 Conversão na Kiwify</option>
+                                                    <option value="traffic">🌐 Tráfego para página de vendas</option>
+                                                    <option value="warming">🔥 Aquecimento de público</option>
+                                                    <option value="testimonial">⭐ Testemunhos visuais</option>
+                                                    <option value="awareness">🎯 Awareness de marca</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="aiVisualStyle">Estilo Visual *</label>
+                                                <select id="aiVisualStyle" name="visualStyle" required>
+                                                    <option value="">Selecione o estilo</option>
+                                                    <option value="minimalist">✨ Minimalista</option>
+                                                    <option value="emotional">❤️ Emocional</option>
+                                                    <option value="colorful">🌈 Colorido</option>
+                                                    <option value="professional">💼 Profissional</option>
+                                                    <option value="mockup">📱 Estilo Mockup</option>
+                                                    <option value="lifestyle">🌟 Lifestyle</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="aiCreativeType">Tipo de Criativo *</label>
+                                                <select id="aiCreativeType" name="creativeType" required>
+                                                    <option value="">Selecione o tipo</option>
+                                                    <option value="feed">📱 Post para Feed</option>
+                                                    <option value="story">📖 Story</option>
+                                                    <option value="banner">🏷️ Banner Horizontal</option>
+                                                    <option value="ad">📢 Criativo para Anúncio</option>
+                                                    <option value="carousel">🎠 Carrossel</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="aiMainText">Texto Principal da Campanha</label>
+                                            <textarea id="aiMainText" name="mainText" placeholder="Digite o texto principal que deve aparecer no criativo..." rows="3"></textarea>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="aiEmotionalTrigger">Gatilho Emocional</label>
+                                            <select id="aiEmotionalTrigger" name="emotionalTrigger">
+                                                <option value="">Nenhum específico</option>
+                                                <option value="urgency">⏰ Urgência</option>
+                                                <option value="belonging">👥 Pertencimento</option>
+                                                <option value="transformation">🦋 Transformação</option>
+                                                <option value="fear">😰 Medo de perder</option>
+                                                <option value="success">🏆 Sucesso</option>
+                                                <option value="comfort">🤗 Conforto</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="aiAdditionalDetails">Detalhes Adicionais</label>
+                                            <textarea id="aiAdditionalDetails" name="additionalDetails" placeholder="Cores específicas, elementos visuais, referências..." rows="2"></textarea>
+                                        </div>
+                                        
+                                        <div class="ai-generate-section">
+                                            <button type="submit" class="btn btn-primary btn-large" id="generateCreativeBtn">
+                                                <i class="fas fa-magic"></i>
+                                                Gerar Criativo com IA
+                                            </button>
+                                            <p class="ai-note">
+                                                <i class="fas fa-info-circle"></i>
+                                                A geração pode levar de 30 a 60 segundos
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <div class="ai-preview-section">
+                                <div class="ai-preview-card">
+                                    <h4><i class="fas fa-eye"></i> Preview do Criativo</h4>
+                                    
+                                    <div class="ai-preview-container" id="aiPreviewContainer">
+                                        <div class="ai-placeholder">
+                                            <i class="fas fa-image"></i>
+                                            <p>O criativo gerado aparecerá aqui</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="ai-preview-actions" id="aiPreviewActions" style="display: none;">
+                                        <button class="btn btn-secondary" id="regenerateBtn">
+                                            <i class="fas fa-redo"></i>
+                                            Regenerar
+                                        </button>
+                                        <button class="btn btn-success" id="saveGeneratedBtn">
+                                            <i class="fas fa-save"></i>
+                                            Salvar na Galeria
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- AI History -->
+                        <div class="ai-history-section">
+                            <h4><i class="fas fa-history"></i> Histórico de Criativos Gerados</h4>
+                            <div class="ai-history-grid" id="aiHistoryGrid">
+                                <!-- AI generated creatives history will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Analytics Section -->
+                    <div class="creatives-section" id="analyticsSection">
+                        <div class="section-header">
+                            <h3><i class="fas fa-chart-bar"></i> Análise de Performance</h3>
+                            <div class="analytics-period">
+                                <select id="analyticsPeriod">
+                                    <option value="7">Últimos 7 dias</option>
+                                    <option value="30" selected>Últimos 30 dias</option>
+                                    <option value="90">Últimos 90 dias</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-container">
+                            <div class="analytics-cards">
+                                <div class="analytics-card">
+                                    <h5>Criativos Mais Visualizados</h5>
+                                    <div class="analytics-list" id="mostViewedList">
+                                        <!-- Will be populated -->
+                                    </div>
+                                </div>
+                                
+                                <div class="analytics-card">
+                                    <h5>Performance por Tipo</h5>
+                                    <div class="analytics-chart" id="typePerformanceChart">
+                                        <!-- Will be populated -->
+                                    </div>
+                                </div>
+                                
+                                <div class="analytics-card">
+                                    <h5>Distribuição por Idioma</h5>
+                                    <div class="analytics-chart" id="languageDistributionChart">
+                                        <!-- Will be populated -->
+                                    </div>
+                                </div>
+                                
+                                <div class="analytics-card">
+                                    <h5>Criativos IA vs Manual</h5>
+                                    <div class="analytics-comparison" id="aiVsManualComparison">
+                                        <!-- Will be populated -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -4684,6 +5023,248 @@
         </div>
     </div>
     
+    <!-- Creatives Modals -->
+    
+    <!-- Add/Edit Creative Modal -->
+    <div class="modal large" id="creativeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="creativeModalTitle">Adicionar Novo Criativo</h3>
+                <button class="modal-close" id="creativeModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="creativeForm">
+                    <input type="hidden" id="creativeId" name="creativeId">
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-info-circle"></i> Informações do Criativo</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="creativeName">Nome do Criativo *</label>
+                                <input type="text" id="creativeName" name="name" required placeholder="Ex: Banner Instagram Transformação">
+                            </div>
+                            <div class="form-group">
+                                <label for="creativeType">Tipo de Criativo *</label>
+                                <select id="creativeType" name="type" required>
+                                    <option value="">Selecione o tipo</option>
+                                    <option value="feed">📱 Feed</option>
+                                    <option value="story">📖 Story</option>
+                                    <option value="carousel">🎠 Carrossel</option>
+                                    <option value="mockup">📱 Mockup</option>
+                                    <option value="landing">🌐 Página de Vendas</option>
+                                    <option value="members">👥 Área de Membros</option>
+                                    <option value="banner">🏷️ Banner</option>
+                                    <option value="ad">📢 Anúncio</option>
+                                    <option value="other">🔧 Outro</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="creativeLanguage">Idioma Principal *</label>
+                                <select id="creativeLanguage" name="language" required>
+                                    <option value="">Selecione o idioma</option>
+                                    <option value="pt">🇧🇷 Português</option>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="en">🇺🇸 English</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="creativeStatus">Status *</label>
+                                <select id="creativeStatus" name="status" required>
+                                    <option value="active">✅ Ativo</option>
+                                    <option value="inactive">❌ Inativo</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="creativeDescription">Descrição (Opcional)</label>
+                            <textarea id="creativeDescription" name="description" placeholder="Descreva o criativo, campanha ou objetivo..." rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="creativeFeatured" name="featured">
+                                <span class="checkbox-custom"></span>
+                                ⭐ Marcar como destaque
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-image"></i> Upload da Imagem</h4>
+                        
+                        <div class="file-upload-area" id="creativeImageUploadArea">
+                            <input type="file" id="creativeImage" name="image" accept="image/*" style="display: none;">
+                            <div class="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Clique para selecionar imagem</p>
+                                <small>JPG, PNG ou GIF até 10MB</small>
+                            </div>
+                            <div class="upload-preview" id="creativeImagePreview" style="display: none;">
+                                <img id="creativeImagePreviewImg" src="" alt="Preview">
+                                <div class="image-info">
+                                    <span class="image-name" id="creativeImageName"></span>
+                                    <span class="image-size" id="creativeImageSize"></span>
+                                </div>
+                                <button type="button" class="remove-file" onclick="creativesManager.removeImage()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="creativeModalCancel">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="creativeModalSave" form="creativeForm">
+                    <i class="fas fa-save"></i>
+                    Salvar Criativo
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- View Creative Modal -->
+    <div class="modal large" id="viewCreativeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="viewCreativeTitle">Visualizar Criativo</h3>
+                <button class="modal-close" id="viewCreativeModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="creative-viewer">
+                    <div class="creative-image-container">
+                        <img id="viewCreativeImage" src="" alt="Criativo">
+                    </div>
+                    <div class="creative-details">
+                        <div class="detail-row">
+                            <strong>Nome:</strong>
+                            <span id="viewCreativeName"></span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Tipo:</strong>
+                            <span id="viewCreativeType"></span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Idioma:</strong>
+                            <span id="viewCreativeLanguage"></span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Status:</strong>
+                            <span id="viewCreativeStatus"></span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Origem:</strong>
+                            <span id="viewCreativeSource"></span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Data de Upload:</strong>
+                            <span id="viewCreativeDate"></span>
+                        </div>
+                        <div class="detail-row" id="viewCreativeDescriptionRow">
+                            <strong>Descrição:</strong>
+                            <span id="viewCreativeDescription"></span>
+                        </div>
+                        <div class="detail-row" id="viewCreativeAiDetailsRow" style="display: none;">
+                            <strong>Detalhes da IA:</strong>
+                            <div class="ai-details" id="viewCreativeAiDetails"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="viewCreativeModalCancel">Fechar</button>
+                <button type="button" class="btn btn-primary" id="editCreativeFromView">
+                    <i class="fas fa-edit"></i>
+                    Editar
+                </button>
+                <button type="button" class="btn btn-success" id="downloadCreative">
+                    <i class="fas fa-download"></i>
+                    Download
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirm Delete Creative Modal -->
+    <div class="modal" id="confirmDeleteCreativeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão</h3>
+                <button class="modal-close" id="confirmDeleteCreativeClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="confirm-delete-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h4>Tem certeza que deseja excluir este criativo?</h4>
+                    <p>Esta ação não pode ser desfeita. O criativo será removido permanentemente.</p>
+                    <div class="item-info">
+                        <strong id="deleteCreativeName"></strong>
+                        <span id="deleteCreativeDetails"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="confirmDeleteCreativeCancel">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteCreativeConfirm">
+                    <i class="fas fa-trash"></i>
+                    Excluir
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- AI Generation Progress Modal -->
+    <div class="modal" id="aiGenerationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Gerando Criativo com IA</h3>
+            </div>
+            <div class="modal-body">
+                <div class="ai-generation-progress">
+                    <div class="generation-steps">
+                        <div class="step active" id="step1">
+                            <i class="fas fa-brain"></i>
+                            <span>Processando briefing...</span>
+                        </div>
+                        <div class="step" id="step2">
+                            <i class="fas fa-magic"></i>
+                            <span>Gerando prompt otimizado...</span>
+                        </div>
+                        <div class="step" id="step3">
+                            <i class="fas fa-image"></i>
+                            <span>Criando imagem com IA...</span>
+                        </div>
+                        <div class="step" id="step4">
+                            <i class="fas fa-check"></i>
+                            <span>Finalizando criativo...</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="aiProgress"></div>
+                    </div>
+                    <p class="progress-text" id="aiProgressText">Iniciando geração...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelAiGeneration">
+                    <i class="fas fa-times"></i>
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+    
     <!-- Confirm Delete Challenge Modal -->
     <div class="modal" id="confirmDeleteChallengeModal">
         <div class="modal-content">
@@ -4726,12 +5307,14 @@
     <script src="reports-management.js"></script>
     <script src="integrations-management.js"></script>
     <script src="gamification-management.js"></script>
+    <script src="creatives-management.js"></script>
     <link rel="stylesheet" href="store-styles.css">
     <link rel="stylesheet" href="sales-styles.css">
     <link rel="stylesheet" href="notifications-styles.css">
     <link rel="stylesheet" href="reports-styles.css">
     <link rel="stylesheet" href="integrations-styles.css">
     <link rel="stylesheet" href="gamification-styles.css">
+    <link rel="stylesheet" href="creatives-styles.css">
     <script>
         // Verificar autenticação ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
