@@ -24,15 +24,43 @@ class AppCustomization {
     }
 
     init() {
-        if (this.isInitialized) return;
+        if (this.isInitialized) {
+            console.log('✅ App Customization já foi inicializado');
+            return;
+        }
         
-        console.log('Inicializando App Customization...');
+        console.log('🔧 Inicializando App Customization...');
+        
+        // Verificar se a aba existe
+        const customizationTab = document.getElementById('app-customization');
+        if (!customizationTab) {
+            console.error('❌ Aba de personalização não encontrada');
+            return;
+        }
+        
+        console.log('📋 Aba encontrada, verificando elementos...');
+        
+        // Verificar elementos principais
+        const appNameInput = document.getElementById('appName');
+        const saveBtn = document.getElementById('saveCustomizationBtn');
+        const previewScreen = document.getElementById('previewScreen');
+        
+        console.log('🔍 Elementos encontrados:', {
+            appNameInput: !!appNameInput,
+            saveBtn: !!saveBtn,
+            previewScreen: !!previewScreen
+        });
+        
         this.loadSettings();
         this.setupEventListeners();
         this.updatePreview();
         this.updateOverviewStats();
         this.isInitialized = true;
-        console.log('App Customization inicializado com sucesso!');
+        
+        console.log('✅ App Customization inicializado com sucesso!');
+        
+        // Mostrar notificação de sucesso
+        this.showNotification('Sistema de personalização carregado!', 'success');
     }
 
     loadSettings() {
@@ -554,26 +582,58 @@ window.appCustomization = new AppCustomization();
 
 // Initialize when switching to customization tab
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 App Customization: DOM loaded, setting up...');
+    
+    // Force initialization after a delay to ensure all elements are ready
+    setTimeout(() => {
+        console.log('🔧 App Customization: Attempting initialization...');
+        if (window.appCustomization) {
+            window.appCustomization.init();
+        }
+    }, 1000);
+    
     // Hook into the existing tab switching system
     const originalSwitchTab = window.switchTab;
     if (originalSwitchTab) {
         window.switchTab = function(tabId) {
+            console.log('🔄 Switching to tab:', tabId);
             originalSwitchTab(tabId);
             
             // Initialize customization when switching to app-customization tab
             if (tabId === 'app-customization' && window.appCustomization) {
+                console.log('🎨 Initializing App Customization...');
                 setTimeout(() => {
                     window.appCustomization.init();
-                }, 100);
+                }, 200);
             }
         };
+    } else {
+        console.log('⚠️ switchTab function not found, setting up manual tab listener');
+        
+        // Manual tab switching if switchTab is not available
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            if (item.dataset.tab === 'app-customization') {
+                item.addEventListener('click', () => {
+                    console.log('🎨 Manual tab click: Initializing App Customization...');
+                    setTimeout(() => {
+                        if (window.appCustomization) {
+                            window.appCustomization.init();
+                        }
+                    }, 200);
+                });
+            }
+        });
     }
     
     // Also initialize if we're already on the customization tab
     const activeTab = document.querySelector('.tab-content.active');
     if (activeTab && activeTab.id === 'app-customization') {
+        console.log('🎨 Already on customization tab, initializing...');
         setTimeout(() => {
-            window.appCustomization.init();
-        }, 100);
+            if (window.appCustomization) {
+                window.appCustomization.init();
+            }
+        }, 500);
     }
 });
