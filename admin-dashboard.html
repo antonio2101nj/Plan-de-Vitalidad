@@ -19,6 +19,110 @@
     <link rel="stylesheet" href="customization-styles.css">
     <link rel="stylesheet" href="support-styles.css">
     
+    <!-- Inline CSS for GitHub Pages -->
+    <style>
+        /* Customization Styles */
+        .customization-overview { margin-bottom: 2rem; }
+        .overview-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .overview-stats .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px; padding: 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3); transition: all 0.3s ease; }
+        .overview-stats .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4); }
+        .customization-container { display: grid; grid-template-columns: 1fr 400px; gap: 2rem; margin-top: 2rem; }
+        .customization-section { background: #ffffff; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); }
+        .customization-section .section-header { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 1.25rem 1.5rem; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; }
+        .customization-section .section-content { padding: 1.5rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #374151; font-size: 0.9rem; }
+        .form-group input[type="text"] { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.9rem; transition: all 0.3s ease; }
+        .upload-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .upload-area { border: 2px dashed #d1d5db; border-radius: 8px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s ease; min-height: 120px; display: flex; align-items: center; justify-content: center; }
+        .color-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .tone-selector { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }
+        .tone-option { background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 8px; padding: 1rem; text-align: center; cursor: pointer; transition: all 0.3s ease; }
+        .tone-option.active { background: #e8f5e8; border-color: #00d4aa; color: #00a693; }
+        .layout-selector { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .layout-option { border: 2px solid #e5e7eb; border-radius: 12px; padding: 1rem; cursor: pointer; transition: all 0.3s ease; text-align: center; }
+        .layout-option.active { border-color: #6366f1; background: #eff6ff; }
+        .preview-section { background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); overflow: hidden; }
+        .preview-device-frame { background: #1f2937; border-radius: 20px; padding: 20px; margin: 0 auto; }
+        .preview-device-frame.mobile { width: 280px; }
+        .preview-screen { background: white; border-radius: 12px; overflow: hidden; height: 500px; }
+        
+        /* Support Styles */
+        .support-overview { margin-bottom: 2rem; }
+        .support-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .support-stats .stat-card.ai { background: linear-gradient(135deg, #00d4aa 0%, #00a693 100%); }
+        .support-stats .stat-card.manual { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .support-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+        .support-section { background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); overflow: hidden; margin-bottom: 2rem; }
+        .support-section-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .support-section-header.ai { background: linear-gradient(135deg, #00d4aa 0%, #00a693 100%); }
+        .support-section-header.manual { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .support-section-content { padding: 1.5rem; }
+        .ai-toggle { display: flex; align-items: center; justify-content: space-between; background: #f8f9fa; padding: 1rem; border-radius: 8px; border: 2px solid #e9ecef; margin-bottom: 1rem; }
+        .ai-toggle.active { background: #e8f5e8; border-color: #00d4aa; }
+        .toggle-switch { position: relative; width: 60px; height: 30px; background: #ddd; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; }
+        .toggle-switch.active { background: #00d4aa; }
+        .toggle-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; background: white; border-radius: 50%; transition: all 0.3s ease; }
+        .toggle-switch.active::after { transform: translateX(30px); }
+        .training-editor { border: 2px solid #e9ecef; border-radius: 8px; overflow: hidden; }
+        .training-editor textarea { width: 100%; min-height: 200px; border: none; resize: vertical; font-family: 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 1rem; }
+        .support-inbox { max-height: 600px; overflow-y: auto; }
+        .support-ticket { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; transition: all 0.3s ease; cursor: pointer; }
+        .support-ticket:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transform: translateY(-2px); }
+        .support-ticket.pending { border-left: 4px solid #ffc107; }
+        .support-ticket.responded { border-left: 4px solid #28a745; }
+        .support-ticket.escalated { border-left: 4px solid #dc3545; }
+        .response-editor { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .response-editor.active { display: flex; }
+        .response-editor-modal { background: white; border-radius: 12px; width: 90%; max-width: 800px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); }
+        .response-textarea { width: 100%; min-height: 150px; border: 2px solid #e9ecef; border-radius: 8px; padding: 1rem; resize: vertical; font-family: inherit; line-height: 1.5; }
+        .quick-response-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 0.5rem; }
+        .quick-response-btn { background: #e9ecef; border: none; padding: 0.5rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s ease; }
+        .filter-btn { padding: 0.5rem 1rem; border: 2px solid #e9ecef; background: #f8f9fa; border-radius: 20px; cursor: pointer; transition: all 0.3s ease; font-size: 0.9rem; }
+        .filter-btn.active { background: #f093fb; border-color: #f093fb; color: white; }
+        .support-stats-dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .stats-chart { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+        .chart-placeholder { height: 200px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #666; font-style: italic; }
+        
+        /* Additional styles */
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold; }
+        .ticket-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+        .ticket-user { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; }
+        .ticket-meta { display: flex; gap: 1rem; font-size: 0.8rem; color: #666; }
+        .ticket-status { padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
+        .ticket-status.pending { background: #fff3cd; color: #856404; }
+        .ticket-status.responded { background: #d4edda; color: #155724; }
+        .ticket-status.escalated { background: #f8d7da; color: #721c24; }
+        .ticket-message { margin: 0.5rem 0; color: #333; line-height: 1.5; }
+        .ticket-actions { display: flex; gap: 0.5rem; margin-top: 1rem; }
+        .btn { background: #10b981; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s ease; }
+        .btn:hover { background: #059669; }
+        .btn-small { padding: 0.25rem 0.75rem; font-size: 0.8rem; }
+        .btn-primary { background: #6366f1; }
+        .btn-primary:hover { background: #4f46e5; }
+        .btn-secondary { background: #6b7280; }
+        .btn-secondary:hover { background: #4b5563; }
+        .response-editor-header { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+        .response-editor-content { padding: 1.5rem; }
+        .original-message { background: #f8f9fa; border-left: 4px solid #f093fb; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; }
+        .response-actions { display: flex; gap: 1rem; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e9ecef; }
+        .ai-config-grid { display: grid; gap: 1.5rem; }
+        .ai-toggle-info h4 { margin: 0 0 0.25rem 0; color: #333; }
+        .ai-toggle-info p { margin: 0; font-size: 0.9rem; color: #666; }
+        .training-editor-header { background: #f8f9fa; padding: 1rem; border-bottom: 1px solid #e9ecef; display: flex; align-items: center; justify-content: space-between; }
+        .training-stats { display: flex; gap: 1rem; font-size: 0.8rem; color: #666; }
+        .limits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .api-status { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; font-size: 0.9rem; }
+        .api-status.connected { color: #00d4aa; }
+        .api-status.disconnected { color: #e74c3c; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .customization-container, .support-container { grid-template-columns: 1fr; }
+            .overview-stats, .support-stats { grid-template-columns: 1fr; }
+        }
+    </style>
+    
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -6609,6 +6713,360 @@ Exemplo:
     <script src="app-customization.js"></script>
     <script src="fix-customization-display.js"></script>
     <script src="support-management.js"></script>
+    
+    <!-- Inline JavaScript for GitHub Pages -->
+    <script>
+        // App Customization Inline
+        class AppCustomizationInline {
+            constructor() {
+                this.isInitialized = false;
+                this.settings = {
+                    appName: 'Plan de Vitalidad',
+                    primaryColor: '#10B981',
+                    secondaryColor: '#6B7280',
+                    backgroundColor: '#F9FAFB',
+                    titleColor: '#1F2937',
+                    fontFamily: 'Inter',
+                    buttonStyle: 'rounded',
+                    enableAnimations: true,
+                    homeLayout: 'cards',
+                    primaryLanguage: 'es'
+                };
+            }
+
+            init() {
+                if (this.isInitialized) return;
+                console.log('🎨 App Customization Inline inicializado');
+                this.setupEventListeners();
+                this.loadSettings();
+                this.isInitialized = true;
+            }
+
+            setupEventListeners() {
+                // App Name
+                const appNameInput = document.getElementById('appName');
+                if (appNameInput) {
+                    appNameInput.addEventListener('input', (e) => {
+                        this.settings.appName = e.target.value;
+                        this.updatePreview();
+                    });
+                }
+
+                // Color inputs
+                ['primaryColor', 'secondaryColor', 'backgroundColor', 'titleColor'].forEach(colorType => {
+                    const colorInput = document.getElementById(colorType);
+                    if (colorInput) {
+                        colorInput.addEventListener('input', (e) => {
+                            this.settings[colorType] = e.target.value;
+                            this.updatePreview();
+                        });
+                    }
+                });
+
+                // Layout options
+                const layoutOptions = document.querySelectorAll('.layout-option');
+                layoutOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        const layout = option.dataset.layout;
+                        this.settings.homeLayout = layout;
+                        this.updateLayoutSelection(layout);
+                        this.updatePreview();
+                    });
+                });
+
+                // Save button
+                const saveBtn = document.getElementById('saveCustomizationBtn');
+                if (saveBtn) {
+                    saveBtn.addEventListener('click', () => {
+                        this.saveSettings();
+                        this.showNotification('Personalização salva com sucesso!', 'success');
+                    });
+                }
+            }
+
+            updateLayoutSelection(layout) {
+                const layoutOptions = document.querySelectorAll('.layout-option');
+                layoutOptions.forEach(option => {
+                    option.classList.toggle('active', option.dataset.layout === layout);
+                });
+            }
+
+            updatePreview() {
+                const previewAppName = document.getElementById('previewAppName');
+                if (previewAppName) {
+                    previewAppName.textContent = this.settings.appName;
+                }
+            }
+
+            loadSettings() {
+                const saved = localStorage.getItem('appCustomizationSettings');
+                if (saved) {
+                    this.settings = { ...this.settings, ...JSON.parse(saved) };
+                    this.populateForm();
+                }
+            }
+
+            populateForm() {
+                const appNameInput = document.getElementById('appName');
+                if (appNameInput) appNameInput.value = this.settings.appName;
+
+                ['primaryColor', 'secondaryColor', 'backgroundColor', 'titleColor'].forEach(colorType => {
+                    const input = document.getElementById(colorType);
+                    if (input) input.value = this.settings[colorType];
+                });
+
+                this.updateLayoutSelection(this.settings.homeLayout);
+            }
+
+            saveSettings() {
+                localStorage.setItem('appCustomizationSettings', JSON.stringify(this.settings));
+            }
+
+            showNotification(message, type) {
+                console.log(`${type.toUpperCase()}: ${message}`);
+            }
+        }
+
+        // Support Manager Inline
+        class SupportManagerInline {
+            constructor() {
+                this.isInitialized = false;
+                this.tickets = [
+                    {
+                        id: 1,
+                        user: 'María González',
+                        email: 'maria@email.com',
+                        message: '¿Cómo puedo acceder a los desafíos premium? No aparecen en mi app.',
+                        date: new Date().toISOString(),
+                        language: 'es',
+                        status: 'pending',
+                        responses: [],
+                        rating: null,
+                        avatar: 'MG'
+                    },
+                    {
+                        id: 2,
+                        user: 'João Silva',
+                        email: 'joao@email.com',
+                        message: 'Não consigo fazer download dos eBooks. Sempre dá erro.',
+                        date: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+                        language: 'pt',
+                        status: 'responded',
+                        responses: [{
+                            type: 'ai',
+                            message: 'Olá João! Para resolver o problema de download dos eBooks, tente: 1) Verificar conexão, 2) Reiniciar app, 3) Tentar novamente.',
+                            date: new Date(Date.now() - 23 * 60 * 60 * 1000).toISOString()
+                        }],
+                        rating: 4,
+                        avatar: 'JS'
+                    }
+                ];
+                this.currentTicket = null;
+            }
+
+            init() {
+                if (this.isInitialized) return;
+                console.log('🤖 Support Manager Inline inicializado');
+                this.setupEventListeners();
+                this.renderTickets();
+                this.updateStats();
+                this.isInitialized = true;
+            }
+
+            setupEventListeners() {
+                // AI Toggle
+                const aiToggleSwitch = document.getElementById('aiToggleSwitch');
+                if (aiToggleSwitch) {
+                    aiToggleSwitch.addEventListener('click', () => {
+                        aiToggleSwitch.classList.toggle('active');
+                        const aiToggle = document.getElementById('aiToggle');
+                        if (aiToggle) aiToggle.classList.toggle('active');
+                    });
+                }
+
+                // Filter buttons
+                const filterBtns = document.querySelectorAll('.filter-btn');
+                filterBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        filterBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.renderTickets(btn.dataset.filter);
+                    });
+                });
+
+                // Close response editor
+                const closeEditor = document.getElementById('closeResponseEditor');
+                if (closeEditor) {
+                    closeEditor.addEventListener('click', () => {
+                        this.closeResponseEditor();
+                    });
+                }
+
+                // Send response
+                const sendResponse = document.getElementById('sendResponse');
+                if (sendResponse) {
+                    sendResponse.addEventListener('click', () => {
+                        this.sendResponse();
+                    });
+                }
+            }
+
+            renderTickets(filter = 'all') {
+                const inbox = document.getElementById('supportInbox');
+                if (!inbox) return;
+
+                let filteredTickets = this.tickets;
+                if (filter !== 'all') {
+                    filteredTickets = this.tickets.filter(t => t.status === filter);
+                }
+
+                inbox.innerHTML = '';
+                
+                filteredTickets.forEach(ticket => {
+                    const div = document.createElement('div');
+                    div.className = `support-ticket ${ticket.status}`;
+                    div.innerHTML = `
+                        <div class="ticket-header">
+                            <div class="ticket-user">
+                                <div class="user-avatar">${ticket.avatar}</div>
+                                <span>${ticket.user}</span>
+                            </div>
+                            <div class="ticket-meta">
+                                <span>${this.getLanguageFlag(ticket.language)} ${ticket.language.toUpperCase()}</span>
+                                <span>${this.getTimeAgo(new Date(ticket.date))}</span>
+                                <span class="ticket-status ${ticket.status}">${this.getStatusText(ticket.status)}</span>
+                            </div>
+                        </div>
+                        <div class="ticket-message">${ticket.message}</div>
+                        <div class="ticket-actions">
+                            <button class="btn btn-primary btn-small" onclick="supportManagerInline.openResponseEditor(${ticket.id})">
+                                <i class="fas fa-reply"></i> Responder
+                            </button>
+                        </div>
+                    `;
+                    inbox.appendChild(div);
+                });
+            }
+
+            openResponseEditor(ticketId) {
+                const ticket = this.tickets.find(t => t.id === ticketId);
+                if (!ticket) return;
+
+                this.currentTicket = ticket;
+                const editor = document.getElementById('responseEditor');
+                const originalMessage = document.getElementById('originalMessage');
+                
+                if (originalMessage) {
+                    originalMessage.innerHTML = `
+                        <h5>${ticket.user} (${ticket.email})</h5>
+                        <p><strong>Pergunta original:</strong></p>
+                        <p>${ticket.message}</p>
+                    `;
+                }
+                
+                if (editor) {
+                    editor.classList.add('active');
+                }
+            }
+
+            closeResponseEditor() {
+                const editor = document.getElementById('responseEditor');
+                if (editor) {
+                    editor.classList.remove('active');
+                }
+                this.currentTicket = null;
+            }
+
+            sendResponse() {
+                const textarea = document.getElementById('responseTextarea');
+                if (!textarea || !textarea.value.trim() || !this.currentTicket) return;
+
+                const response = {
+                    type: 'support',
+                    message: textarea.value.trim(),
+                    date: new Date().toISOString()
+                };
+
+                if (!this.currentTicket.responses) {
+                    this.currentTicket.responses = [];
+                }
+                this.currentTicket.responses.push(response);
+                this.currentTicket.status = 'responded';
+
+                const ticketIndex = this.tickets.findIndex(t => t.id === this.currentTicket.id);
+                if (ticketIndex !== -1) {
+                    this.tickets[ticketIndex] = this.currentTicket;
+                }
+
+                this.renderTickets();
+                this.updateStats();
+                this.closeResponseEditor();
+                console.log('Resposta enviada com sucesso!');
+            }
+
+            updateStats() {
+                const totalTickets = document.getElementById('totalTickets');
+                const pendingTickets = document.getElementById('pendingTickets');
+                const resolvedTickets = document.getElementById('resolvedTickets');
+                const manualResponses = document.getElementById('manualResponses');
+
+                if (totalTickets) totalTickets.textContent = this.tickets.length;
+                if (pendingTickets) pendingTickets.textContent = this.tickets.filter(t => t.status === 'pending').length;
+                if (resolvedTickets) resolvedTickets.textContent = this.tickets.filter(t => t.status === 'resolved').length;
+                if (manualResponses) manualResponses.textContent = this.tickets.filter(t => t.responses?.some(r => r.type === 'support')).length;
+            }
+
+            getLanguageFlag(language) {
+                const flags = { 'es': '🇪🇸', 'pt': '🇧🇷', 'en': '🇺🇸' };
+                return flags[language] || '🌐';
+            }
+
+            getTimeAgo(date) {
+                const diff = new Date() - date;
+                const hours = Math.floor(diff / 3600000);
+                const days = Math.floor(diff / 86400000);
+                if (days > 0) return `${days}d atrás`;
+                if (hours > 0) return `${hours}h atrás`;
+                return 'Agora';
+            }
+
+            getStatusText(status) {
+                const texts = {
+                    'pending': 'Pendente',
+                    'responded': 'Respondido',
+                    'escalated': 'Encaminhado',
+                    'resolved': 'Resolvido'
+                };
+                return texts[status] || status;
+            }
+        }
+
+        // Initialize inline systems
+        let appCustomizationInline, supportManagerInline;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const originalSwitchTab = window.switchTab;
+            if (originalSwitchTab) {
+                window.switchTab = function(tabId) {
+                    originalSwitchTab(tabId);
+                    
+                    if (tabId === 'app-customization' && !appCustomizationInline) {
+                        setTimeout(() => {
+                            appCustomizationInline = new AppCustomizationInline();
+                            appCustomizationInline.init();
+                        }, 100);
+                    }
+                    
+                    if (tabId === 'support' && !supportManagerInline) {
+                        setTimeout(() => {
+                            supportManagerInline = new SupportManagerInline();
+                            supportManagerInline.init();
+                        }, 100);
+                    }
+                };
+            }
+        });
+    </script>
     <link rel="stylesheet" href="store-styles.css">
     <link rel="stylesheet" href="sales-styles.css">
     <link rel="stylesheet" href="notifications-styles.css">
