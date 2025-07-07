@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Teste Rápido - Personalização</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="customization-styles.css">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-status { 
+            background: #f0f9ff; 
+            border: 1px solid #0ea5e9; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin: 20px 0;
+        }
+        .success { background: #f0fdf4; border-color: #22c55e; }
+        .error { background: #fef2f2; border-color: #ef4444; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Teste Rápido - Sistema de Personalização</h1>
+    
+    <div id="status" class="test-status">
+        <p>⏳ Verificando sistema...</p>
+    </div>
+
+    <!-- Elementos básicos para teste -->
+    <div class="customization-container" style="display: none;">
+        <div class="customization-left">
+            <div class="customization-section">
+                <div class="section-content">
+                    <input type="text" id="appName" value="Plan de Vitalidad">
+                    <input type="color" id="primaryColor" value="#10B981">
+                    <button id="saveCustomizationBtn">Salvar</button>
+                </div>
+            </div>
+        </div>
+        <div class="customization-right">
+            <div id="previewScreen">
+                <div id="previewAppName">Plan de Vitalidad</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app-customization.js"></script>
+    <script>
+        let testResults = [];
+        
+        function addResult(test, success, details = '') {
+            testResults.push({ test, success, details });
+            updateStatus();
+        }
+        
+        function updateStatus() {
+            const status = document.getElementById('status');
+            const successCount = testResults.filter(r => r.success).length;
+            const totalCount = testResults.length;
+            
+            let html = `<h3>📊 Resultados dos Testes (${successCount}/${totalCount})</h3>`;
+            
+            testResults.forEach(result => {
+                const icon = result.success ? '✅' : '❌';
+                html += `<p>${icon} ${result.test}`;
+                if (result.details) html += ` - ${result.details}`;
+                html += '</p>';
+            });
+            
+            status.innerHTML = html;
+            status.className = `test-status ${successCount === totalCount ? 'success' : 'error'}`;
+        }
+        
+        // Executar testes
+        setTimeout(() => {
+            console.log('🚀 Iniciando testes...');
+            
+            // Teste 1: Verificar se o CSS foi carregado
+            const testElement = document.createElement('div');
+            testElement.className = 'customization-overview';
+            document.body.appendChild(testElement);
+            const styles = window.getComputedStyle(testElement);
+            const cssLoaded = styles.marginBottom === '32px'; // 2rem
+            document.body.removeChild(testElement);
+            addResult('CSS carregado', cssLoaded);
+            
+            // Teste 2: Verificar se o JavaScript foi carregado
+            const jsLoaded = typeof AppCustomization !== 'undefined';
+            addResult('JavaScript carregado', jsLoaded);
+            
+            // Teste 3: Verificar se a instância global foi criada
+            const instanceCreated = typeof window.appCustomization !== 'undefined';
+            addResult('Instância global criada', instanceCreated);
+            
+            // Teste 4: Verificar se consegue inicializar
+            if (instanceCreated) {
+                try {
+                    window.appCustomization.init();
+                    addResult('Inicialização bem-sucedida', true);
+                } catch (error) {
+                    addResult('Inicialização bem-sucedida', false, error.message);
+                }
+            }
+            
+            // Teste 5: Verificar se consegue salvar configurações
+            if (instanceCreated) {
+                try {
+                    window.appCustomization.settings.appName = 'Teste App';
+                    window.appCustomization.saveSettings();
+                    const saved = localStorage.getItem('appCustomizationSettings');
+                    const parsedSaved = JSON.parse(saved);
+                    const saveWorking = parsedSaved.appName === 'Teste App';
+                    addResult('Salvamento funcionando', saveWorking);
+                } catch (error) {
+                    addResult('Salvamento funcionando', false, error.message);
+                }
+            }
+            
+            console.log('✅ Testes concluídos!');
+            
+        }, 1000);
+    </script>
+</body>
+</html>
