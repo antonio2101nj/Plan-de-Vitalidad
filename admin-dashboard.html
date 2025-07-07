@@ -703,13 +703,230 @@
                 <!-- Continue with other tabs... -->
                 <div class="tab-content" id="content">
                     <div class="content-header">
-                        <h2 data-i18n="content">Conteúdos</h2>
-                        <p data-i18n="content-description">Gerencie o conteúdo do aplicativo</p>
+                        <h2 data-i18n="content">📁 Conteúdos</h2>
+                        <p data-i18n="content-description">Gerencie todos os conteúdos disponíveis no aplicativo</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-file-alt"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Content Stats -->
+                    <div class="content-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalContents">0</h3>
+                                <p>Total de Conteúdos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="activeContents">0</h3>
+                                <p>Conteúdos Ativos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="premiumContents">0</h3>
+                                <p>Conteúdos Premium</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalViews">0</h3>
+                                <p>Total de Visualizações</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Content Type Summary -->
+                    <div class="content-type-summary">
+                        <div class="type-card">
+                            <i class="fas fa-play-circle"></i>
+                            <span class="type-count" id="videoCount">0</span>
+                            <span class="type-label">Vídeos</span>
+                        </div>
+                        <div class="type-card">
+                            <i class="fas fa-file-pdf"></i>
+                            <span class="type-count" id="pdfCount">0</span>
+                            <span class="type-label">PDFs</span>
+                        </div>
+                        <div class="type-card">
+                            <i class="fas fa-image"></i>
+                            <span class="type-count" id="imageCount">0</span>
+                            <span class="type-label">Imagens</span>
+                        </div>
+                        <div class="type-card">
+                            <i class="fas fa-music"></i>
+                            <span class="type-count" id="audioCount">0</span>
+                            <span class="type-label">Áudios</span>
+                        </div>
+                        <div class="type-card">
+                            <i class="fas fa-link"></i>
+                            <span class="type-count" id="linkCount">0</span>
+                            <span class="type-label">Links</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Content Controls -->
+                    <div class="content-controls">
+                        <div class="controls-left">
+                            <button class="btn btn-primary" id="addContentBtn">
+                                <i class="fas fa-plus"></i>
+                                Adicionar Novo Conteúdo
+                            </button>
+                            <button class="btn btn-secondary" id="exportContentsBtn">
+                                <i class="fas fa-download"></i>
+                                Exportar Lista
+                            </button>
+                            <button class="btn btn-info" id="reorderContentsBtn">
+                                <i class="fas fa-sort"></i>
+                                Reordenar Conteúdos
+                            </button>
+                        </div>
+                        <div class="controls-right">
+                            <div class="search-container">
+                                <input type="text" id="contentSearchInput" placeholder="Buscar por nome ou descrição...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Content Filters -->
+                    <div class="content-filters">
+                        <div class="filter-group">
+                            <label for="contentTypeFilter">Tipo:</label>
+                            <select id="contentTypeFilter">
+                                <option value="">Todos os tipos</option>
+                                <option value="video">🎥 Vídeo</option>
+                                <option value="pdf">📄 PDF</option>
+                                <option value="image">🖼️ Imagem</option>
+                                <option value="audio">🎵 Áudio</option>
+                                <option value="link">🔗 Link Externo</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="contentLanguageFilter">Idioma:</label>
+                            <select id="contentLanguageFilter">
+                                <option value="">Todos os idiomas</option>
+                                <option value="es">🇪🇸 Español</option>
+                                <option value="pt">🇧🇷 Português</option>
+                                <option value="en">🇺🇸 English</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="contentCategoryFilter">Categoria:</label>
+                            <select id="contentCategoryFilter">
+                                <option value="">Todas as categorias</option>
+                                <option value="ebook">📚 eBook</option>
+                                <option value="planner">📋 Planner</option>
+                                <option value="lesson">🎓 Aula</option>
+                                <option value="bonus">🎁 Bônus</option>
+                                <option value="guide">📖 Guia</option>
+                                <option value="challenge">🏆 Desafio</option>
+                                <option value="recipe">🍽️ Receita</option>
+                                <option value="other">🔧 Outro</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="contentStatusFilter">Status:</label>
+                            <select id="contentStatusFilter">
+                                <option value="">Todos</option>
+                                <option value="active">✅ Ativo</option>
+                                <option value="inactive">❌ Inativo</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="contentAccessFilter">Acesso:</label>
+                            <select id="contentAccessFilter">
+                                <option value="">Todos</option>
+                                <option value="free">🆓 Gratuito</option>
+                                <option value="premium">👑 Premium</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- View Toggle -->
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="contentCardViewBtn" data-view="cards">
+                            <i class="fas fa-th-large"></i>
+                            Cards
+                        </button>
+                        <button class="view-btn" id="contentTableViewBtn" data-view="table">
+                            <i class="fas fa-list"></i>
+                            Tabela
+                        </button>
+                    </div>
+                    
+                    <!-- Content Container -->
+                    <div class="content-container">
+                        <!-- Cards View -->
+                        <div class="content-grid" id="contentGrid">
+                            <!-- Content cards will be populated here -->
+                        </div>
+                        
+                        <!-- Table View -->
+                        <div class="content-table-container" id="contentTableContainer" style="display: none;">
+                            <table class="content-table" id="contentTable">
+                                <thead>
+                                    <tr>
+                                        <th>📁 Conteúdo</th>
+                                        <th>📱 Tipo</th>
+                                        <th>🗣️ Idioma</th>
+                                        <th>📂 Categoria</th>
+                                        <th>👑 Acesso</th>
+                                        <th>📅 Data Upload</th>
+                                        <th>👁️ Visualizações</th>
+                                        <th>✅ Status</th>
+                                        <th>⚙️ Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="contentTableBody">
+                                    <!-- Content will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="table-loading" id="contentLoading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Carregando conteúdos...</p>
+                        </div>
+                        
+                        <div class="no-content" id="noContentMessage" style="display: none;">
+                            <i class="fas fa-folder-open"></i>
+                            <h3>Nenhum conteúdo encontrado</h3>
+                            <p>Não há conteúdos cadastrados ou que correspondam aos filtros selecionados.</p>
+                            <button class="btn btn-primary" onclick="contentManager.openAddContentModal()">
+                                <i class="fas fa-plus"></i>
+                                Adicionar Primeiro Conteúdo
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="contentPaginationInfo">Mostrando 0 de 0 conteúdos</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn btn-small" id="contentPrevPageBtn" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                                Anterior
+                            </button>
+                            <span class="page-numbers" id="contentPageNumbers"></span>
+                            <button class="btn btn-small" id="contentNextPageBtn" disabled>
+                                Próximo
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -5023,6 +5240,354 @@
         </div>
     </div>
     
+    <!-- Content Management Modals -->
+    
+    <!-- Add/Edit Content Modal -->
+    <div class="modal extra-large" id="contentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="contentModalTitle">Adicionar Novo Conteúdo</h3>
+                <button class="modal-close" id="contentModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="contentForm">
+                    <input type="hidden" id="contentId" name="contentId">
+                    
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-info-circle"></i> Informações Básicas</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contentName">Nome do Conteúdo *</label>
+                                <input type="text" id="contentName" name="name" required placeholder="Ex: Planner de Alimentação Saudável">
+                            </div>
+                            <div class="form-group">
+                                <label for="contentLanguage">Idioma Principal *</label>
+                                <select id="contentLanguage" name="language" required>
+                                    <option value="">Selecione o idioma</option>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="pt">🇧🇷 Português</option>
+                                    <option value="en">🇺🇸 English</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contentDescription">Descrição *</label>
+                            <div class="rich-text-editor">
+                                <div class="editor-toolbar">
+                                    <button type="button" class="editor-btn" data-command="bold" title="Negrito">
+                                        <i class="fas fa-bold"></i>
+                                    </button>
+                                    <button type="button" class="editor-btn" data-command="italic" title="Itálico">
+                                        <i class="fas fa-italic"></i>
+                                    </button>
+                                    <button type="button" class="editor-btn" data-command="underline" title="Sublinhado">
+                                        <i class="fas fa-underline"></i>
+                                    </button>
+                                    <div class="editor-separator"></div>
+                                    <button type="button" class="editor-btn" data-command="insertUnorderedList" title="Lista">
+                                        <i class="fas fa-list-ul"></i>
+                                    </button>
+                                    <button type="button" class="editor-btn" data-command="insertOrderedList" title="Lista Numerada">
+                                        <i class="fas fa-list-ol"></i>
+                                    </button>
+                                </div>
+                                <div id="contentDescription" class="editor-content" contenteditable="true" placeholder="Descreva o conteúdo, seus benefícios e como usar..."></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contentCategory">Categoria *</label>
+                                <select id="contentCategory" name="category" required>
+                                    <option value="">Selecione a categoria</option>
+                                    <option value="ebook">📚 eBook</option>
+                                    <option value="planner">📋 Planner</option>
+                                    <option value="lesson">🎓 Aula</option>
+                                    <option value="bonus">🎁 Bônus</option>
+                                    <option value="guide">📖 Guia</option>
+                                    <option value="challenge">🏆 Desafio</option>
+                                    <option value="recipe">🍽️ Receita</option>
+                                    <option value="other">🔧 Outro</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="contentOrder">Ordem de Exibição</label>
+                                <input type="number" id="contentOrder" name="order" min="1" max="999" placeholder="1">
+                                <small class="form-help">Ordem em que aparecerá no app (menor número = primeiro)</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Media Configuration -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-file-upload"></i> Configuração de Mídia</h4>
+                        
+                        <div class="form-group">
+                            <label for="contentMediaType">Tipo de Mídia *</label>
+                            <select id="contentMediaType" name="mediaType" required>
+                                <option value="">Selecione o tipo</option>
+                                <option value="file">📁 Upload de Arquivo</option>
+                                <option value="link">🔗 Link Externo</option>
+                            </select>
+                        </div>
+                        
+                        <!-- File Upload Section -->
+                        <div class="media-section" id="fileUploadSection" style="display: none;">
+                            <div class="form-group">
+                                <label for="contentFile">Arquivo Principal *</label>
+                                <div class="file-upload-area" id="contentFileUploadArea">
+                                    <input type="file" id="contentFile" name="file" accept=".pdf,.mp4,.mp3,.wav,.jpg,.jpeg,.png,.gif" style="display: none;">
+                                    <div class="upload-placeholder">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p>Clique para selecionar arquivo</p>
+                                        <small>PDF, Vídeo (MP4), Áudio (MP3, WAV), Imagem (JPG, PNG, GIF) até 100MB</small>
+                                    </div>
+                                    <div class="upload-preview" id="contentFilePreview" style="display: none;">
+                                        <div class="file-info">
+                                            <i class="fas fa-file" id="contentFileIcon"></i>
+                                            <div class="file-details">
+                                                <span class="file-name" id="contentFileName"></span>
+                                                <span class="file-size" id="contentFileSize"></span>
+                                                <span class="file-type" id="contentFileType"></span>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="remove-file" onclick="contentManager.removeFile('main')">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- External Link Section -->
+                        <div class="media-section" id="linkSection" style="display: none;">
+                            <div class="form-group">
+                                <label for="contentExternalLink">Link Externo *</label>
+                                <input type="url" id="contentExternalLink" name="externalLink" placeholder="https://youtube.com/watch?v=...">
+                                <small class="form-help">YouTube, Vimeo, Google Drive, Dropbox, etc.</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contentLinkType">Tipo de Link</label>
+                                <select id="contentLinkType" name="linkType">
+                                    <option value="youtube">📺 YouTube</option>
+                                    <option value="vimeo">🎬 Vimeo</option>
+                                    <option value="drive">☁️ Google Drive</option>
+                                    <option value="dropbox">📦 Dropbox</option>
+                                    <option value="other">🔗 Outro</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Thumbnail Upload -->
+                        <div class="form-group">
+                            <label for="contentThumbnail">Imagem de Capa/Miniatura</label>
+                            <div class="file-upload-area" id="contentThumbnailUploadArea">
+                                <input type="file" id="contentThumbnail" name="thumbnail" accept="image/*" style="display: none;">
+                                <div class="upload-placeholder">
+                                    <i class="fas fa-image"></i>
+                                    <p>Clique para selecionar imagem de capa</p>
+                                    <small>JPG, PNG até 5MB (recomendado: 800x600px)</small>
+                                </div>
+                                <div class="upload-preview" id="contentThumbnailPreview" style="display: none;">
+                                    <img id="contentThumbnailPreviewImg" src="" alt="Preview">
+                                    <button type="button" class="remove-file" onclick="contentManager.removeFile('thumbnail')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Content Settings -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-cog"></i> Configurações de Acesso</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contentAccess">Tipo de Acesso *</label>
+                                <select id="contentAccess" name="access" required>
+                                    <option value="">Selecione o acesso</option>
+                                    <option value="free">🆓 Gratuito</option>
+                                    <option value="premium">👑 Premium</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="contentStatus">Status *</label>
+                                <select id="contentStatus" name="status" required>
+                                    <option value="active">✅ Ativo</option>
+                                    <option value="inactive">❌ Inativo</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="contentFeatured" name="featured">
+                                    <span class="checkbox-custom"></span>
+                                    ⭐ Marcar como Destaque
+                                    <small>Conteúdo aparecerá em destaque na home do app</small>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="contentDownloadable" name="downloadable">
+                                    <span class="checkbox-custom"></span>
+                                    📥 Permitir Download
+                                    <small>Usuários poderão baixar o arquivo para acesso offline</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="contentModalCancel">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="contentModalSave" form="contentForm">
+                    <i class="fas fa-save"></i>
+                    Salvar Conteúdo
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- View Content Modal -->
+    <div class="modal large" id="viewContentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="viewContentTitle">Visualizar Conteúdo</h3>
+                <button class="modal-close" id="viewContentModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="content-viewer">
+                    <div class="content-preview">
+                        <div class="content-thumbnail">
+                            <img id="viewContentThumbnail" src="" alt="Thumbnail">
+                            <div class="content-type-badge" id="viewContentTypeBadge"></div>
+                        </div>
+                        <div class="content-details">
+                            <h4 id="viewContentName"></h4>
+                            <div class="content-meta">
+                                <span class="meta-item">
+                                    <i class="fas fa-language"></i>
+                                    <span id="viewContentLanguage"></span>
+                                </span>
+                                <span class="meta-item">
+                                    <i class="fas fa-folder"></i>
+                                    <span id="viewContentCategory"></span>
+                                </span>
+                                <span class="meta-item">
+                                    <i class="fas fa-crown"></i>
+                                    <span id="viewContentAccess"></span>
+                                </span>
+                                <span class="meta-item">
+                                    <i class="fas fa-eye"></i>
+                                    <span id="viewContentViews">0 visualizações</span>
+                                </span>
+                            </div>
+                            <div class="content-description" id="viewContentDescription"></div>
+                            <div class="content-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Data de Upload:</span>
+                                    <span class="stat-value" id="viewContentDate"></span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Última Atualização:</span>
+                                    <span class="stat-value" id="viewContentUpdated"></span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Ordem:</span>
+                                    <span class="stat-value" id="viewContentOrder"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="viewContentModalCancel">Fechar</button>
+                <button type="button" class="btn btn-info" id="previewContentBtn">
+                    <i class="fas fa-external-link-alt"></i>
+                    Abrir Conteúdo
+                </button>
+                <button type="button" class="btn btn-primary" id="editContentFromView">
+                    <i class="fas fa-edit"></i>
+                    Editar
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirm Delete Content Modal -->
+    <div class="modal" id="confirmDeleteContentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão</h3>
+                <button class="modal-close" id="confirmDeleteContentClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="confirm-delete-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h4>Tem certeza que deseja excluir este conteúdo?</h4>
+                    <p>Esta ação não pode ser desfeita. O conteúdo será removido permanentemente e não estará mais disponível para os usuários.</p>
+                    <div class="item-info">
+                        <strong id="deleteContentName"></strong>
+                        <span id="deleteContentDetails"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="confirmDeleteContentCancel">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteContentConfirm">
+                    <i class="fas fa-trash"></i>
+                    Excluir Conteúdo
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reorder Contents Modal -->
+    <div class="modal large" id="reorderContentsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Reordenar Conteúdos</h3>
+                <button class="modal-close" id="reorderContentsModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="reorder-instructions">
+                    <p><i class="fas fa-info-circle"></i> Arraste os itens para reorganizar a ordem de exibição no aplicativo.</p>
+                </div>
+                <div class="reorder-container">
+                    <div class="reorder-list" id="reorderList">
+                        <!-- Sortable content items will be populated here -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="reorderContentsModalCancel">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="saveReorderBtn">
+                    <i class="fas fa-save"></i>
+                    Salvar Ordem
+                </button>
+            </div>
+        </div>
+    </div>
+    
     <!-- Creatives Modals -->
     
     <!-- Add/Edit Creative Modal -->
@@ -5308,6 +5873,7 @@
     <script src="integrations-management.js"></script>
     <script src="gamification-management.js"></script>
     <script src="creatives-management.js"></script>
+    <script src="content-management.js"></script>
     <link rel="stylesheet" href="store-styles.css">
     <link rel="stylesheet" href="sales-styles.css">
     <link rel="stylesheet" href="notifications-styles.css">
@@ -5315,6 +5881,7 @@
     <link rel="stylesheet" href="integrations-styles.css">
     <link rel="stylesheet" href="gamification-styles.css">
     <link rel="stylesheet" href="creatives-styles.css">
+    <link rel="stylesheet" href="content-styles.css">
     <script>
         // Verificar autenticação ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
