@@ -1315,3 +1315,580 @@ setInterval(() => {
         userDashboard.saveUserData();
     }
 }, 30000); // Save every 30 seconds
+
+// === COMMERCIAL CAROUSEL FUNCTIONALITY ===
+class CommercialCarousel {
+    constructor() {
+        this.currentSlide = 0;
+        this.slides = [
+            {
+                type: 'promotion',
+                title: '🎉 ¡Oferta Especial!',
+                description: 'Descubre nuestros nuevos productos premium con descuentos exclusivos',
+                cta: 'Ver Ofertas',
+                background: 'linear-gradient(135deg, #FF6B6B, #FF8E53)',
+                action: () => this.goToStore()
+            },
+            {
+                type: 'feature',
+                title: '📚 Nuevo eBook Disponible',
+                description: 'Guía completa de alimentación consciente y hábitos saludables',
+                cta: 'Leer Ahora',
+                background: 'linear-gradient(135deg, #4ECDC4, #44A08D)',
+                action: () => this.openContent('nuevo-ebook')
+            },
+            {
+                type: 'challenge',
+                title: '🏆 Desafío de 30 Días',
+                description: 'Únete a nuestro desafío de transformación personal',
+                cta: 'Participar',
+                background: 'linear-gradient(135deg, #A8E6CF, #7FCDCD)',
+                action: () => this.goToChallenge()
+            }
+        ];
+        this.autoSlideInterval = null;
+        this.init();
+    }
+
+    init() {
+        this.render();
+        this.setupEventListeners();
+        this.startAutoSlide();
+    }
+
+    render() {
+        const track = document.getElementById('carouselTrack');
+        const indicators = document.getElementById('carouselIndicators');
+        
+        if (!track || !indicators) return;
+
+        // Render slides
+        track.innerHTML = this.slides.map((slide, index) => `
+            <div class="carousel-slide" style="background: ${slide.background}">
+                <div class="carousel-content">
+                    <h3>${slide.title}</h3>
+                    <p>${slide.description}</p>
+                    <button class="carousel-cta" onclick="commercialCarousel.handleSlideAction(${index})">
+                        ${slide.cta}
+                    </button>
+                </div>
+            </div>
+        `).join('');
+
+        // Render indicators
+        indicators.innerHTML = this.slides.map((_, index) => `
+            <div class="carousel-indicator ${index === 0 ? 'active' : ''}" 
+                 onclick="commercialCarousel.goToSlide(${index})">
+            </div>
+        `).join('');
+    }
+
+    setupEventListeners() {
+        const prevBtn = document.getElementById('carouselPrev');
+        const nextBtn = document.getElementById('carouselNext');
+        
+        if (prevBtn) prevBtn.addEventListener('click', () => this.previousSlide());
+        if (nextBtn) nextBtn.addEventListener('click', () => this.nextSlide());
+    }
+
+    goToSlide(index) {
+        this.currentSlide = index;
+        this.updateCarousel();
+    }
+
+    nextSlide() {
+        this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+        this.updateCarousel();
+    }
+
+    previousSlide() {
+        this.currentSlide = this.currentSlide === 0 ? this.slides.length - 1 : this.currentSlide - 1;
+        this.updateCarousel();
+    }
+
+    updateCarousel() {
+        const track = document.getElementById('carouselTrack');
+        const indicators = document.querySelectorAll('.carousel-indicator');
+        
+        if (track) {
+            track.style.transform = `translateX(-${this.currentSlide * 100}%)`;
+        }
+        
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === this.currentSlide);
+        });
+    }
+
+    startAutoSlide() {
+        this.autoSlideInterval = setInterval(() => {
+            this.nextSlide();
+        }, 5000);
+    }
+
+    stopAutoSlide() {
+        if (this.autoSlideInterval) {
+            clearInterval(this.autoSlideInterval);
+            this.autoSlideInterval = null;
+        }
+    }
+
+    handleSlideAction(index) {
+        const slide = this.slides[index];
+        if (slide && slide.action) {
+            slide.action();
+        }
+    }
+
+    goToStore() {
+        if (window.userDashboard) {
+            window.userDashboard.switchTab('tienda');
+        }
+    }
+
+    goToChallenge() {
+        if (window.userDashboard) {
+            window.userDashboard.switchTab('desafios');
+        }
+    }
+
+    openContent(contentId) {
+        // This would open specific content
+        console.log('Opening content:', contentId);
+    }
+}
+
+// === PRODUCTS OVERVIEW FUNCTIONALITY ===
+class ProductsOverview {
+    constructor() {
+        this.products = {
+            unlocked: [
+                {
+                    id: 'ebook-nutricion',
+                    title: 'eBook Nutrición Vital',
+                    type: 'eBook',
+                    progress: 75,
+                    thumbnail: '📖',
+                    url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+                    fileType: 'pdf'
+                },
+                {
+                    id: 'video-ejercicios',
+                    title: 'Video Ejercicios Matutinos',
+                    type: 'Video',
+                    progress: 40,
+                    thumbnail: '🎥',
+                    url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
+                    fileType: 'video'
+                },
+                {
+                    id: 'audio-meditacion',
+                    title: 'Audio Meditación Guiada',
+                    type: 'Audio',
+                    progress: 100,
+                    thumbnail: '🎵',
+                    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+                    fileType: 'audio'
+                },
+                {
+                    id: 'planner-habitos',
+                    title: 'Planner de Hábitos',
+                    type: 'Planner',
+                    progress: 60,
+                    thumbnail: '📋',
+                    url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+                    fileType: 'pdf'
+                },
+                {
+                    id: 'guia-suplementos',
+                    title: 'Guía de Suplementos',
+                    type: 'Guía',
+                    progress: 30,
+                    thumbnail: '💊',
+                    url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+                    fileType: 'pdf'
+                }
+            ],
+            bonus: [
+                {
+                    id: 'bonus-recetas',
+                    title: 'Recetas Secretas',
+                    type: 'eBook',
+                    progress: 0,
+                    thumbnail: '🍽️',
+                    url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+                    fileType: 'pdf'
+                },
+                {
+                    id: 'bonus-workout',
+                    title: 'Workout Intensivo',
+                    type: 'Video',
+                    progress: 0,
+                    thumbnail: '💪',
+                    url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
+                    fileType: 'video'
+                },
+                {
+                    id: 'bonus-checklist',
+                    title: 'Checklist de Bienestar',
+                    type: 'Checklist',
+                    progress: 0,
+                    thumbnail: '✅',
+                    url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+                    fileType: 'pdf'
+                }
+            ],
+            locked: [
+                {
+                    id: 'locked-masterclass',
+                    title: 'Masterclass Avanzada',
+                    type: 'Video',
+                    progress: 0,
+                    thumbnail: '🎓',
+                    unlockDate: '2024-01-15'
+                },
+                {
+                    id: 'locked-ebook-pro',
+                    title: 'eBook Pro Nutrition',
+                    type: 'eBook',
+                    progress: 0,
+                    thumbnail: '📚',
+                    unlockDate: '2024-01-20'
+                },
+                {
+                    id: 'locked-community',
+                    title: 'Acceso Comunidad VIP',
+                    type: 'Acceso',
+                    progress: 0,
+                    thumbnail: '👥',
+                    unlockDate: '2024-01-25'
+                },
+                {
+                    id: 'locked-coaching',
+                    title: 'Sesión de Coaching',
+                    type: 'Sesión',
+                    progress: 0,
+                    thumbnail: '🎯',
+                    unlockDate: '2024-01-30'
+                }
+            ]
+        };
+        this.init();
+    }
+
+    init() {
+        this.render();
+        this.updateCounts();
+    }
+
+    render() {
+        this.renderProductCategory('unlocked', this.products.unlocked);
+        this.renderProductCategory('bonus', this.products.bonus);
+        this.renderProductCategory('locked', this.products.locked);
+    }
+
+    renderProductCategory(category, products) {
+        const grid = document.getElementById(`${category}ProductsGrid`);
+        if (!grid) return;
+
+        grid.innerHTML = products.map(product => `
+            <div class="product-card ${category === 'locked' ? 'locked' : ''}" 
+                 onclick="${category !== 'locked' ? `productsOverview.openProduct('${product.id}')` : ''}">
+                <div class="product-thumbnail">
+                    ${product.thumbnail}
+                    <div class="product-status-badge ${category}">
+                        ${category === 'unlocked' ? 'Disponible' : 
+                          category === 'bonus' ? 'Bónus' : 'Bloqueado'}
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h4 class="product-title">${product.title}</h4>
+                    <p class="product-type">${product.type}</p>
+                    ${category !== 'locked' ? `
+                        <div class="product-progress">
+                            <div class="progress-label">Progreso: ${product.progress}%</div>
+                            <div class="progress-bar-small">
+                                <div class="progress-fill-small" style="width: ${product.progress}%"></div>
+                            </div>
+                        </div>
+                    ` : `
+                        <p class="unlock-date">Disponible: ${product.unlockDate}</p>
+                    `}
+                    <div class="product-actions">
+                        ${category !== 'locked' ? `
+                            <button class="product-btn primary" onclick="event.stopPropagation(); productsOverview.openProduct('${product.id}')">
+                                ${product.progress > 0 ? 'Continuar' : 'Comenzar'}
+                            </button>
+                        ` : `
+                            <button class="product-btn secondary" disabled>
+                                Próximamente
+                            </button>
+                        `}
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    updateCounts() {
+        const unlockedCount = document.getElementById('unlockedCount');
+        const bonusCount = document.getElementById('bonusCount');
+        const lockedCount = document.getElementById('lockedCount');
+        
+        if (unlockedCount) unlockedCount.textContent = this.products.unlocked.length;
+        if (bonusCount) bonusCount.textContent = this.products.bonus.length;
+        if (lockedCount) lockedCount.textContent = this.products.locked.length;
+    }
+
+    openProduct(productId) {
+        const product = this.findProduct(productId);
+        if (product && product.url) {
+            openContentViewer(productId, product.title, product.url, product.fileType);
+        }
+    }
+
+    findProduct(productId) {
+        const allProducts = [...this.products.unlocked, ...this.products.bonus, ...this.products.locked];
+        return allProducts.find(p => p.id === productId);
+    }
+}
+
+// === CONTENT VIEWER FUNCTIONALITY ===
+class ContentViewer {
+    constructor() {
+        this.currentContent = null;
+        this.isFullscreen = false;
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+    }
+
+    setupEventListeners() {
+        const closeBtn = document.getElementById('closeContentViewer');
+        const downloadBtn = document.getElementById('downloadContentBtn');
+        const fullscreenBtn = document.getElementById('fullscreenContentBtn');
+        
+        if (closeBtn) closeBtn.addEventListener('click', () => this.close());
+        if (downloadBtn) downloadBtn.addEventListener('click', () => this.download());
+        if (fullscreenBtn) fullscreenBtn.addEventListener('click', () => this.toggleFullscreen());
+        
+        // PDF controls
+        const pdfPrevBtn = document.getElementById('pdfPrevPage');
+        const pdfNextBtn = document.getElementById('pdfNextPage');
+        const pdfZoomInBtn = document.getElementById('pdfZoomIn');
+        const pdfZoomOutBtn = document.getElementById('pdfZoomOut');
+        
+        if (pdfPrevBtn) pdfPrevBtn.addEventListener('click', () => this.pdfPreviousPage());
+        if (pdfNextBtn) pdfNextBtn.addEventListener('click', () => this.pdfNextPage());
+        if (pdfZoomInBtn) pdfZoomInBtn.addEventListener('click', () => this.pdfZoomIn());
+        if (pdfZoomOutBtn) pdfZoomOutBtn.addEventListener('click', () => this.pdfZoomOut());
+    }
+
+    open(contentId, title, url, fileType) {
+        this.currentContent = { contentId, title, url, fileType };
+        
+        // Update modal title
+        document.getElementById('contentViewerTitle').textContent = title;
+        document.getElementById('contentViewerSubtitle').textContent = fileType.toUpperCase();
+        
+        // Show modal
+        document.getElementById('contentViewerModal').classList.remove('hidden');
+        
+        // Show loading
+        this.showLoading();
+        
+        // Load content based on type
+        setTimeout(() => {
+            this.loadContent(url, fileType);
+        }, 500);
+    }
+
+    loadContent(url, fileType) {
+        this.hideAllViewers();
+        
+        switch (fileType) {
+            case 'pdf':
+                this.loadPDF(url);
+                break;
+            case 'video':
+                this.loadVideo(url);
+                break;
+            case 'audio':
+                this.loadAudio(url);
+                break;
+            case 'image':
+                this.loadImage(url);
+                break;
+            default:
+                this.showError();
+        }
+    }
+
+    loadPDF(url) {
+        const pdfViewer = document.getElementById('pdfViewer');
+        const pdfIframe = document.getElementById('pdfIframe');
+        
+        if (pdfViewer && pdfIframe) {
+            pdfIframe.src = url;
+            pdfViewer.classList.remove('hidden');
+            this.hideLoading();
+        }
+    }
+
+    loadVideo(url) {
+        const videoViewer = document.getElementById('videoViewer');
+        const videoPlayer = document.getElementById('videoPlayer');
+        const videoSource = document.getElementById('videoSource');
+        
+        if (videoViewer && videoPlayer && videoSource) {
+            videoSource.src = url;
+            videoPlayer.load();
+            videoViewer.classList.remove('hidden');
+            this.hideLoading();
+        }
+    }
+
+    loadAudio(url) {
+        const audioViewer = document.getElementById('audioViewer');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const audioSource = document.getElementById('audioSource');
+        const audioTitle = document.getElementById('audioTitle');
+        
+        if (audioViewer && audioPlayer && audioSource) {
+            audioSource.src = url;
+            audioPlayer.load();
+            audioTitle.textContent = this.currentContent.title;
+            audioViewer.classList.remove('hidden');
+            this.hideLoading();
+        }
+    }
+
+    loadImage(url) {
+        const imageViewer = document.getElementById('imageViewer');
+        const imageContent = document.getElementById('imageContent');
+        
+        if (imageViewer && imageContent) {
+            imageContent.src = url;
+            imageViewer.classList.remove('hidden');
+            this.hideLoading();
+        }
+    }
+
+    hideAllViewers() {
+        const viewers = ['pdfViewer', 'videoViewer', 'audioViewer', 'imageViewer'];
+        viewers.forEach(id => {
+            const viewer = document.getElementById(id);
+            if (viewer) viewer.classList.add('hidden');
+        });
+    }
+
+    showLoading() {
+        const loading = document.getElementById('contentLoading');
+        const error = document.getElementById('contentError');
+        
+        if (loading) loading.classList.remove('hidden');
+        if (error) error.classList.add('hidden');
+    }
+
+    hideLoading() {
+        const loading = document.getElementById('contentLoading');
+        if (loading) loading.classList.add('hidden');
+    }
+
+    showError() {
+        const loading = document.getElementById('contentLoading');
+        const error = document.getElementById('contentError');
+        
+        if (loading) loading.classList.add('hidden');
+        if (error) error.classList.remove('hidden');
+    }
+
+    close() {
+        document.getElementById('contentViewerModal').classList.add('hidden');
+        this.currentContent = null;
+        
+        // Stop any playing media
+        const videoPlayer = document.getElementById('videoPlayer');
+        const audioPlayer = document.getElementById('audioPlayer');
+        
+        if (videoPlayer) videoPlayer.pause();
+        if (audioPlayer) audioPlayer.pause();
+    }
+
+    download() {
+        if (this.currentContent && this.currentContent.url) {
+            const link = document.createElement('a');
+            link.href = this.currentContent.url;
+            link.download = this.currentContent.title;
+            link.click();
+        }
+    }
+
+    toggleFullscreen() {
+        // Implementation for fullscreen toggle
+        const modal = document.getElementById('contentViewerModal');
+        if (modal) {
+            if (!this.isFullscreen) {
+                modal.style.width = '100vw';
+                modal.style.height = '100vh';
+                modal.style.maxWidth = '100vw';
+                modal.style.maxHeight = '100vh';
+                this.isFullscreen = true;
+            } else {
+                modal.style.width = '1200px';
+                modal.style.height = '800px';
+                modal.style.maxWidth = '95vw';
+                modal.style.maxHeight = '95vh';
+                this.isFullscreen = false;
+            }
+        }
+    }
+
+    // PDF specific methods
+    pdfPreviousPage() {
+        // Implementation for PDF page navigation
+        console.log('PDF Previous Page');
+    }
+
+    pdfNextPage() {
+        // Implementation for PDF page navigation
+        console.log('PDF Next Page');
+    }
+
+    pdfZoomIn() {
+        // Implementation for PDF zoom
+        console.log('PDF Zoom In');
+    }
+
+    pdfZoomOut() {
+        // Implementation for PDF zoom
+        console.log('PDF Zoom Out');
+    }
+}
+
+// Global function to open content viewer
+function openContentViewer(contentId, title, url, fileType) {
+    if (window.contentViewer) {
+        window.contentViewer.open(contentId, title, url, fileType);
+    }
+}
+
+function retryContentLoad() {
+    if (window.contentViewer && window.contentViewer.currentContent) {
+        const content = window.contentViewer.currentContent;
+        window.contentViewer.loadContent(content.url, content.fileType);
+    }
+}
+
+// Initialize new components when dashboard loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize commercial carousel
+    window.commercialCarousel = new CommercialCarousel();
+    
+    // Initialize products overview
+    window.productsOverview = new ProductsOverview();
+    
+    // Initialize content viewer
+    window.contentViewer = new ContentViewer();
+});
