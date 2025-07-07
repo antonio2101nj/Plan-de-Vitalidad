@@ -270,6 +270,566 @@
         .save-actions-left, .save-actions-right { display: flex; gap: 1rem; }
         .btn-large { padding: 1rem 2rem; font-size: 1rem; font-weight: 600; }
         
+        /* ===== CAROUSEL STYLES ===== */
+        .carousel-nav-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 0;
+        }
+
+        .carousel-tab-btn {
+            background: transparent;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 8px 8px 0 0;
+            color: #6c757d;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 3px solid transparent;
+        }
+
+        .carousel-tab-btn:hover {
+            background: #f8f9fa;
+            color: #495057;
+        }
+
+        .carousel-tab-btn.active {
+            background: #fff;
+            color: #007bff;
+            border-bottom-color: #007bff;
+            box-shadow: 0 -2px 8px rgba(0,123,255,0.1);
+        }
+
+        .carousel-tab-content {
+            display: none;
+            padding: 2rem 0;
+        }
+
+        .carousel-tab-content.active {
+            display: block;
+        }
+
+        /* Carousel Images Grid */
+        .carousel-images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .carousel-image-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .carousel-image-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .image-preview {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .carousel-image-card:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .image-info {
+            padding: 1rem;
+        }
+
+        .image-info h4 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .image-info p {
+            margin: 0 0 1rem 0;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .image-stats {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        .image-stats .ctr {
+            margin-left: auto;
+            font-weight: 600;
+            color: #28a745;
+        }
+
+        .image-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .position-badge {
+            background: #007bff;
+            color: #fff;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Banners Section */
+        .banners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .banner-section-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .banner-section-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .banner-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .banner-section-header h4 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #333;
+        }
+
+        .banner-preview {
+            height: 120px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .banner-preview.no-banner {
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .banner-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: #fff;
+            padding: 1rem;
+        }
+
+        .banner-info h5 {
+            margin: 0 0 0.25rem 0;
+            font-size: 0.9rem;
+        }
+
+        .banner-info p {
+            margin: 0;
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        /* Templates Section */
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .template-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .template-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .template-preview {
+            position: relative;
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .template-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #ffc107;
+            color: #000;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .template-info {
+            padding: 1rem;
+        }
+
+        .template-info h4 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+
+        .template-info p {
+            margin: 0 0 1rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .template-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .template-actions .btn {
+            flex: 1;
+        }
+
+        /* Visual Editor Section */
+        .editor-section {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .editor-toolbar {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .tool-btn {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tool-btn:hover {
+            background: #e9ecef;
+            border-color: #adb5bd;
+        }
+
+        .tool-btn.active {
+            background: #007bff;
+            border-color: #007bff;
+            color: #fff;
+        }
+
+        .editor-workspace {
+            display: flex;
+            min-height: 500px;
+        }
+
+        .editor-canvas-container {
+            flex: 1;
+            padding: 1rem;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .editor-canvas-container canvas {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .editor-properties {
+            width: 280px;
+            background: #fff;
+            border-left: 1px solid #e9ecef;
+            padding: 1rem;
+        }
+
+        .editor-properties h4 {
+            margin: 0 0 1rem 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .property-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .property-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .dimension-inputs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dimension-inputs input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .filter-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-controls label {
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .filter-controls input[type="range"] {
+            width: 100%;
+        }
+
+        /* Analytics Section */
+        .analytics-controls {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .date-range-picker {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .date-range-picker label {
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .date-range-picker select,
+        .date-range-picker input[type="date"] {
+            padding: 0.5rem;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            background: #fff;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .analytics-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .analytics-card h4 {
+            margin: 0 0 1rem 0;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chart-container {
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .top-images-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .detailed-analytics {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .detailed-analytics h4 {
+            margin: 0 0 1rem 0;
+            color: #333;
+        }
+
+        .analytics-table-container {
+            overflow-x: auto;
+        }
+
+        .analytics-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .analytics-table th,
+        .analytics-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .analytics-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .analytics-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* Carousel Settings */
+        .carousel-settings {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .carousel-settings label {
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .carousel-settings input[type="number"] {
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* Empty States */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            margin: 0 0 0.5rem 0;
+            color: #495057;
+        }
+
+        .empty-state p {
+            margin: 0 0 1.5rem 0;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .customization-container, .support-container { grid-template-columns: 1fr; }
@@ -283,6 +843,37 @@
             .quick-actions-bar { flex-direction: column; }
             .settings-save-actions { flex-direction: column; gap: 1rem; }
             .save-actions-left, .save-actions-right { width: 100%; justify-content: center; }
+            
+            /* Carousel Responsive */
+            .carousel-nav-tabs {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .carousel-tab-btn {
+                border-radius: 0;
+                border-bottom: 1px solid #e9ecef;
+            }
+
+            .carousel-images-grid,
+            .banners-grid,
+            .templates-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .editor-workspace {
+                flex-direction: column;
+            }
+
+            .editor-properties {
+                width: 100%;
+                border-left: none;
+                border-top: 1px solid #e9ecef;
+            }
+
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
     
@@ -1716,13 +2307,357 @@
 
                 <div class="tab-content" id="carousel">
                     <div class="content-header">
-                        <h2 data-i18n="carousel">Imagens do Carrossel</h2>
-                        <p data-i18n="carousel-description">Gerencie as imagens do carrossel</p>
+                        <h2 data-i18n="carousel">🎠 Imagens do Carrossel</h2>
+                        <p data-i18n="carousel-description">Gestão visual completa: carrossel, banners, templates e analytics</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-images"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- Carousel Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalCarouselImages">0</h3>
+                                <p>Imagens Ativas</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalCarouselViews">0</h3>
+                                <p>Visualizações</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-mouse-pointer"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalCarouselClicks">0</h3>
+                                <p>Cliques</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="carouselConversionRate">0%</h3>
+                                <p>Taxa de Conversão</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Management Tabs -->
+                    <div class="carousel-nav-tabs">
+                        <button class="carousel-tab-btn active" data-carousel-tab="main">
+                            <i class="fas fa-th-large"></i>
+                            Carrossel Principal
+                        </button>
+                        <button class="carousel-tab-btn" data-carousel-tab="banners">
+                            <i class="fas fa-flag"></i>
+                            Banners por Seção
+                        </button>
+                        <button class="carousel-tab-btn" data-carousel-tab="templates">
+                            <i class="fas fa-palette"></i>
+                            Templates & Modelos
+                        </button>
+                        <button class="carousel-tab-btn" data-carousel-tab="editor">
+                            <i class="fas fa-edit"></i>
+                            Editor Visual
+                        </button>
+                        <button class="carousel-tab-btn" data-carousel-tab="analytics">
+                            <i class="fas fa-chart-bar"></i>
+                            Analytics
+                        </button>
+                    </div>
+
+                    <!-- Main Carousel Tab -->
+                    <div class="carousel-tab-content active" id="carouselMainTab">
+                        <div class="section-controls">
+                            <div class="controls-left">
+                                <button class="btn btn-primary" id="addCarouselImageBtn">
+                                    <i class="fas fa-plus"></i>
+                                    Adicionar Imagem
+                                </button>
+                                <button class="btn btn-secondary" id="importCarouselImagesBtn">
+                                    <i class="fas fa-upload"></i>
+                                    Importar Múltiplas
+                                </button>
+                                <button class="btn btn-info" id="previewCarouselBtn">
+                                    <i class="fas fa-play"></i>
+                                    Preview do Carrossel
+                                </button>
+                            </div>
+                            <div class="controls-right">
+                                <div class="carousel-settings">
+                                    <label>Autoplay:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="carouselAutoplay" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <input type="number" id="carouselInterval" value="5" min="2" max="30" style="width: 60px;">
+                                    <span>segundos</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Carousel Images Container -->
+                        <div class="carousel-images-grid" id="carouselImagesGrid">
+                            <!-- Images will be populated here -->
+                        </div>
+
+                        <!-- Carousel Preview Modal would open here -->
+                    </div>
+
+                    <!-- Banners Tab -->
+                    <div class="carousel-tab-content" id="carouselBannersTab">
+                        <div class="banners-section">
+                            <h3><i class="fas fa-flag"></i> Banners por Seção do App</h3>
+                            <p>Configure banners específicos para diferentes seções da aplicação</p>
+                            
+                            <div class="banners-grid">
+                                <div class="banner-section-card" data-section="home">
+                                    <div class="banner-section-header">
+                                        <h4><i class="fas fa-home"></i> Home</h4>
+                                        <button class="btn btn-small btn-primary">Configurar</button>
+                                    </div>
+                                    <div class="banner-preview" id="homeBannerPreview">
+                                        <span class="no-banner">Nenhum banner configurado</span>
+                                    </div>
+                                </div>
+
+                                <div class="banner-section-card" data-section="challenges">
+                                    <div class="banner-section-header">
+                                        <h4><i class="fas fa-trophy"></i> Desafios</h4>
+                                        <button class="btn btn-small btn-primary">Configurar</button>
+                                    </div>
+                                    <div class="banner-preview" id="challengesBannerPreview">
+                                        <span class="no-banner">Nenhum banner configurado</span>
+                                    </div>
+                                </div>
+
+                                <div class="banner-section-card" data-section="store">
+                                    <div class="banner-section-header">
+                                        <h4><i class="fas fa-store"></i> Loja</h4>
+                                        <button class="btn btn-small btn-primary">Configurar</button>
+                                    </div>
+                                    <div class="banner-preview" id="storeBannerPreview">
+                                        <span class="no-banner">Nenhum banner configurado</span>
+                                    </div>
+                                </div>
+
+                                <div class="banner-section-card" data-section="profile">
+                                    <div class="banner-section-header">
+                                        <h4><i class="fas fa-user"></i> Perfil</h4>
+                                        <button class="btn btn-small btn-primary">Configurar</button>
+                                    </div>
+                                    <div class="banner-preview" id="profileBannerPreview">
+                                        <span class="no-banner">Nenhum banner configurado</span>
+                                    </div>
+                                </div>
+
+                                <div class="banner-section-card" data-section="support">
+                                    <div class="banner-section-header">
+                                        <h4><i class="fas fa-headset"></i> Suporte</h4>
+                                        <button class="btn btn-small btn-primary">Configurar</button>
+                                    </div>
+                                    <div class="banner-preview" id="supportBannerPreview">
+                                        <span class="no-banner">Nenhum banner configurado</span>
+                                    </div>
+                                </div>
+
+                                <div class="banner-section-card" data-section="premium">
+                                    <div class="banner-section-header">
+                                        <h4><i class="fas fa-crown"></i> Premium</h4>
+                                        <button class="btn btn-small btn-primary">Configurar</button>
+                                    </div>
+                                    <div class="banner-preview" id="premiumBannerPreview">
+                                        <span class="no-banner">Nenhum banner configurado</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Templates Tab -->
+                    <div class="carousel-tab-content" id="carouselTemplatesTab">
+                        <div class="templates-section">
+                            <div class="section-controls">
+                                <div class="controls-left">
+                                    <button class="btn btn-primary" id="createTemplateBtn">
+                                        <i class="fas fa-plus"></i>
+                                        Criar Template
+                                    </button>
+                                    <button class="btn btn-secondary" id="importTemplateBtn">
+                                        <i class="fas fa-download"></i>
+                                        Importar Template
+                                    </button>
+                                </div>
+                                <div class="controls-right">
+                                    <div class="template-filters">
+                                        <select id="templateCategoryFilter">
+                                            <option value="">Todas as categorias</option>
+                                            <option value="motivation">🔥 Motivação</option>
+                                            <option value="health">🏃‍♀️ Saúde</option>
+                                            <option value="fitness">💪 Fitness</option>
+                                            <option value="nutrition">🥗 Nutrição</option>
+                                            <option value="mental">🧠 Bem-estar Mental</option>
+                                            <option value="offers">🎁 Ofertas</option>
+                                            <option value="events">📅 Eventos</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="templates-grid" id="templatesGrid">
+                                <!-- Templates will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Editor Tab -->
+                    <div class="carousel-tab-content" id="carouselEditorTab">
+                        <div class="editor-section">
+                            <div class="editor-toolbar">
+                                <div class="toolbar-group">
+                                    <button class="tool-btn" id="editorUploadBtn" title="Upload de Imagem">
+                                        <i class="fas fa-upload"></i>
+                                    </button>
+                                    <button class="tool-btn" id="editorTextBtn" title="Adicionar Texto">
+                                        <i class="fas fa-font"></i>
+                                    </button>
+                                    <button class="tool-btn" id="editorShapesBtn" title="Formas">
+                                        <i class="fas fa-shapes"></i>
+                                    </button>
+                                    <button class="tool-btn" id="editorFiltersBtn" title="Filtros">
+                                        <i class="fas fa-magic"></i>
+                                    </button>
+                                </div>
+                                <div class="toolbar-group">
+                                    <button class="tool-btn" id="editorUndoBtn" title="Desfazer">
+                                        <i class="fas fa-undo"></i>
+                                    </button>
+                                    <button class="tool-btn" id="editorRedoBtn" title="Refazer">
+                                        <i class="fas fa-redo"></i>
+                                    </button>
+                                </div>
+                                <div class="toolbar-group">
+                                    <button class="btn btn-secondary" id="editorPreviewBtn">
+                                        <i class="fas fa-eye"></i>
+                                        Preview
+                                    </button>
+                                    <button class="btn btn-primary" id="editorSaveBtn">
+                                        <i class="fas fa-save"></i>
+                                        Salvar
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="editor-workspace">
+                                <div class="editor-canvas-container">
+                                    <canvas id="visualEditor" width="800" height="400"></canvas>
+                                </div>
+                                <div class="editor-properties">
+                                    <h4>Propriedades</h4>
+                                    <div class="property-group">
+                                        <label>Dimensões:</label>
+                                        <div class="dimension-inputs">
+                                            <input type="number" id="canvasWidth" value="800" placeholder="Largura">
+                                            <span>×</span>
+                                            <input type="number" id="canvasHeight" value="400" placeholder="Altura">
+                                        </div>
+                                    </div>
+                                    <div class="property-group">
+                                        <label>Filtros:</label>
+                                        <div class="filter-controls">
+                                            <label>Brilho:</label>
+                                            <input type="range" id="brightnessSlider" min="0" max="200" value="100">
+                                            <label>Contraste:</label>
+                                            <input type="range" id="contrastSlider" min="0" max="200" value="100">
+                                            <label>Saturação:</label>
+                                            <input type="range" id="saturationSlider" min="0" max="200" value="100">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Tab -->
+                    <div class="carousel-tab-content" id="carouselAnalyticsTab">
+                        <div class="analytics-section">
+                            <div class="analytics-controls">
+                                <div class="date-range-picker">
+                                    <label>Período:</label>
+                                    <select id="analyticsDateRange">
+                                        <option value="7">Últimos 7 dias</option>
+                                        <option value="30" selected>Últimos 30 dias</option>
+                                        <option value="90">Últimos 90 dias</option>
+                                        <option value="custom">Personalizado</option>
+                                    </select>
+                                    <input type="date" id="analyticsDateFrom" style="display: none;">
+                                    <input type="date" id="analyticsDateTo" style="display: none;">
+                                </div>
+                            </div>
+
+                            <!-- Performance Overview -->
+                            <div class="analytics-grid">
+                                <div class="analytics-card">
+                                    <h4><i class="fas fa-chart-line"></i> Performance Geral</h4>
+                                    <div class="chart-container">
+                                        <canvas id="performanceChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+
+                                <div class="analytics-card">
+                                    <h4><i class="fas fa-images"></i> Imagens Mais Visualizadas</h4>
+                                    <div class="top-images-list" id="topImagesList">
+                                        <!-- Top images will be populated here -->
+                                    </div>
+                                </div>
+
+                                <div class="analytics-card">
+                                    <h4><i class="fas fa-mouse-pointer"></i> Taxa de Cliques por Imagem</h4>
+                                    <div class="chart-container">
+                                        <canvas id="clickRateChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+
+                                <div class="analytics-card">
+                                    <h4><i class="fas fa-clock"></i> Horários de Maior Engajamento</h4>
+                                    <div class="chart-container">
+                                        <canvas id="engagementTimeChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Detailed Analytics Table -->
+                            <div class="detailed-analytics">
+                                <h4>Análise Detalhada por Imagem</h4>
+                                <div class="analytics-table-container">
+                                    <table class="analytics-table">
+                                        <thead>
+                                            <tr>
+                                                <th>🖼️ Imagem</th>
+                                                <th>👁️ Visualizações</th>
+                                                <th>🖱️ Cliques</th>
+                                                <th>📊 CTR</th>
+                                                <th>⏱️ Tempo Médio</th>
+                                                <th>📱 Dispositivo</th>
+                                                <th>📅 Última Atualização</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="analyticsTableBody">
+                                            <!-- Analytics data will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -8575,8 +9510,543 @@ Exemplo:
             }
         }
 
+        // Carousel Manager Inline
+        class CarouselManagerInline {
+            constructor() {
+                this.isInitialized = false;
+                this.activeTab = 'main';
+                this.carouselImages = JSON.parse(localStorage.getItem('carousel_images') || '[]');
+                this.sectionBanners = JSON.parse(localStorage.getItem('section_banners') || '{}');
+                this.templates = JSON.parse(localStorage.getItem('carousel_templates') || '[]');
+                this.analytics = JSON.parse(localStorage.getItem('carousel_analytics') || '{}');
+                this.settings = JSON.parse(localStorage.getItem('carousel_settings') || '{}');
+
+                // Initialize default data
+                this.initializeDefaultData();
+            }
+
+            init() {
+                if (this.isInitialized) return;
+                console.log('🎠 Carousel Manager Inline inicializado');
+                this.bindEvents();
+                this.renderCurrentTab();
+                this.updateStats();
+                this.isInitialized = true;
+            }
+
+            initializeDefaultData() {
+                // Initialize with sample data if empty
+                if (this.carouselImages.length === 0) {
+                    this.carouselImages = [
+                        {
+                            id: 1,
+                            title: 'Bem-vindo ao Plan de Vitalidad',
+                            description: 'Transforme sua vida com hábitos saudáveis',
+                            imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=400&fit=crop',
+                            linkUrl: '#challenges',
+                            position: 1,
+                            active: true,
+                            views: 1250,
+                            clicks: 89,
+                            language: 'spanish'
+                        },
+                        {
+                            id: 2,
+                            title: 'Desafio 30 Dias Fitness',
+                            description: 'Seu corpo perfeito em apenas 30 dias',
+                            imageUrl: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=800&h=400&fit=crop',
+                            linkUrl: '#store',
+                            position: 2,
+                            active: true,
+                            views: 980,
+                            clicks: 156,
+                            language: 'spanish'
+                        }
+                    ];
+                }
+
+                if (Object.keys(this.sectionBanners).length === 0) {
+                    this.sectionBanners = {
+                        home: null,
+                        challenges: null,
+                        store: {
+                            imageUrl: 'https://images.unsplash.com/photo-1540553016722-983e48a2cd10?w=800&h=200&fit=crop',
+                            title: 'Produtos Premium',
+                            description: 'Acesse conteúdo exclusivo'
+                        },
+                        profile: null,
+                        support: null,
+                        premium: null
+                    };
+                }
+
+                if (this.templates.length === 0) {
+                    this.templates = [
+                        {
+                            id: 1,
+                            name: 'Motivação Fitness',
+                            category: 'fitness',
+                            thumbnail: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=150&fit=crop',
+                            premium: false
+                        },
+                        {
+                            id: 2,
+                            name: 'Nutrição Saudável',
+                            category: 'nutrition',
+                            thumbnail: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=300&h=150&fit=crop',
+                            premium: true
+                        }
+                    ];
+                }
+
+                this.saveData();
+            }
+
+            bindEvents() {
+                // Tab navigation
+                document.querySelectorAll('.carousel-tab-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.switchCarouselTab(e.target.dataset.carouselTab);
+                    });
+                });
+
+                // Main carousel events
+                const addImageBtn = document.getElementById('addCarouselImageBtn');
+                if (addImageBtn) {
+                    addImageBtn.addEventListener('click', () => this.openImageModal());
+                }
+
+                const importImagesBtn = document.getElementById('importCarouselImagesBtn');
+                if (importImagesBtn) {
+                    importImagesBtn.addEventListener('click', () => this.importMultipleImages());
+                }
+
+                const previewBtn = document.getElementById('previewCarouselBtn');
+                if (previewBtn) {
+                    previewBtn.addEventListener('click', () => this.previewCarousel());
+                }
+
+                // Settings events
+                const autoplayToggle = document.getElementById('carouselAutoplay');
+                if (autoplayToggle) {
+                    autoplayToggle.addEventListener('change', (e) => {
+                        this.settings.autoplay = e.target.checked;
+                        this.saveData();
+                    });
+                }
+
+                const intervalInput = document.getElementById('carouselInterval');
+                if (intervalInput) {
+                    intervalInput.addEventListener('input', (e) => {
+                        this.settings.interval = parseInt(e.target.value);
+                        this.saveData();
+                    });
+                }
+
+                // Banner section events
+                document.querySelectorAll('.banner-section-card button').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const section = e.target.closest('.banner-section-card').dataset.section;
+                        this.configureBanner(section);
+                    });
+                });
+
+                // Template events
+                const createTemplateBtn = document.getElementById('createTemplateBtn');
+                if (createTemplateBtn) {
+                    createTemplateBtn.addEventListener('click', () => this.createTemplate());
+                }
+
+                // Editor events
+                this.initializeVisualEditor();
+
+                // Analytics events
+                const analyticsDateRange = document.getElementById('analyticsDateRange');
+                if (analyticsDateRange) {
+                    analyticsDateRange.addEventListener('change', (e) => {
+                        this.updateAnalytics(e.target.value);
+                    });
+                }
+            }
+
+            switchCarouselTab(tabId) {
+                // Update active tab button
+                document.querySelectorAll('.carousel-tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-carousel-tab="${tabId}"]`).classList.add('active');
+
+                // Update active tab content
+                document.querySelectorAll('.carousel-tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(`carousel${tabId.charAt(0).toUpperCase() + tabId.slice(1)}Tab`).classList.add('active');
+
+                this.activeTab = tabId;
+                this.renderCurrentTab();
+            }
+
+            renderCurrentTab() {
+                switch (this.activeTab) {
+                    case 'main':
+                        this.renderCarouselImages();
+                        break;
+                    case 'banners':
+                        this.renderSectionBanners();
+                        break;
+                    case 'templates':
+                        this.renderTemplates();
+                        break;
+                    case 'editor':
+                        this.renderEditor();
+                        break;
+                    case 'analytics':
+                        this.renderAnalytics();
+                        break;
+                }
+            }
+
+            renderCarouselImages() {
+                const grid = document.getElementById('carouselImagesGrid');
+                if (!grid) return;
+
+                if (this.carouselImages.length === 0) {
+                    grid.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-images"></i>
+                            <h3>Nenhuma imagem no carrossel</h3>
+                            <p>Adicione a primeira imagem para começar</p>
+                            <button class="btn btn-primary" onclick="carouselManagerInline.openImageModal()">
+                                <i class="fas fa-plus"></i>
+                                Adicionar Primeira Imagem
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const html = this.carouselImages.map(image => `
+                    <div class="carousel-image-card" data-id="${image.id}">
+                        <div class="image-preview">
+                            <img src="${image.imageUrl}" alt="${image.title}" loading="lazy">
+                            <div class="image-overlay">
+                                <button class="btn btn-small btn-primary" onclick="carouselManagerInline.editImage(${image.id})">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-small btn-secondary" onclick="carouselManagerInline.previewImage(${image.id})">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-small btn-danger" onclick="carouselManagerInline.deleteImage(${image.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="image-info">
+                            <h4>${image.title}</h4>
+                            <p>${image.description}</p>
+                            <div class="image-stats">
+                                <span><i class="fas fa-eye"></i> ${image.views || 0}</span>
+                                <span><i class="fas fa-mouse-pointer"></i> ${image.clicks || 0}</span>
+                                <span class="ctr">CTR: ${image.views ? ((image.clicks / image.views) * 100).toFixed(1) : 0}%</span>
+                            </div>
+                            <div class="image-controls">
+                                <span class="position-badge">Posição ${image.position}</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" ${image.active ? 'checked' : ''} 
+                                           onchange="carouselManagerInline.toggleImageStatus(${image.id})">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                grid.innerHTML = html;
+            }
+
+            renderSectionBanners() {
+                const sections = ['home', 'challenges', 'store', 'profile', 'support', 'premium'];
+                
+                sections.forEach(section => {
+                    const preview = document.getElementById(`${section}BannerPreview`);
+                    if (!preview) return;
+
+                    const banner = this.sectionBanners[section];
+                    if (banner) {
+                        preview.innerHTML = `
+                            <img src="${banner.imageUrl}" alt="${banner.title}" loading="lazy">
+                            <div class="banner-info">
+                                <h5>${banner.title}</h5>
+                                <p>${banner.description}</p>
+                            </div>
+                        `;
+                        preview.classList.remove('no-banner');
+                    } else {
+                        preview.innerHTML = '<span class="no-banner">Nenhum banner configurado</span>';
+                        preview.classList.add('no-banner');
+                    }
+                });
+            }
+
+            renderTemplates() {
+                const grid = document.getElementById('templatesGrid');
+                if (!grid) return;
+
+                const filter = document.getElementById('templateCategoryFilter').value;
+                const filteredTemplates = filter ? 
+                    this.templates.filter(t => t.category === filter) : 
+                    this.templates;
+
+                const html = filteredTemplates.map(template => `
+                    <div class="template-card">
+                        <div class="template-preview">
+                            <img src="${template.thumbnail}" alt="${template.name}" loading="lazy">
+                            ${template.premium ? '<span class="premium-badge">Premium</span>' : ''}
+                        </div>
+                        <div class="template-info">
+                            <h4>${template.name}</h4>
+                            <p>Categoria: ${this.getCategoryLabel(template.category)}</p>
+                            <div class="template-actions">
+                                <button class="btn btn-small btn-primary" onclick="carouselManagerInline.useTemplate(${template.id})">
+                                    <i class="fas fa-download"></i>
+                                    Usar Template
+                                </button>
+                                <button class="btn btn-small btn-secondary" onclick="carouselManagerInline.editTemplate(${template.id})">
+                                    <i class="fas fa-edit"></i>
+                                    Editar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                grid.innerHTML = html || '<div class="empty-state"><p>Nenhum template encontrado</p></div>';
+            }
+
+            renderEditor() {
+                // Initialize canvas if not already done
+                const canvas = document.getElementById('visualEditor');
+                if (canvas && !this.editorInitialized) {
+                    this.initializeCanvas(canvas);
+                    this.editorInitialized = true;
+                }
+            }
+
+            renderAnalytics() {
+                this.renderPerformanceChart();
+                this.renderTopImagesList();
+                this.renderClickRateChart();
+                this.renderEngagementTimeChart();
+                this.renderAnalyticsTable();
+            }
+
+            updateStats() {
+                const totalImages = this.carouselImages.filter(img => img.active).length;
+                const totalViews = this.carouselImages.reduce((sum, img) => sum + (img.views || 0), 0);
+                const totalClicks = this.carouselImages.reduce((sum, img) => sum + (img.clicks || 0), 0);
+                const conversionRate = totalViews > 0 ? ((totalClicks / totalViews) * 100).toFixed(1) : 0;
+
+                document.getElementById('totalCarouselImages').textContent = totalImages;
+                document.getElementById('totalCarouselViews').textContent = totalViews.toLocaleString();
+                document.getElementById('totalCarouselClicks').textContent = totalClicks.toLocaleString();
+                document.getElementById('carouselConversionRate').textContent = `${conversionRate}%`;
+            }
+
+            // Modal and action methods
+            openImageModal(imageId = null) {
+                const isEdit = imageId !== null;
+                const image = isEdit ? this.carouselImages.find(img => img.id === imageId) : null;
+
+                const modalHtml = `
+                    <div class="modal active" id="imageModal">
+                        <div class="modal-overlay" onclick="carouselManagerInline.closeModal()"></div>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3>${isEdit ? 'Editar' : 'Adicionar'} Imagem do Carrossel</h3>
+                                <button class="modal-close" onclick="carouselManagerInline.closeModal()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="imageForm">
+                                    <div class="form-group">
+                                        <label>Título *</label>
+                                        <input type="text" id="imageTitle" value="${image?.title || ''}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Descrição</label>
+                                        <textarea id="imageDescription" rows="3">${image?.description || ''}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>URL da Imagem *</label>
+                                        <input type="url" id="imageUrl" value="${image?.imageUrl || ''}" required>
+                                        <small>Recomendado: 800x400px (proporção 2:1)</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Link de Destino</label>
+                                        <input type="text" id="imageLinkUrl" value="${image?.linkUrl || ''}" 
+                                               placeholder="#challenges, #store, https://...">
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Posição</label>
+                                            <input type="number" id="imagePosition" value="${image?.position || this.carouselImages.length + 1}" min="1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Idioma</label>
+                                            <select id="imageLanguage">
+                                                <option value="spanish" ${image?.language === 'spanish' ? 'selected' : ''}>🇪🇸 Espanhol</option>
+                                                <option value="portuguese" ${image?.language === 'portuguese' ? 'selected' : ''}>🇧🇷 Português</option>
+                                                <option value="english" ${image?.language === 'english' ? 'selected' : ''}>🇺🇸 Inglês</option>
+                                                <option value="all" ${image?.language === 'all' ? 'selected' : ''}>🌍 Todos</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="imageActive" ${image?.active !== false ? 'checked' : ''}>
+                                            <span class="checkbox-custom"></span>
+                                            Imagem ativa
+                                        </label>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" onclick="carouselManagerInline.closeModal()">Cancelar</button>
+                                <button class="btn btn-primary" onclick="carouselManagerInline.saveImage(${imageId})">
+                                    ${isEdit ? 'Atualizar' : 'Adicionar'} Imagem
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                document.body.insertAdjacentHTML('beforeend', modalHtml);
+            }
+
+            saveImage(imageId = null) {
+                const isEdit = imageId !== null;
+                const formData = {
+                    title: document.getElementById('imageTitle').value,
+                    description: document.getElementById('imageDescription').value,
+                    imageUrl: document.getElementById('imageUrl').value,
+                    linkUrl: document.getElementById('imageLinkUrl').value,
+                    position: parseInt(document.getElementById('imagePosition').value),
+                    language: document.getElementById('imageLanguage').value,
+                    active: document.getElementById('imageActive').checked
+                };
+
+                if (!formData.title || !formData.imageUrl) {
+                    alert('Título e URL da imagem são obrigatórios');
+                    return;
+                }
+
+                if (isEdit) {
+                    const index = this.carouselImages.findIndex(img => img.id === imageId);
+                    if (index !== -1) {
+                        this.carouselImages[index] = { ...this.carouselImages[index], ...formData };
+                    }
+                } else {
+                    const newImage = {
+                        id: Date.now(),
+                        ...formData,
+                        views: 0,
+                        clicks: 0,
+                        createdAt: new Date().toISOString()
+                    };
+                    this.carouselImages.push(newImage);
+                }
+
+                this.saveData();
+                this.renderCarouselImages();
+                this.updateStats();
+                this.closeModal();
+                this.showNotification(`Imagem ${isEdit ? 'atualizada' : 'adicionada'} com sucesso!`);
+            }
+
+            deleteImage(imageId) {
+                if (confirm('Tem certeza que deseja excluir esta imagem?')) {
+                    this.carouselImages = this.carouselImages.filter(img => img.id !== imageId);
+                    this.saveData();
+                    this.renderCarouselImages();
+                    this.updateStats();
+                    this.showNotification('Imagem excluída com sucesso!');
+                }
+            }
+
+            toggleImageStatus(imageId) {
+                const image = this.carouselImages.find(img => img.id === imageId);
+                if (image) {
+                    image.active = !image.active;
+                    this.saveData();
+                    this.updateStats();
+                }
+            }
+
+            // Additional utility methods
+            getCategoryLabel(category) {
+                const labels = {
+                    'motivation': '🔥 Motivação',
+                    'health': '🏃‍♀️ Saúde',
+                    'fitness': '💪 Fitness',
+                    'nutrition': '🥗 Nutrição',
+                    'mental': '🧠 Bem-estar Mental',
+                    'offers': '🎁 Ofertas',
+                    'events': '📅 Eventos'
+                };
+                return labels[category] || category;
+            }
+
+            initializeCanvas(canvas) {
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#f8f9fa';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Add placeholder text
+                ctx.fillStyle = '#6c757d';
+                ctx.font = '24px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Editor Visual - Em Desenvolvimento', canvas.width/2, canvas.height/2);
+            }
+
+            closeModal() {
+                const modal = document.querySelector('.modal.active');
+                if (modal) {
+                    modal.remove();
+                }
+            }
+
+            saveData() {
+                localStorage.setItem('carousel_images', JSON.stringify(this.carouselImages));
+                localStorage.setItem('section_banners', JSON.stringify(this.sectionBanners));
+                localStorage.setItem('carousel_templates', JSON.stringify(this.templates));
+                localStorage.setItem('carousel_analytics', JSON.stringify(this.analytics));
+                localStorage.setItem('carousel_settings', JSON.stringify(this.settings));
+            }
+
+            showNotification(message) {
+                console.log('CAROUSEL:', message);
+                // Implement notification system
+            }
+
+            // Placeholder methods for advanced features
+            importMultipleImages() { this.showNotification('Funcionalidade em desenvolvimento'); }
+            previewCarousel() { this.showNotification('Preview do carrossel será implementado'); }
+            configureBanner(section) { this.showNotification(`Configurar banner da seção ${section}`); }
+            createTemplate() { this.showNotification('Criar template personalizado'); }
+            useTemplate(id) { this.showNotification(`Usar template ID ${id}`); }
+            editTemplate(id) { this.showNotification(`Editar template ID ${id}`); }
+            initializeVisualEditor() { /* Initialize editor tools */ }
+            renderPerformanceChart() { /* Render analytics chart */ }
+            renderTopImagesList() { /* Render top images */ }
+            renderClickRateChart() { /* Render click rate chart */ }
+            renderEngagementTimeChart() { /* Render engagement chart */ }
+            renderAnalyticsTable() { /* Render detailed analytics */ }
+            updateAnalytics(range) { /* Update analytics for date range */ }
+        }
+
         // Initialize inline systems
-        let appCustomizationInline, supportManagerInline, autoresponderManagerInline, generalSettingsManagerInline;
+        let appCustomizationInline, supportManagerInline, autoresponderManagerInline, generalSettingsManagerInline, carouselManagerInline;
 
         document.addEventListener('DOMContentLoaded', function() {
             const originalSwitchTab = window.switchTab;
@@ -8611,6 +10081,13 @@ Exemplo:
                             generalSettingsManagerInline.init();
                         }, 100);
                     }
+
+                    if (tabId === 'carousel' && !carouselManagerInline) {
+                        setTimeout(() => {
+                            carouselManagerInline = new CarouselManagerInline();
+                            carouselManagerInline.init();
+                        }, 100);
+                    }
                 };
             }
         });
@@ -8624,6 +10101,19 @@ Exemplo:
             previewChanges: () => generalSettingsManagerInline?.previewChanges(),
             resetCategory: () => generalSettingsManagerInline?.resetCategory(),
             saveAllSettings: () => generalSettingsManagerInline?.saveAllSettings()
+        };
+
+        // Global functions for Carousel Manager
+        window.carouselManagerInline = {
+            openImageModal: (id) => carouselManagerInline?.openImageModal(id),
+            editImage: (id) => carouselManagerInline?.openImageModal(id),
+            previewImage: (id) => carouselManagerInline?.previewImage?.(id),
+            deleteImage: (id) => carouselManagerInline?.deleteImage(id),
+            toggleImageStatus: (id) => carouselManagerInline?.toggleImageStatus(id),
+            saveImage: (id) => carouselManagerInline?.saveImage(id),
+            closeModal: () => carouselManagerInline?.closeModal(),
+            useTemplate: (id) => carouselManagerInline?.useTemplate(id),
+            editTemplate: (id) => carouselManagerInline?.editTemplate(id)
         };
     </script>
     <link rel="stylesheet" href="store-styles.css">
