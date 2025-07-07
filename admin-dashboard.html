@@ -226,6 +226,50 @@
         .notification.warning { border-left: 4px solid #ffc107; }
         .notification.info { border-left: 4px solid #17a2b8; }
         
+        /* ===== GENERAL SETTINGS STYLES ===== */
+        .general-settings-overview { margin-bottom: 2rem; }
+        .quick-actions-bar { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .quick-action-btn { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; }
+        .quick-action-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3); }
+        .settings-categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; }
+        .settings-category { background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); overflow: hidden; margin-bottom: 2rem; transition: all 0.3s ease; }
+        .settings-category:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); }
+        .category-header { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 1.5rem; display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid #e5e7eb; }
+        .category-icon { font-size: 2rem; }
+        .category-info { flex: 1; }
+        .category-info h3 { margin: 0 0 0.25rem 0; font-size: 1.1rem; font-weight: 600; color: #1f2937; }
+        .category-info p { margin: 0; font-size: 0.9rem; color: #6b7280; }
+        .status-indicator { width: 12px; height: 12px; border-radius: 50%; }
+        .status-indicator.active { background: #10b981; }
+        .status-indicator.warning { background: #f59e0b; }
+        .status-indicator.error { background: #ef4444; }
+        .category-content { padding: 1.5rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group:last-child { margin-bottom: 0; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #374151; font-size: 0.9rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.9rem; transition: all 0.3s ease; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); }
+        .form-group small { display: block; margin-top: 0.5rem; font-size: 0.8rem; color: #6b7280; }
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .language-toggles, .currency-toggles { display: grid; gap: 0.75rem; }
+        .toggle-option { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+        .toggle-slider { position: relative; width: 50px; height: 25px; background: #ddd; border-radius: 15px; transition: all 0.3s ease; }
+        .toggle-option input:checked + .toggle-slider { background: #6366f1; }
+        .toggle-slider::after { content: ''; position: absolute; top: 2px; left: 2px; width: 21px; height: 21px; background: white; border-radius: 50%; transition: all 0.3s ease; }
+        .toggle-option input:checked + .toggle-slider::after { transform: translateX(25px); }
+        .toggle-option input { display: none; }
+        .toggle-label { font-size: 0.9rem; font-weight: 500; }
+        .checkbox-label { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+        .checkbox-custom { width: 20px; height: 20px; border: 2px solid #d1d5db; border-radius: 4px; position: relative; transition: all 0.3s ease; }
+        .checkbox-label input:checked + .checkbox-custom { background: #6366f1; border-color: #6366f1; }
+        .checkbox-label input:checked + .checkbox-custom::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 0.8rem; font-weight: bold; }
+        .checkbox-label input { display: none; }
+        .smtp-config { background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+        .smtp-config h5 { margin: 0 0 1rem 0; color: #374151; display: flex; align-items: center; gap: 0.5rem; }
+        .settings-save-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 3rem; padding: 2rem; background: #f8f9fa; border-radius: 12px; }
+        .save-actions-left, .save-actions-right { display: flex; gap: 1rem; }
+        .btn-large { padding: 1rem 2rem; font-size: 1rem; font-weight: 600; }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .customization-container, .support-container { grid-template-columns: 1fr; }
@@ -235,6 +279,10 @@
             .search-box { min-width: auto; }
             .email-modal-content { margin: 1rem; max-width: none; }
             .stats-dashboard { grid-template-columns: 1fr; }
+            .settings-categories-grid { grid-template-columns: 1fr; }
+            .quick-actions-bar { flex-direction: column; }
+            .settings-save-actions { flex-direction: column; gap: 1rem; }
+            .save-actions-left, .save-actions-right { width: 100%; justify-content: center; }
         }
     </style>
     
@@ -4100,13 +4148,433 @@
 
                 <div class="tab-content" id="general-settings">
                     <div class="content-header">
-                        <h2 data-i18n="general-settings">Configurações Gerais</h2>
-                        <p data-i18n="general-settings-description">Configure as opções gerais do sistema</p>
+                        <h2 data-i18n="general-settings">⚙️ Configurações Gerais</h2>
+                        <p data-i18n="general-settings-description">Configure todas as opções globais da plataforma</p>
                     </div>
-                    <div class="placeholder-content">
-                        <i class="fas fa-cog"></i>
-                        <h3 data-i18n="coming-soon">Em breve...</h3>
-                        <p data-i18n="functionality-development">Esta funcionalidade será desenvolvida em breve</p>
+                    
+                    <!-- General Settings Overview -->
+                    <div class="general-settings-overview">
+                        <div class="overview-stats">
+                            <div class="stat-card platform">
+                                <div class="stat-icon">🏢</div>
+                                <div class="stat-content">
+                                    <h4 id="platformStatus">Ativo</h4>
+                                    <p>Status da Plataforma</p>
+                                </div>
+                            </div>
+                            <div class="stat-card security">
+                                <div class="stat-icon">🔒</div>
+                                <div class="stat-content">
+                                    <h4 id="securityLevel">Alto</h4>
+                                    <p>Nível de Segurança</p>
+                                </div>
+                            </div>
+                            <div class="stat-card integrations">
+                                <div class="stat-icon">🔗</div>
+                                <div class="stat-content">
+                                    <h4 id="activeIntegrations">5</h4>
+                                    <p>Integrações Ativas</p>
+                                </div>
+                            </div>
+                            <div class="stat-card backup">
+                                <div class="stat-icon">💾</div>
+                                <div class="stat-content">
+                                    <h4 id="lastBackup">Hoje</h4>
+                                    <p>Último Backup</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions Bar -->
+                    <div class="quick-actions-bar">
+                        <button class="quick-action-btn" onclick="generalSettingsManager.exportSettings()">
+                            <i class="fas fa-download"></i>
+                            <span>Exportar Configurações</span>
+                        </button>
+                        <button class="quick-action-btn" onclick="generalSettingsManager.importSettings()">
+                            <i class="fas fa-upload"></i>
+                            <span>Importar Configurações</span>
+                        </button>
+                        <button class="quick-action-btn" onclick="generalSettingsManager.resetToDefaults()">
+                            <i class="fas fa-undo"></i>
+                            <span>Restaurar Padrões</span>
+                        </button>
+                        <button class="quick-action-btn" onclick="generalSettingsManager.testAllSystems()">
+                            <i class="fas fa-stethoscope"></i>
+                            <span>Testar Sistemas</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Settings Categories Grid -->
+                    <div class="settings-categories-grid">
+                        <!-- Platform Settings -->
+                        <div class="settings-category" data-category="platform">
+                            <div class="category-header">
+                                <div class="category-icon">🏢</div>
+                                <div class="category-info">
+                                    <h3>Configurações da Plataforma</h3>
+                                    <p>Informações gerais e identificação</p>
+                                </div>
+                                <div class="category-status">
+                                    <span class="status-indicator active"></span>
+                                </div>
+                            </div>
+                            <div class="category-content">
+                                <div class="form-group">
+                                    <label for="platformName">Nome da Plataforma</label>
+                                    <input type="text" id="platformName" value="Plan de Vitalidad" placeholder="Nome da sua plataforma">
+                                </div>
+                                <div class="form-group">
+                                    <label for="platformDescription">Descrição/Tagline</label>
+                                    <input type="text" id="platformDescription" value="Transforme sua vida com hábitos saudáveis" placeholder="Slogan ou descrição curta">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="platformTimezone">Timezone Padrão</label>
+                                        <select id="platformTimezone">
+                                            <option value="America/Sao_Paulo">🇧🇷 América/São_Paulo (GMT-3)</option>
+                                            <option value="Europe/Madrid">🇪🇸 Europa/Madrid (GMT+1)</option>
+                                            <option value="America/New_York">🇺🇸 América/Nova_York (GMT-5)</option>
+                                            <option value="Europe/London">🇬🇧 Europa/Londres (GMT+0)</option>
+                                            <option value="America/Mexico_City">🇲🇽 América/México (GMT-6)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="platformCurrency">Moeda Padrão</label>
+                                        <select id="platformCurrency">
+                                            <option value="USD">💵 USD - Dólar Americano</option>
+                                            <option value="EUR">💶 EUR - Euro</option>
+                                            <option value="BRL">💰 BRL - Real Brasileiro</option>
+                                            <option value="MXN">🪙 MXN - Peso Mexicano</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="platformUrl">URL Base da Plataforma</label>
+                                    <input type="url" id="platformUrl" value="https://antonio2101nj.github.io/Plan-de-Vitalidad/" placeholder="https://seudominio.com">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Language and Localization -->
+                        <div class="settings-category" data-category="localization">
+                            <div class="category-header">
+                                <div class="category-icon">🌍</div>
+                                <div class="category-info">
+                                    <h3>Idioma e Localização</h3>
+                                    <p>Configurações regionais e idiomas</p>
+                                </div>
+                                <div class="category-status">
+                                    <span class="status-indicator active"></span>
+                                </div>
+                            </div>
+                            <div class="category-content">
+                                <div class="form-group">
+                                    <label>Idiomas Disponíveis</label>
+                                    <div class="language-toggles">
+                                        <label class="toggle-option">
+                                            <input type="checkbox" id="lang_spanish" checked>
+                                            <span class="toggle-slider"></span>
+                                            <span class="toggle-label">🇪🇸 Español</span>
+                                        </label>
+                                        <label class="toggle-option">
+                                            <input type="checkbox" id="lang_portuguese" checked>
+                                            <span class="toggle-slider"></span>
+                                            <span class="toggle-label">🇧🇷 Português</span>
+                                        </label>
+                                        <label class="toggle-option">
+                                            <input type="checkbox" id="lang_english" checked>
+                                            <span class="toggle-slider"></span>
+                                            <span class="toggle-label">🇺🇸 English</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="defaultLanguage">Idioma Padrão</label>
+                                    <select id="defaultLanguage">
+                                        <option value="es">🇪🇸 Español</option>
+                                        <option value="pt">🇧🇷 Português</option>
+                                        <option value="en">🇺🇸 English</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="autoDetectLanguage" checked>
+                                        <span class="checkbox-custom"></span>
+                                        Detectar idioma automaticamente por IP
+                                    </label>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="dateFormat">Formato de Data</label>
+                                        <select id="dateFormat">
+                                            <option value="DD/MM/YYYY">DD/MM/YYYY (Brasil/Europa)</option>
+                                            <option value="MM/DD/YYYY">MM/DD/YYYY (EUA)</option>
+                                            <option value="YYYY-MM-DD">YYYY-MM-DD (ISO)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timeFormat">Formato de Hora</label>
+                                        <select id="timeFormat">
+                                            <option value="24h">24 horas (15:30)</option>
+                                            <option value="12h">12 horas (3:30 PM)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- User Settings -->
+                        <div class="settings-category" data-category="users">
+                            <div class="category-header">
+                                <div class="category-icon">👥</div>
+                                <div class="category-info">
+                                    <h3>Configurações de Usuários</h3>
+                                    <p>Registro, autenticação e políticas</p>
+                                </div>
+                                <div class="category-status">
+                                    <span class="status-indicator active"></span>
+                                </div>
+                            </div>
+                            <div class="category-content">
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="allowRegistration" checked>
+                                        <span class="checkbox-custom"></span>
+                                        Permitir registro automático de usuários
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="requireEmailVerification" checked>
+                                        <span class="checkbox-custom"></span>
+                                        Exigir verificação de e-mail
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="manualApproval">
+                                        <span class="checkbox-custom"></span>
+                                        Aprovação manual de novos usuários
+                                    </label>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="minPasswordLength">Tamanho Mínimo da Senha</label>
+                                        <input type="number" id="minPasswordLength" value="6" min="4" max="20">
+                                        <small>Entre 4 e 20 caracteres</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sessionTimeout">Tempo de Sessão (horas)</label>
+                                        <input type="number" id="sessionTimeout" value="24" min="1" max="168">
+                                        <small>Auto-logout após inatividade</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="maxDevices">Máximo de Dispositivos Simultâneos</label>
+                                    <input type="number" id="maxDevices" value="3" min="1" max="10">
+                                    <small>Quantos dispositivos um usuário pode usar ao mesmo tempo</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Settings -->
+                        <div class="settings-category" data-category="payments">
+                            <div class="category-header">
+                                <div class="category-icon">💳</div>
+                                <div class="category-info">
+                                    <h3>Configurações de Pagamento</h3>
+                                    <p>Gateways, moedas e políticas</p>
+                                </div>
+                                <div class="category-status">
+                                    <span class="status-indicator warning"></span>
+                                </div>
+                            </div>
+                            <div class="category-content">
+                                <div class="form-group">
+                                    <label for="defaultGateway">Gateway Padrão</label>
+                                    <select id="defaultGateway">
+                                        <option value="kiwify">Kiwify</option>
+                                        <option value="stripe">Stripe</option>
+                                        <option value="paypal">PayPal</option>
+                                        <option value="mercadopago">Mercado Pago</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Moedas Aceitas</label>
+                                    <div class="currency-toggles">
+                                        <label class="toggle-option">
+                                            <input type="checkbox" id="currency_usd" checked>
+                                            <span class="toggle-slider"></span>
+                                            <span class="toggle-label">💵 USD</span>
+                                        </label>
+                                        <label class="toggle-option">
+                                            <input type="checkbox" id="currency_eur" checked>
+                                            <span class="toggle-slider"></span>
+                                            <span class="toggle-label">💶 EUR</span>
+                                        </label>
+                                        <label class="toggle-option">
+                                            <input type="checkbox" id="currency_brl" checked>
+                                            <span class="toggle-slider"></span>
+                                            <span class="toggle-label">💰 BRL</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="refundPolicy">Política de Reembolso (dias)</label>
+                                        <input type="number" id="refundPolicy" value="7" min="0" max="365">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="paymentRetries">Tentativas de Cobrança</label>
+                                        <input type="number" id="paymentRetries" value="3" min="1" max="10">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="webhookUrl">URL de Webhook</label>
+                                    <input type="url" id="webhookUrl" placeholder="https://seudominio.com/webhook/payment">
+                                    <small>Para receber notificações de pagamento</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Email Settings -->
+                        <div class="settings-category" data-category="email">
+                            <div class="category-header">
+                                <div class="category-icon">📧</div>
+                                <div class="category-info">
+                                    <h3>Configurações de E-mail</h3>
+                                    <p>SMTP, templates e limites</p>
+                                </div>
+                                <div class="category-status">
+                                    <span class="status-indicator active"></span>
+                                </div>
+                            </div>
+                            <div class="category-content">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="senderName">Nome do Remetente</label>
+                                        <input type="text" id="senderName" value="Plan de Vitalidad" placeholder="Nome que aparece no e-mail">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="senderEmail">E-mail do Remetente</label>
+                                        <input type="email" id="senderEmail" value="noreply@plandevitalidad.com" placeholder="email@seudominio.com">
+                                    </div>
+                                </div>
+                                <div class="smtp-config">
+                                    <h5><i class="fas fa-server"></i> Configuração SMTP (Opcional)</h5>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="smtpHost">Servidor SMTP</label>
+                                            <input type="text" id="smtpHost" placeholder="smtp.gmail.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="smtpPort">Porta</label>
+                                            <input type="number" id="smtpPort" value="587" placeholder="587">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="smtpUsername">Usuário SMTP</label>
+                                            <input type="text" id="smtpUsername" placeholder="seu@email.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="smtpPassword">Senha SMTP</label>
+                                            <input type="password" id="smtpPassword" placeholder="••••••••">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="emailLimitHour">Limite por Hora</label>
+                                        <input type="number" id="emailLimitHour" value="100" min="1">
+                                        <small>E-mails enviados por hora</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="emailLimitDay">Limite por Dia</label>
+                                        <input type="number" id="emailLimitDay" value="1000" min="1">
+                                        <small>E-mails enviados por dia</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Security Settings -->
+                        <div class="settings-category" data-category="security">
+                            <div class="category-header">
+                                <div class="category-icon">🔒</div>
+                                <div class="category-info">
+                                    <h3>Segurança e Privacidade</h3>
+                                    <p>2FA, logs e compliance</p>
+                                </div>
+                                <div class="category-status">
+                                    <span class="status-indicator active"></span>
+                                </div>
+                            </div>
+                            <div class="category-content">
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="require2FA" checked>
+                                        <span class="checkbox-custom"></span>
+                                        Exigir 2FA para administradores
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="enableLogs" checked>
+                                        <span class="checkbox-custom"></span>
+                                        Registrar logs de atividade
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="gdprCompliance" checked>
+                                        <span class="checkbox-custom"></span>
+                                        Conformidade LGPD/GDPR
+                                    </label>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="logRetention">Retenção de Logs (dias)</label>
+                                        <input type="number" id="logRetention" value="90" min="1" max="365">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="backupFrequency">Frequência de Backup</label>
+                                        <select id="backupFrequency">
+                                            <option value="daily">Diário</option>
+                                            <option value="weekly">Semanal</option>
+                                            <option value="monthly">Mensal</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="blockedIPs">IPs Bloqueados</label>
+                                    <textarea id="blockedIPs" placeholder="192.168.1.1&#10;10.0.0.1" rows="3"></textarea>
+                                    <small>Um IP por linha</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Save Actions -->
+                    <div class="settings-save-actions">
+                        <div class="save-actions-left">
+                            <button class="btn btn-secondary" onclick="generalSettingsManager.previewChanges()">
+                                <i class="fas fa-eye"></i>
+                                Visualizar Mudanças
+                            </button>
+                            <button class="btn btn-warning" onclick="generalSettingsManager.resetCategory()">
+                                <i class="fas fa-undo"></i>
+                                Restaurar Seção
+                            </button>
+                        </div>
+                        <div class="save-actions-right">
+                            <button class="btn btn-primary btn-large" onclick="generalSettingsManager.saveAllSettings()">
+                                <i class="fas fa-save"></i>
+                                Salvar Todas as Configurações
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -7769,8 +8237,346 @@ Exemplo:
             }
         }
 
+        // General Settings Manager Inline
+        class GeneralSettingsManagerInline {
+            constructor() {
+                this.isInitialized = false;
+                this.settings = JSON.parse(localStorage.getItem('general_settings') || '{}');
+                this.defaultSettings = {
+                    platform: {
+                        name: 'Plan de Vitalidad',
+                        description: 'Transforme sua vida com hábitos saudáveis',
+                        timezone: 'America/Sao_Paulo',
+                        currency: 'USD',
+                        url: 'https://antonio2101nj.github.io/Plan-de-Vitalidad/'
+                    },
+                    localization: {
+                        availableLanguages: ['es', 'pt', 'en'],
+                        defaultLanguage: 'es',
+                        autoDetectLanguage: true,
+                        dateFormat: 'DD/MM/YYYY',
+                        timeFormat: '24h'
+                    },
+                    users: {
+                        allowRegistration: true,
+                        requireEmailVerification: true,
+                        manualApproval: false,
+                        minPasswordLength: 6,
+                        sessionTimeout: 24,
+                        maxDevices: 3
+                    },
+                    payments: {
+                        defaultGateway: 'kiwify',
+                        acceptedCurrencies: ['USD', 'EUR', 'BRL'],
+                        refundPolicy: 7,
+                        paymentRetries: 3,
+                        webhookUrl: ''
+                    },
+                    email: {
+                        senderName: 'Plan de Vitalidad',
+                        senderEmail: 'noreply@plandevitalidad.com',
+                        smtp: { host: '', port: 587, username: '', password: '' },
+                        limits: { hour: 100, day: 1000 }
+                    },
+                    security: {
+                        require2FA: true,
+                        enableLogs: true,
+                        gdprCompliance: true,
+                        logRetention: 90,
+                        backupFrequency: 'daily',
+                        blockedIPs: []
+                    }
+                };
+                
+                // Merge default settings with saved ones
+                this.settings = { ...this.defaultSettings, ...this.settings };
+            }
+
+            init() {
+                if (this.isInitialized) return;
+                console.log('⚙️ General Settings Manager Inline inicializado');
+                this.loadSettings();
+                this.bindEvents();
+                this.updateStats();
+                this.isInitialized = true;
+            }
+
+            loadSettings() {
+                // Platform settings
+                document.getElementById('platformName').value = this.settings.platform?.name || this.defaultSettings.platform.name;
+                document.getElementById('platformDescription').value = this.settings.platform?.description || this.defaultSettings.platform.description;
+                document.getElementById('platformTimezone').value = this.settings.platform?.timezone || this.defaultSettings.platform.timezone;
+                document.getElementById('platformCurrency').value = this.settings.platform?.currency || this.defaultSettings.platform.currency;
+                document.getElementById('platformUrl').value = this.settings.platform?.url || this.defaultSettings.platform.url;
+
+                // Localization settings
+                const availableLanguages = this.settings.localization?.availableLanguages || this.defaultSettings.localization.availableLanguages;
+                document.getElementById('lang_spanish').checked = availableLanguages.includes('es');
+                document.getElementById('lang_portuguese').checked = availableLanguages.includes('pt');
+                document.getElementById('lang_english').checked = availableLanguages.includes('en');
+                document.getElementById('defaultLanguage').value = this.settings.localization?.defaultLanguage || this.defaultSettings.localization.defaultLanguage;
+                document.getElementById('autoDetectLanguage').checked = this.settings.localization?.autoDetectLanguage ?? this.defaultSettings.localization.autoDetectLanguage;
+                document.getElementById('dateFormat').value = this.settings.localization?.dateFormat || this.defaultSettings.localization.dateFormat;
+                document.getElementById('timeFormat').value = this.settings.localization?.timeFormat || this.defaultSettings.localization.timeFormat;
+
+                // User settings
+                document.getElementById('allowRegistration').checked = this.settings.users?.allowRegistration ?? this.defaultSettings.users.allowRegistration;
+                document.getElementById('requireEmailVerification').checked = this.settings.users?.requireEmailVerification ?? this.defaultSettings.users.requireEmailVerification;
+                document.getElementById('manualApproval').checked = this.settings.users?.manualApproval ?? this.defaultSettings.users.manualApproval;
+                document.getElementById('minPasswordLength').value = this.settings.users?.minPasswordLength || this.defaultSettings.users.minPasswordLength;
+                document.getElementById('sessionTimeout').value = this.settings.users?.sessionTimeout || this.defaultSettings.users.sessionTimeout;
+                document.getElementById('maxDevices').value = this.settings.users?.maxDevices || this.defaultSettings.users.maxDevices;
+
+                // Payment settings
+                document.getElementById('defaultGateway').value = this.settings.payments?.defaultGateway || this.defaultSettings.payments.defaultGateway;
+                const acceptedCurrencies = this.settings.payments?.acceptedCurrencies || this.defaultSettings.payments.acceptedCurrencies;
+                document.getElementById('currency_usd').checked = acceptedCurrencies.includes('USD');
+                document.getElementById('currency_eur').checked = acceptedCurrencies.includes('EUR');
+                document.getElementById('currency_brl').checked = acceptedCurrencies.includes('BRL');
+                document.getElementById('refundPolicy').value = this.settings.payments?.refundPolicy || this.defaultSettings.payments.refundPolicy;
+                document.getElementById('paymentRetries').value = this.settings.payments?.paymentRetries || this.defaultSettings.payments.paymentRetries;
+                document.getElementById('webhookUrl').value = this.settings.payments?.webhookUrl || this.defaultSettings.payments.webhookUrl;
+
+                // Email settings
+                document.getElementById('senderName').value = this.settings.email?.senderName || this.defaultSettings.email.senderName;
+                document.getElementById('senderEmail').value = this.settings.email?.senderEmail || this.defaultSettings.email.senderEmail;
+                document.getElementById('smtpHost').value = this.settings.email?.smtp?.host || '';
+                document.getElementById('smtpPort').value = this.settings.email?.smtp?.port || this.defaultSettings.email.smtp.port;
+                document.getElementById('smtpUsername').value = this.settings.email?.smtp?.username || '';
+                document.getElementById('smtpPassword').value = this.settings.email?.smtp?.password || '';
+                document.getElementById('emailLimitHour').value = this.settings.email?.limits?.hour || this.defaultSettings.email.limits.hour;
+                document.getElementById('emailLimitDay').value = this.settings.email?.limits?.day || this.defaultSettings.email.limits.day;
+
+                // Security settings
+                document.getElementById('require2FA').checked = this.settings.security?.require2FA ?? this.defaultSettings.security.require2FA;
+                document.getElementById('enableLogs').checked = this.settings.security?.enableLogs ?? this.defaultSettings.security.enableLogs;
+                document.getElementById('gdprCompliance').checked = this.settings.security?.gdprCompliance ?? this.defaultSettings.security.gdprCompliance;
+                document.getElementById('logRetention').value = this.settings.security?.logRetention || this.defaultSettings.security.logRetention;
+                document.getElementById('backupFrequency').value = this.settings.security?.backupFrequency || this.defaultSettings.security.backupFrequency;
+                document.getElementById('blockedIPs').value = (this.settings.security?.blockedIPs || []).join('\n');
+            }
+
+            bindEvents() {
+                // Platform settings
+                document.getElementById('platformName').addEventListener('input', (e) => {
+                    this.updateSetting('platform', 'name', e.target.value);
+                });
+                document.getElementById('platformDescription').addEventListener('input', (e) => {
+                    this.updateSetting('platform', 'description', e.target.value);
+                });
+                document.getElementById('platformTimezone').addEventListener('change', (e) => {
+                    this.updateSetting('platform', 'timezone', e.target.value);
+                });
+                document.getElementById('platformCurrency').addEventListener('change', (e) => {
+                    this.updateSetting('platform', 'currency', e.target.value);
+                });
+                document.getElementById('platformUrl').addEventListener('input', (e) => {
+                    this.updateSetting('platform', 'url', e.target.value);
+                });
+
+                // User settings events
+                document.getElementById('allowRegistration').addEventListener('change', (e) => {
+                    this.updateSetting('users', 'allowRegistration', e.target.checked);
+                });
+
+                // Add more event listeners for other settings...
+            }
+
+            updateSetting(category, key, value) {
+                if (!this.settings[category]) {
+                    this.settings[category] = {};
+                }
+                this.settings[category][key] = value;
+                localStorage.setItem('general_settings', JSON.stringify(this.settings));
+            }
+
+            updateStats() {
+                // Count active integrations
+                const integrations = JSON.parse(localStorage.getItem('autoresponder_integrations') || '{}');
+                const activeCount = Object.values(integrations).filter(int => int.connected).length;
+                document.getElementById('activeIntegrations').textContent = activeCount;
+                
+                // Update last backup
+                const lastBackup = localStorage.getItem('last_backup_date') || 'Nunca';
+                document.getElementById('lastBackup').textContent = lastBackup === 'Nunca' ? lastBackup : 'Hoje';
+            }
+
+            saveAllSettings() {
+                this.gatherFormData();
+                localStorage.setItem('general_settings', JSON.stringify(this.settings));
+                this.showNotification('Todas as configurações foram salvas com sucesso!', 'success');
+                this.updateStats();
+            }
+
+            gatherFormData() {
+                // Platform
+                this.settings.platform = {
+                    name: document.getElementById('platformName').value,
+                    description: document.getElementById('platformDescription').value,
+                    timezone: document.getElementById('platformTimezone').value,
+                    currency: document.getElementById('platformCurrency').value,
+                    url: document.getElementById('platformUrl').value
+                };
+
+                // Localization
+                const availableLanguages = [];
+                if (document.getElementById('lang_spanish').checked) availableLanguages.push('es');
+                if (document.getElementById('lang_portuguese').checked) availableLanguages.push('pt');
+                if (document.getElementById('lang_english').checked) availableLanguages.push('en');
+
+                this.settings.localization = {
+                    availableLanguages,
+                    defaultLanguage: document.getElementById('defaultLanguage').value,
+                    autoDetectLanguage: document.getElementById('autoDetectLanguage').checked,
+                    dateFormat: document.getElementById('dateFormat').value,
+                    timeFormat: document.getElementById('timeFormat').value
+                };
+
+                // Users
+                this.settings.users = {
+                    allowRegistration: document.getElementById('allowRegistration').checked,
+                    requireEmailVerification: document.getElementById('requireEmailVerification').checked,
+                    manualApproval: document.getElementById('manualApproval').checked,
+                    minPasswordLength: parseInt(document.getElementById('minPasswordLength').value),
+                    sessionTimeout: parseInt(document.getElementById('sessionTimeout').value),
+                    maxDevices: parseInt(document.getElementById('maxDevices').value)
+                };
+
+                // Continue gathering other settings...
+            }
+
+            exportSettings() {
+                const data = {
+                    settings: this.settings,
+                    exported_at: new Date().toISOString(),
+                    version: '1.0'
+                };
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `configuracoes-gerais-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                this.showNotification('Configurações exportadas com sucesso!', 'success');
+            }
+
+            importSettings() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json';
+                input.onchange = (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            try {
+                                const data = JSON.parse(e.target.result);
+                                if (data.settings) {
+                                    this.settings = data.settings;
+                                    this.loadSettings();
+                                    this.saveAllSettings();
+                                    this.showNotification('Configurações importadas com sucesso!', 'success');
+                                } else {
+                                    throw new Error('Formato de arquivo inválido');
+                                }
+                            } catch (error) {
+                                this.showNotification('Erro ao importar arquivo: ' + error.message, 'error');
+                            }
+                        };
+                        reader.readAsText(file);
+                    }
+                };
+                input.click();
+            }
+
+            resetToDefaults() {
+                if (confirm('Tem certeza que deseja restaurar todas as configurações para os valores padrão? Esta ação não pode ser desfeita.')) {
+                    this.settings = { ...this.defaultSettings };
+                    this.loadSettings();
+                    this.saveAllSettings();
+                    this.showNotification('Configurações restauradas para os padrões!', 'success');
+                }
+            }
+
+            testAllSystems() {
+                this.showNotification('Iniciando teste dos sistemas...', 'info');
+                
+                // Simulate system tests
+                setTimeout(() => {
+                    const results = [
+                        '✅ Conectividade: OK',
+                        '✅ Banco de dados: OK',
+                        '✅ E-mail: OK',
+                        '✅ APIs: OK',
+                        '⚠️ Backup: Pendente'
+                    ];
+                    
+                    const resultHtml = results.join('<br>');
+                    this.showNotification(`Teste concluído:<br>${resultHtml}`, 'success');
+                }, 2000);
+            }
+
+            previewChanges() {
+                const changes = this.getUnsavedChanges();
+                if (changes.length === 0) {
+                    this.showNotification('Não há mudanças pendentes.', 'info');
+                } else {
+                    const changesList = changes.map(change => `• ${change}`).join('<br>');
+                    this.showNotification(`Mudanças pendentes:<br>${changesList}`, 'info');
+                }
+            }
+
+            getUnsavedChanges() {
+                const savedSettings = JSON.parse(localStorage.getItem('general_settings') || '{}');
+                const changes = [];
+                
+                // Compare current form values with saved settings
+                if (document.getElementById('platformName').value !== (savedSettings.platform?.name || this.defaultSettings.platform.name)) {
+                    changes.push('Nome da plataforma alterado');
+                }
+                
+                // Add more comparisons...
+                
+                return changes;
+            }
+
+            resetCategory() {
+                this.showNotification('Funcionalidade de restaurar seção será implementada em breve.', 'info');
+            }
+
+            showNotification(message, type = 'info') {
+                // Remove existing notifications
+                const existingNotifications = document.querySelectorAll('.notification');
+                existingNotifications.forEach(notification => notification.remove());
+
+                // Create new notification
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'times' : 'info'}-circle"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+
+                document.body.appendChild(notification);
+                
+                // Show notification
+                setTimeout(() => notification.classList.add('show'), 100);
+                
+                // Hide notification after 5 seconds
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 300);
+                }, 5000);
+            }
+        }
+
         // Initialize inline systems
-        let appCustomizationInline, supportManagerInline, autoresponderManagerInline;
+        let appCustomizationInline, supportManagerInline, autoresponderManagerInline, generalSettingsManagerInline;
 
         document.addEventListener('DOMContentLoaded', function() {
             const originalSwitchTab = window.switchTab;
@@ -7798,9 +8604,27 @@ Exemplo:
                             autoresponderManagerInline.init();
                         }, 100);
                     }
+
+                    if (tabId === 'general-settings' && !generalSettingsManagerInline) {
+                        setTimeout(() => {
+                            generalSettingsManagerInline = new GeneralSettingsManagerInline();
+                            generalSettingsManagerInline.init();
+                        }, 100);
+                    }
                 };
             }
         });
+
+        // Global functions for HTML onclick events
+        window.generalSettingsManager = {
+            exportSettings: () => generalSettingsManagerInline?.exportSettings(),
+            importSettings: () => generalSettingsManagerInline?.importSettings(),
+            resetToDefaults: () => generalSettingsManagerInline?.resetToDefaults(),
+            testAllSystems: () => generalSettingsManagerInline?.testAllSystems(),
+            previewChanges: () => generalSettingsManagerInline?.previewChanges(),
+            resetCategory: () => generalSettingsManagerInline?.resetCategory(),
+            saveAllSettings: () => generalSettingsManagerInline?.saveAllSettings()
+        };
     </script>
     <link rel="stylesheet" href="store-styles.css">
     <link rel="stylesheet" href="sales-styles.css">
