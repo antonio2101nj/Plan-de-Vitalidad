@@ -677,9 +677,15 @@ class AppCustomizationManager {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Only initialize if we're on the customization tab
-    if (document.getElementById('app-customization')) {
-        window.customizationManager = new AppCustomizationManager();
+    // Initialize if we're on the customization tab or test page
+    if (document.getElementById('app-customization') || document.querySelector('.customization-container')) {
+        try {
+            console.log('Initializing App Customization Manager...');
+            window.customizationManager = new AppCustomizationManager();
+            console.log('App Customization Manager initialized successfully!');
+        } catch (error) {
+            console.error('Error initializing App Customization Manager:', error);
+        }
     }
 });
 

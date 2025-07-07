@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Personalização do App</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="customization-styles.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .test-header h1 {
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+        
+        .test-header p {
+            color: #6b7280;
+            margin: 0;
+        }
+        
+        .btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #059669;
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        
+        .btn-large {
+            padding: 15px 30px;
+            font-size: 16px;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: #ef4444;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>🎨 Teste - Personalização do App</h1>
+            <p>Sistema de personalização do Plan de Vitalidad</p>
+        </div>
+        
+        <!-- Customization Overview -->
+        <div class="customization-overview">
+            <div class="overview-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4 id="customThemeStatus">Tema Padrão</h4>
+                        <p>Status do Tema</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4 id="layoutModelStatus">Cards</h4>
+                        <p>Modelo de Layout</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4 id="primaryLanguageStatus">Español</h4>
+                        <p>Idioma Principal</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-save"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4 id="lastSavedStatus">Não Salvo</h4>
+                        <p>Última Alteração</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Customization Sections -->
+        <div class="customization-container">
+            <div class="customization-left">
+                <!-- Visual Identity Section -->
+                <div class="customization-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-image"></i> Identidade Visual</h3>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label for="appName">Nome do App</label>
+                            <input type="text" id="appName" placeholder="Plan de Vitalidad" maxlength="30">
+                            <small class="form-help">Nome exibido na tela de instalação (máx. 30 caracteres)</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Color Palette Section -->
+                <div class="customization-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-palette"></i> Paleta de Cores</h3>
+                        <button class="btn btn-secondary btn-small" id="resetColorsBtn">
+                            <i class="fas fa-undo"></i>
+                            Restaurar Padrão
+                        </button>
+                    </div>
+                    <div class="section-content">
+                        <div class="color-grid">
+                            <div class="color-item">
+                                <label for="primaryColor">Cor Principal</label>
+                                <div class="color-input-wrapper">
+                                    <input type="color" id="primaryColor" value="#10B981">
+                                    <input type="text" id="primaryColorText" value="#10B981" placeholder="#10B981">
+                                </div>
+                                <small>Botões, destaques, elementos principais</small>
+                            </div>
+                            
+                            <div class="color-item">
+                                <label for="secondaryColor">Cor Secundária</label>
+                                <div class="color-input-wrapper">
+                                    <input type="color" id="secondaryColor" value="#6B7280">
+                                    <input type="text" id="secondaryColorText" value="#6B7280" placeholder="#6B7280">
+                                </div>
+                                <small>Textos secundários, ícones</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Save Section -->
+                <div class="customization-actions">
+                    <button class="btn btn-primary btn-large" id="saveCustomizationBtn">
+                        <i class="fas fa-save"></i>
+                        Salvar Personalização
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Live Preview Section -->
+            <div class="customization-right">
+                <div class="preview-section">
+                    <div class="preview-header">
+                        <h3><i class="fas fa-eye"></i> Preview do App</h3>
+                        <div class="preview-controls">
+                            <button class="preview-device active" data-device="mobile">
+                                <i class="fas fa-mobile-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="preview-container">
+                        <div class="preview-device-frame mobile" id="previewFrame">
+                            <div class="preview-screen" id="previewScreen">
+                                <div class="preview-app">
+                                    <div class="preview-app-header">
+                                        <div class="preview-logo">
+                                            <img id="previewLogo" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" alt="Logo">
+                                        </div>
+                                        <div class="preview-app-title" id="previewAppName">Plan de Vitalidad</div>
+                                    </div>
+                                    
+                                    <div class="preview-content" id="previewContent">
+                                        <div class="preview-layout cards active" id="previewCards">
+                                            <div class="preview-banner"></div>
+                                            <div class="preview-cards-grid">
+                                                <div class="preview-card-item">
+                                                    <div class="preview-card-icon"></div>
+                                                    <div class="preview-card-text"></div>
+                                                </div>
+                                                <div class="preview-card-item">
+                                                    <div class="preview-card-icon"></div>
+                                                    <div class="preview-card-text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="preview-bottom-nav">
+                                        <div class="preview-nav-item active">
+                                            <div class="preview-nav-icon"></div>
+                                        </div>
+                                        <div class="preview-nav-item">
+                                            <div class="preview-nav-icon"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="customization-simple.js"></script>
+    
+    <script>
+        // Teste com logging detalhado
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Página de teste carregada');
+            console.log('📱 User Agent:', navigator.userAgent);
+            console.log('🌐 URL:', window.location.href);
+            
+            // Verificar elementos DOM
+            const container = document.querySelector('.customization-container');
+            const appNameInput = document.getElementById('appName');
+            const primaryColorInput = document.getElementById('primaryColor');
+            const saveBtn = document.getElementById('saveCustomizationBtn');
+            
+            console.log('🔍 Elementos encontrados:');
+            console.log('  - Container:', !!container);
+            console.log('  - App Name Input:', !!appNameInput);
+            console.log('  - Primary Color Input:', !!primaryColorInput);
+            console.log('  - Save Button:', !!saveBtn);
+            
+            // Verificar se o SimpleCustomizationManager foi carregado
+            setTimeout(() => {
+                if (typeof SimpleCustomizationManager !== 'undefined') {
+                    console.log('✅ SimpleCustomizationManager disponível');
+                    
+                    if (window.simpleCustomizationManager) {
+                        console.log('✅ Manager já inicializado automaticamente');
+                    } else {
+                        console.log('🔄 Inicializando manager manualmente...');
+                        try {
+                            window.simpleCustomizationManager = new SimpleCustomizationManager();
+                            console.log('✅ Manager inicializado manualmente!');
+                        } catch (error) {
+                            console.error('❌ Erro ao inicializar manager:', error);
+                        }
+                    }
+                } else {
+                    console.error('❌ SimpleCustomizationManager não foi carregado!');
+                    
+                    // Mostrar notificação de erro
+                    const notification = document.createElement('div');
+                    notification.className = 'notification error';
+                    notification.innerHTML = `
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Erro: JavaScript de personalização não carregado!</span>
+                    `;
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => {
+                        notification.classList.add('show');
+                    }, 100);
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>
