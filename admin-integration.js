@@ -121,8 +121,17 @@ class AdminIntegration {
                                 <textarea id="productDescription" rows="3" placeholder="Descrição do produto..."></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="productImage">URL da Imagem</label>
-                                <input type="url" id="productImage" placeholder="https://exemplo.com/imagem.jpg">
+                                <label for="productImage">Imagem do Produto</label>
+                                <div class="image-upload-container">
+                                    <input type="file" id="productImageFile" accept="image/*" style="display: none;">
+                                    <input type="url" id="productImage" placeholder="https://exemplo.com/imagem.jpg ou clique para upload">
+                                    <button type="button" class="btn-upload" onclick="document.getElementById('productImageFile').click()">
+                                        <i class="fas fa-upload"></i> Upload
+                                    </button>
+                                </div>
+                                <div class="image-preview" id="productImagePreview" style="display: none;">
+                                    <img src="" alt="Preview" style="max-width: 100px; max-height: 100px; border-radius: 8px;">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="productThumbnail">Emoji/Thumbnail</label>
@@ -173,6 +182,25 @@ class AdminIntegration {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             this.saveProduct(form);
+        });
+
+        // Adicionar event listener para upload de imagem
+        const imageFileInput = modal.querySelector('#productImageFile');
+        const imageUrlInput = modal.querySelector('#productImage');
+        const imagePreview = modal.querySelector('#productImagePreview');
+        
+        imageFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                this.handleImageUpload(file, imageUrlInput, imagePreview);
+            }
+        });
+
+        // Preview quando URL é digitada
+        imageUrlInput.addEventListener('input', (e) => {
+            if (e.target.value) {
+                this.showImagePreview(e.target.value, imagePreview);
+            }
         });
 
         return modal;
@@ -398,6 +426,42 @@ class AdminIntegration {
         input.click();
     }
 
+    // === UPLOAD DE IMAGENS ===
+    handleImageUpload(file, urlInput, previewElement) {
+        // Validar tipo de arquivo
+        if (!file.type.startsWith('image/')) {
+            this.showNotification('Por favor, selecione apenas arquivos de imagem!', 'error');
+            return;
+        }
+
+        // Validar tamanho (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            this.showNotification('Imagem muito grande! Máximo 5MB.', 'error');
+            return;
+        }
+
+        // Converter para base64 (para demonstração - em produção usaria cloud storage)
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64Data = e.target.result;
+            urlInput.value = base64Data;
+            this.showImagePreview(base64Data, previewElement);
+            this.showNotification('Imagem carregada com sucesso!', 'success');
+        };
+        reader.onerror = () => {
+            this.showNotification('Erro ao carregar imagem!', 'error');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    showImagePreview(url, previewElement) {
+        const img = previewElement.querySelector('img');
+        if (img) {
+            img.src = url;
+            previewElement.style.display = 'block';
+        }
+    }
+
     // === NOTIFICAÇÕES ===
     showNotification(message, type = 'info') {
         const notification = document.createElement('div');
@@ -611,6 +675,42 @@ const integrationStyles = `
     padding: 8px 16px;
     border-radius: 6px;
     cursor: pointer;
+}
+
+.integration-modal .image-upload-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.integration-modal .image-upload-container input[type="url"] {
+    flex: 1;
+}
+
+.integration-modal .btn-upload {
+    background: #10B981;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.integration-modal .btn-upload:hover {
+    background: #059669;
+}
+
+.integration-modal .image-preview {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #f9f9f9;
+}
+
+.integration-modal .image-preview img {
+    border: 1px solid #ddd;
 }
 
 .integration-modal .modal-actions {
