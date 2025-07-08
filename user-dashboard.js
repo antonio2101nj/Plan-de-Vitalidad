@@ -1881,6 +1881,11 @@ function retryContentLoad() {
     }
 }
 
+// Global function to show locked message
+function showLockedMessage() {
+    alert('Este produto será liberado em breve! Continue acompanhando seu progresso para desbloquear novos conteúdos.');
+}
+
 // Initialize new components when dashboard loads
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize commercial carousel

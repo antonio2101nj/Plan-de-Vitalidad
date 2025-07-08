@@ -2467,6 +2467,245 @@ body {
     margin-bottom: var(--spacing-xs);
 }
 
+/* === MODERN PRODUCTS OVERVIEW STYLES (Inspired by example) === */
+.products-overview-modern {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing);
+    margin-bottom: var(--spacing-lg);
+}
+
+.featured-product-card {
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-lg);
+}
+
+.featured-product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+}
+
+.featured-content {
+    position: relative;
+    height: 300px;
+}
+
+.featured-image {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.featured-product-card:hover .featured-image img {
+    transform: scale(1.05);
+}
+
+.featured-fallback {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 4rem;
+}
+
+.featured-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(6, 182, 212, 0.9));
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: var(--spacing-lg);
+}
+
+.featured-overlay h3 {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.featured-overlay p {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.9;
+}
+
+.featured-cta {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    padding: var(--spacing) var(--spacing-lg);
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: var(--font-size);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.featured-cta:hover {
+    background: white;
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.products-grid-modern {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing);
+}
+
+.product-card-modern {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+    height: 140px;
+}
+
+.product-card-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.product-card-modern.locked {
+    cursor: not-allowed;
+}
+
+.product-card-modern.locked:hover {
+    transform: none;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card-modern:hover .product-image img {
+    transform: scale(1.1);
+}
+
+.product-fallback {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--bg-tertiary), var(--border-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 2rem;
+}
+
+.product-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2));
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--spacing);
+}
+
+.product-overlay h4 {
+    font-size: var(--font-size);
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.product-status {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    align-self: flex-end;
+}
+
+.product-status.available {
+    background: rgba(16, 185, 129, 0.9);
+    padding: 4px 8px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.product-status.bonus-status {
+    background: rgba(245, 158, 11, 0.9);
+    padding: 4px 8px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.product-status.locked {
+    background: rgba(107, 114, 128, 0.9);
+    padding: 4px 8px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.lock-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    backdrop-filter: blur(2px);
+}
+
+.product-card-modern.bonus {
+    position: relative;
+}
+
+.product-card-modern.bonus::before {
+    content: '🎁';
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    z-index: 2;
+    font-size: 1.2rem;
+    background: rgba(245, 158, 11, 0.9);
+    padding: 4px 6px;
+    border-radius: 50%;
+    backdrop-filter: blur(10px);
+}
+
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
     .commercial-carousel {
@@ -2483,6 +2722,32 @@ body {
     
     .products-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .products-overview-modern {
+        grid-template-columns: 1fr;
+        gap: var(--spacing);
+    }
+    
+    .featured-content {
+        height: 200px;
+    }
+    
+    .featured-overlay h3 {
+        font-size: var(--font-size-lg);
+    }
+    
+    .featured-overlay p {
+        font-size: var(--font-size);
+    }
+    
+    .products-grid-modern {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-sm);
+    }
+    
+    .product-card-modern {
+        height: 120px;
     }
     
     .content-viewer-modal {
@@ -2505,5 +2770,28 @@ body {
     .audio-transcript {
         margin-top: var(--spacing);
         padding: var(--spacing);
+    }
+}
+
+@media (max-width: 480px) {
+    .products-grid-modern {
+        grid-template-columns: 1fr;
+    }
+    
+    .product-card-modern {
+        height: 100px;
+    }
+    
+    .featured-overlay h3 {
+        font-size: var(--font-size);
+    }
+    
+    .featured-overlay p {
+        font-size: var(--font-size-sm);
+    }
+    
+    .featured-cta {
+        padding: var(--spacing-sm) var(--spacing);
+        font-size: var(--font-size-sm);
     }
 }

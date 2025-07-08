@@ -9,6 +9,25 @@ const AUTH_CONFIG = {
     USER_ROUTES: ['app-dashboard.html', 'user-dashboard.html'],
     DEMO_USERS: {
         // Usuários demo para teste
+        'admin@vitalidad.com': {
+            password: 'admin123',
+            role: 'admin',
+            name: 'Administrador',
+            permissions: ['all']
+        },
+        'user@vitalidad.com': {
+            password: 'user123',
+            role: 'user',
+            name: 'Sara Emanuelly',
+            permissions: ['dashboard', 'profile']
+        },
+        'antonio@vitalidad.com': {
+            password: 'antonio123',
+            role: 'admin',
+            name: 'Antonio Silva',
+            permissions: ['all']
+        },
+        // Credenciais antigas mantidas para compatibilidade
         'admin@planvitalidad.com': {
             password: 'admin123',
             role: 'admin',
@@ -410,6 +429,8 @@ if (typeof module !== 'undefined' && module.exports) {
 // Log do sistema
 console.log('Sistema de Autenticação Plan de Vitalidad carregado');
 console.log('Usuários demo disponíveis:');
-console.log('- admin@planvitalidad.com / admin123 (Admin)');
-console.log('- usuario@planvitalidad.com / user123 (Usuário)');
-console.log('- antonio@planvitalidad.com / antonio123 (Admin)');
+console.log('- admin@vitalidad.com / admin123 (Admin)');
+console.log('- user@vitalidad.com / user123 (Usuário)');
+console.log('- antonio@vitalidad.com / antonio123 (Admin)');
+console.log('- admin@planvitalidad.com / admin123 (Admin - compatibilidade)');
+console.log('- usuario@planvitalidad.com / user123 (Usuário - compatibilidade)');

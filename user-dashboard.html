@@ -299,52 +299,96 @@
                             </div>
                         </div>
 
-                        <!-- Products Overview Section -->
-                        <div class="products-overview">
-                            <div class="section-header">
-                                <h3 class="section-title">
-                                    <span class="section-icon">📚</span>
-                                    <span>Tus Productos</span>
-                                </h3>
-                                <button class="see-all-btn" data-tab="productos">
-                                    Ver todos
-                                    <i class="fas fa-arrow-right"></i>
-                                </button>
-                            </div>
-
-                            <!-- Released Products -->
-                            <div class="products-category">
-                                <h4 class="category-title">
-                                    <span class="category-icon unlocked">🔓</span>
-                                    <span>Productos Liberados</span>
-                                    <span class="category-count" id="unlockedCount">5</span>
-                                </h4>
-                                <div class="products-grid" id="unlockedProductsGrid">
-                                    <!-- Unlocked products will be inserted here -->
+                        <!-- Products Overview Section - Inspired by the example -->
+                        <div class="products-overview-modern">
+                            <!-- Featured Product Card (Large) -->
+                            <div class="featured-product-card" onclick="openContentViewer('featured-partnership', 'Parceria Especial', 'https://example.com/partnership-info.pdf', 'pdf')">
+                                <div class="featured-content">
+                                    <div class="featured-image">
+                                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=300&fit=crop&crop=center" alt="Parceria" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="featured-fallback" style="display: none;">
+                                            <i class="fas fa-handshake"></i>
+                                        </div>
+                                    </div>
+                                    <div class="featured-overlay">
+                                        <h3>QUER FAZER UMA PARCERIA COM NOSSA PÁGINA OFICIAL</h3>
+                                        <p>@DOGINFLUENCER</p>
+                                        <button class="featured-cta">CLIQUE AQUI</button>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- Bonus Products -->
-                            <div class="products-category">
-                                <h4 class="category-title">
-                                    <span class="category-icon bonus">🎁</span>
-                                    <span>Bónus Especiales</span>
-                                    <span class="category-count" id="bonusCount">3</span>
-                                </h4>
-                                <div class="products-grid" id="bonusProductsGrid">
-                                    <!-- Bonus products will be inserted here -->
+                            <!-- Product Grid (2x2) -->
+                            <div class="products-grid-modern">
+                                <!-- Aulas -->
+                                <div class="product-card-modern" onclick="openContentViewer('aulas-collection', 'Aulas Completas', 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4', 'video')">
+                                    <div class="product-image">
+                                        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=200&fit=crop&crop=center" alt="Aulas" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="product-fallback" style="display: none;">
+                                            <i class="fas fa-graduation-cap"></i>
+                                        </div>
+                                    </div>
+                                    <div class="product-overlay">
+                                        <h4>Aulas</h4>
+                                        <div class="product-status available">
+                                            <i class="fas fa-play-circle"></i>
+                                            <span>Disponível</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- Locked Products -->
-                            <div class="products-category">
-                                <h4 class="category-title">
-                                    <span class="category-icon locked">🔒</span>
-                                    <span>Próximos Productos</span>
-                                    <span class="category-count" id="lockedCount">4</span>
-                                </h4>
-                                <div class="products-grid" id="lockedProductsGrid">
-                                    <!-- Locked products will be inserted here -->
+                                <!-- Planos Personalizados -->
+                                <div class="product-card-modern" onclick="openContentViewer('planos-personalizados', 'Planos Personalizados', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', 'pdf')">
+                                    <div class="product-image">
+                                        <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=300&h=200&fit=crop&crop=center" alt="Planos" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="product-fallback" style="display: none;">
+                                            <i class="fas fa-clipboard-list"></i>
+                                        </div>
+                                    </div>
+                                    <div class="product-overlay">
+                                        <h4>Planos Personalizados</h4>
+                                        <div class="product-status available">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <span>Disponível</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Bônus -->
+                                <div class="product-card-modern bonus" onclick="openContentViewer('bonus-especial', 'Bônus Especial', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', 'pdf')">
+                                    <div class="product-image">
+                                        <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=300&h=200&fit=crop&crop=center" alt="Bônus" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="product-fallback" style="display: none;">
+                                            <i class="fas fa-gift"></i>
+                                        </div>
+                                    </div>
+                                    <div class="product-overlay">
+                                        <h4>Bônus</h4>
+                                        <div class="product-status bonus-status">
+                                            <i class="fas fa-star"></i>
+                                            <span>Liberado em 7 dias</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dog IA -->
+                                <div class="product-card-modern locked" onclick="showLockedMessage()">
+                                    <div class="product-image">
+                                        <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=300&h=200&fit=crop&crop=center" alt="Dog IA" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="product-fallback" style="display: none;">
+                                            <i class="fas fa-robot"></i>
+                                        </div>
+                                    </div>
+                                    <div class="product-overlay">
+                                        <h4>Dog IA</h4>
+                                        <div class="product-status locked">
+                                            <i class="fas fa-lock"></i>
+                                            <span>Bloqueado</span>
+                                        </div>
+                                    </div>
+                                    <div class="lock-overlay">
+                                        <i class="fas fa-lock"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
