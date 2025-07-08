@@ -1282,14 +1282,31 @@
     <script>
         // Initialize the dashboard
         document.addEventListener('DOMContentLoaded', function() {
-            // Check authentication
-            if (!authSystem.isLoggedIn() || authSystem.getCurrentUser()?.role !== 'user') {
-                window.location.href = 'app-login.html';
-                return;
-            }
+            console.log('🌱 Verificando autenticação...');
+            
+            try {
+                // Check authentication
+                if (!authSystem.isLoggedIn() || authSystem.getCurrentUser()?.role !== 'user') {
+                    console.log('❌ Usuário não autenticado, redirecionando...');
+                    window.location.href = 'app-login.html';
+                    return;
+                }
 
-            // Initialize dashboard
-            initializeUserDashboard();
+                console.log('✅ Usuário autenticado:', authSystem.getCurrentUser());
+                
+                // Initialize dashboard
+                initializeUserDashboard();
+                
+            } catch (error) {
+                console.error('Erro na inicialização:', error);
+                // Forçar remoção da tela de carregamento em caso de erro
+                setTimeout(() => {
+                    const loadingScreen = document.getElementById('loadingScreen');
+                    if (loadingScreen) {
+                        loadingScreen.style.display = 'none';
+                    }
+                }, 2000);
+            }
         });
     </script>
 </body>

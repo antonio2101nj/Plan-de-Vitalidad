@@ -20,13 +20,24 @@ class UserDashboard {
     }
 
     init() {
-        this.setupEventListeners();
-        this.setupTranslations();
-        this.loadUserData();
-        this.hideLoadingScreen();
-        this.updateCurrentDate();
-        this.startBannerRotation();
-        this.renderInitialContent();
+        try {
+            console.log('🌱 Inicializando User Dashboard...');
+            this.setupEventListeners();
+            this.setupTranslations();
+            this.loadUserData();
+            this.updateCurrentDate();
+            this.renderInitialContent();
+            
+            // Aguardar um pouco antes de esconder a tela de carregamento
+            setTimeout(() => {
+                this.hideLoadingScreen();
+                console.log('🌱 User Dashboard inicializado com sucesso!');
+            }, 500);
+            
+        } catch (error) {
+            console.error('Erro na inicialização do dashboard:', error);
+            this.hideLoadingScreen();
+        }
     }
 
     setupEventListeners() {
@@ -910,12 +921,24 @@ class UserDashboard {
         if (loadingScreen) {
             setTimeout(() => {
                 loadingScreen.classList.add('hidden');
-            }, 1000);
+                // Garantir que a tela seja removida do DOM após a animação
+                setTimeout(() => {
+                    if (loadingScreen.parentNode) {
+                        loadingScreen.style.display = 'none';
+                    }
+                }, 500);
+            }, 800);
         }
     }
 
     renderInitialContent() {
-        this.updateTaskTexts();
+        try {
+            this.updateTaskTexts();
+            // Inicializar carrossel antigo como fallback
+            this.startBannerRotation();
+        } catch (error) {
+            console.error('Erro ao renderizar conteúdo inicial:', error);
+        }
     }
 
     renderProducts() {
@@ -1360,7 +1383,10 @@ class CommercialCarousel {
         const track = document.getElementById('carouselTrack');
         const indicators = document.getElementById('carouselIndicators');
         
-        if (!track || !indicators) return;
+        if (!track || !indicators) {
+            console.warn('Elementos do carrossel não encontrados');
+            return;
+        }
 
         // Render slides
         track.innerHTML = this.slides.map((slide, index) => `
@@ -1588,7 +1614,10 @@ class ProductsOverview {
 
     renderProductCategory(category, products) {
         const grid = document.getElementById(`${category}ProductsGrid`);
-        if (!grid) return;
+        if (!grid) {
+            console.warn(`Grid ${category}ProductsGrid não encontrado`);
+            return;
+        }
 
         grid.innerHTML = products.map(product => `
             <div class="product-card ${category === 'locked' ? 'locked' : ''}" 
@@ -1888,12 +1917,25 @@ function showLockedMessage() {
 
 // Initialize new components when dashboard loads
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize commercial carousel
-    window.commercialCarousel = new CommercialCarousel();
+    console.log('🌱 DOM carregado, inicializando componentes...');
     
-    // Initialize products overview
-    window.productsOverview = new ProductsOverview();
-    
-    // Initialize content viewer
-    window.contentViewer = new ContentViewer();
+    // Aguardar um pouco para garantir que todos os elementos estejam prontos
+    setTimeout(() => {
+        try {
+            // Initialize content viewer first (needed by other components)
+            window.contentViewer = new ContentViewer();
+            console.log('✅ ContentViewer inicializado');
+            
+            // Initialize commercial carousel
+            window.commercialCarousel = new CommercialCarousel();
+            console.log('✅ CommercialCarousel inicializado');
+            
+            // Initialize products overview
+            window.productsOverview = new ProductsOverview();
+            console.log('✅ ProductsOverview inicializado');
+            
+        } catch (error) {
+            console.error('Erro ao inicializar componentes:', error);
+        }
+    }, 100);
 });
