@@ -2472,6 +2472,14 @@
                                     <i class="fas fa-play"></i>
                                     Preview do Carrossel
                                 </button>
+                                <button class="btn btn-success" onclick="adminIntegration.openProductModal()">
+                                    <i class="fas fa-plus-circle"></i>
+                                    Adicionar Produto
+                                </button>
+                                <button class="btn btn-warning" onclick="adminIntegration.previewUserDashboard()">
+                                    <i class="fas fa-eye"></i>
+                                    Ver Painel Usuário
+                                </button>
                             </div>
                             <div class="controls-right">
                                 <div class="carousel-settings">
@@ -8587,7 +8595,9 @@ Exemplo:
         </div>
     </div>
 
-    <script src="auth.js"></script>
+    <script src="shared-data.js"></script>
+    <script src="admin-integration.js"></script>
+<script src="auth.js"></script>
     <script src="script.js"></script>
     <script src="users-management.js"></script>
     <script src="products-management.js"></script>

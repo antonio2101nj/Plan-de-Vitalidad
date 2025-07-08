@@ -1343,40 +1343,46 @@ setInterval(() => {
 class CommercialCarousel {
     constructor() {
         this.currentSlide = 0;
-        this.slides = [
-            {
-                type: 'promotion',
-                title: '🎉 ¡Oferta Especial!',
-                description: 'Descubre nuestros nuevos productos premium con descuentos exclusivos',
-                cta: 'Ver Ofertas',
-                background: 'linear-gradient(135deg, #FF6B6B, #FF8E53)',
-                action: () => this.goToStore()
-            },
-            {
-                type: 'feature',
-                title: '📚 Nuevo eBook Disponible',
-                description: 'Guía completa de alimentación consciente y hábitos saludables',
-                cta: 'Leer Ahora',
-                background: 'linear-gradient(135deg, #4ECDC4, #44A08D)',
-                action: () => this.openContent('nuevo-ebook')
-            },
-            {
-                type: 'challenge',
-                title: '🏆 Desafío de 30 Días',
-                description: 'Únete a nuestro desafío de transformación personal',
-                cta: 'Participar',
-                background: 'linear-gradient(135deg, #A8E6CF, #7FCDCD)',
-                action: () => this.goToChallenge()
-            }
-        ];
+        this.slides = [];
         this.autoSlideInterval = null;
         this.init();
     }
 
     init() {
+        this.loadSlidesFromSharedData();
         this.render();
         this.setupEventListeners();
         this.startAutoSlide();
+        
+        // Escutar mudanças nos dados
+        window.addEventListener('planVitalidadDataChange', () => {
+            this.loadSlidesFromSharedData();
+            this.render();
+        });
+    }
+
+    loadSlidesFromSharedData() {
+        if (window.sharedDataManager) {
+            this.slides = window.sharedDataManager.getCarouselSlides().map(slide => ({
+                type: slide.type || 'default',
+                title: slide.title,
+                description: slide.description,
+                cta: slide.cta,
+                background: slide.background,
+                image: slide.image,
+                action: () => this.handleSlideLink(slide.link)
+            }));
+        }
+    }
+
+    handleSlideLink(link) {
+        if (link && window.userDashboard) {
+            if (link.startsWith('http')) {
+                window.open(link, '_blank');
+            } else {
+                window.userDashboard.switchTab(link);
+            }
+        }
     }
 
     render() {
@@ -1390,7 +1396,7 @@ class CommercialCarousel {
 
         // Render slides
         track.innerHTML = this.slides.map((slide, index) => `
-            <div class="carousel-slide" style="background: ${slide.background}">
+            <div class="carousel-slide" style="background: ${slide.background}${slide.image ? `, url('${slide.image}')` : ''}; background-size: cover; background-position: center;">
                 <div class="carousel-content">
                     <h3>${slide.title}</h3>
                     <p>${slide.description}</p>
@@ -1486,124 +1492,61 @@ class CommercialCarousel {
 // === PRODUCTS OVERVIEW FUNCTIONALITY ===
 class ProductsOverview {
     constructor() {
-        this.products = {
-            unlocked: [
-                {
-                    id: 'ebook-nutricion',
-                    title: 'eBook Nutrición Vital',
-                    type: 'eBook',
-                    progress: 75,
-                    thumbnail: '📖',
-                    url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-                    fileType: 'pdf'
-                },
-                {
-                    id: 'video-ejercicios',
-                    title: 'Video Ejercicios Matutinos',
-                    type: 'Video',
-                    progress: 40,
-                    thumbnail: '🎥',
-                    url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-                    fileType: 'video'
-                },
-                {
-                    id: 'audio-meditacion',
-                    title: 'Audio Meditación Guiada',
-                    type: 'Audio',
-                    progress: 100,
-                    thumbnail: '🎵',
-                    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
-                    fileType: 'audio'
-                },
-                {
-                    id: 'planner-habitos',
-                    title: 'Planner de Hábitos',
-                    type: 'Planner',
-                    progress: 60,
-                    thumbnail: '📋',
-                    url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-                    fileType: 'pdf'
-                },
-                {
-                    id: 'guia-suplementos',
-                    title: 'Guía de Suplementos',
-                    type: 'Guía',
-                    progress: 30,
-                    thumbnail: '💊',
-                    url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-                    fileType: 'pdf'
-                }
-            ],
-            bonus: [
-                {
-                    id: 'bonus-recetas',
-                    title: 'Recetas Secretas',
-                    type: 'eBook',
-                    progress: 0,
-                    thumbnail: '🍽️',
-                    url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-                    fileType: 'pdf'
-                },
-                {
-                    id: 'bonus-workout',
-                    title: 'Workout Intensivo',
-                    type: 'Video',
-                    progress: 0,
-                    thumbnail: '💪',
-                    url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-                    fileType: 'video'
-                },
-                {
-                    id: 'bonus-checklist',
-                    title: 'Checklist de Bienestar',
-                    type: 'Checklist',
-                    progress: 0,
-                    thumbnail: '✅',
-                    url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-                    fileType: 'pdf'
-                }
-            ],
-            locked: [
-                {
-                    id: 'locked-masterclass',
-                    title: 'Masterclass Avanzada',
-                    type: 'Video',
-                    progress: 0,
-                    thumbnail: '🎓',
-                    unlockDate: '2024-01-15'
-                },
-                {
-                    id: 'locked-ebook-pro',
-                    title: 'eBook Pro Nutrition',
-                    type: 'eBook',
-                    progress: 0,
-                    thumbnail: '📚',
-                    unlockDate: '2024-01-20'
-                },
-                {
-                    id: 'locked-community',
-                    title: 'Acceso Comunidad VIP',
-                    type: 'Acceso',
-                    progress: 0,
-                    thumbnail: '👥',
-                    unlockDate: '2024-01-25'
-                },
-                {
-                    id: 'locked-coaching',
-                    title: 'Sesión de Coaching',
-                    type: 'Sesión',
-                    progress: 0,
-                    thumbnail: '🎯',
-                    unlockDate: '2024-01-30'
-                }
-            ]
-        };
+        this.products = { unlocked: [], bonus: [], locked: [] };
         this.init();
     }
 
     init() {
+        this.loadProductsFromSharedData();
         this.render();
         this.updateCounts();
+        this.updateMainBanner();
+        
+        // Escutar mudanças nos dados
+        window.addEventListener('planVitalidadDataChange', () => {
+            this.loadProductsFromSharedData();
+            this.render();
+            this.updateCounts();
+            this.updateMainBanner();
+        });
+    }
+
+    loadProductsFromSharedData() {
+        if (window.sharedDataManager) {
+            this.products = window.sharedDataManager.getProducts();
+        }
+    }
+
+    updateMainBanner() {
+        if (window.sharedDataManager) {
+            const banners = window.sharedDataManager.getBanners();
+            const mainBanner = banners.home?.main;
+            
+            if (mainBanner && mainBanner.active) {
+                const bannerTitle = document.querySelector('.featured-overlay h3');
+                const bannerSubtitle = document.querySelector('.featured-overlay p');
+                const bannerButton = document.querySelector('.featured-cta');
+                const bannerImage = document.querySelector('.featured-card');
+                
+                if (bannerTitle) bannerTitle.textContent = mainBanner.title;
+                if (bannerSubtitle) bannerSubtitle.textContent = mainBanner.subtitle;
+                if (bannerButton) bannerButton.textContent = mainBanner.cta;
+                if (bannerImage && mainBanner.image) {
+                    bannerImage.style.backgroundImage = `url('${mainBanner.image}')`;
+                }
+                
+                // Atualizar link do banner
+                if (bannerButton && mainBanner.link) {
+                    bannerButton.onclick = () => {
+                        if (mainBanner.link.startsWith('http')) {
+                            window.open(mainBanner.link, '_blank');
+                        } else {
+                            window.userDashboard?.switchTab(mainBanner.link);
+                        }
+                    };
+                }
+            }
+        }
     }
 
     render() {
