@@ -1858,9 +1858,55 @@ function showLockedMessage() {
     alert('Este produto será liberado em breve! Continue acompanhando seu progresso para desbloquear novos conteúdos.');
 }
 
-// Initialize new components when dashboard loads
+// Force remove any loading screen immediately
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🌱 DOM carregado, inicializando componentes...');
+    console.log('🌱 DOM carregado, FORÇANDO remoção de loading...');
+    
+    // FORÇA BRUTA: Remove qualquer loading imediatamente
+    const forceRemoveLoading = () => {
+        // Remover elementos de loading
+        const loadingSelectors = [
+            '.loading-screen', '#loading', '.loading', '[class*="loading"]', 
+            '[id*="loading"]', '.spinner', '.loading-overlay'
+        ];
+        
+        loadingSelectors.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => {
+                if (el) {
+                    el.style.display = 'none !important';
+                    el.style.visibility = 'hidden !important';
+                    el.style.opacity = '0 !important';
+                    el.remove();
+                }
+            });
+        });
+        
+        // Garantir que body e html estão visíveis
+        document.body.style.display = 'block !important';
+        document.body.style.visibility = 'visible !important';
+        document.body.style.opacity = '1 !important';
+        document.documentElement.style.display = 'block !important';
+        
+        // Garantir que o app está visível
+        const app = document.getElementById('app');
+        if (app) {
+            app.style.display = 'block !important';
+            app.style.visibility = 'visible !important';
+            app.style.opacity = '1 !important';
+        }
+        
+        console.log('🔧 FORÇA BRUTA: Loading removido');
+    };
+    
+    // Executar imediatamente
+    forceRemoveLoading();
+    
+    // Repetir após pequenos intervalos
+    setTimeout(forceRemoveLoading, 50);
+    setTimeout(forceRemoveLoading, 200);
+    setTimeout(forceRemoveLoading, 500);
+    setTimeout(forceRemoveLoading, 1000);
     
     // Aguardar um pouco para garantir que todos os elementos estejam prontos
     setTimeout(() => {
@@ -1877,8 +1923,13 @@ document.addEventListener('DOMContentLoaded', function() {
             window.productsOverview = new ProductsOverview();
             console.log('✅ ProductsOverview inicializado');
             
+            // Força final de remoção
+            forceRemoveLoading();
+            
         } catch (error) {
             console.error('Erro ao inicializar componentes:', error);
+            // Mesmo com erro, forçar remoção
+            forceRemoveLoading();
         }
     }, 100);
 });
