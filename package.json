@@ -1,0 +1,28 @@
+{
+  "name": "plan-vitalidad-pwa",
+  "version": "2.0.0",
+  "description": "Sistema PWA completo com Firebase Auth e Cloudinary",
+  "main": "index.html",
+  "scripts": {
+    "dev": "http-server -p 3000 -o",
+    "build": "echo 'Building PWA...' && npm run optimize",
+    "optimize": "echo 'Optimizing assets...'",
+    "deploy": "echo 'Deploy to production'"
+  },
+  "dependencies": {
+    "firebase": "^10.7.1"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "keywords": [
+    "pwa",
+    "firebase",
+    "cloudinary",
+    "authentication",
+    "health",
+    "wellness"
+  ],
+  "author": "Plan de Vitalidad Team",
+  "license": "MIT"
+}

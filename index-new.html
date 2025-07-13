@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Vitalidad - Sua jornada de bem-estar</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Sistema completo de bem-estar com autenticação, upload de mídias e sincronização em tempo real">
+    <meta name="keywords" content="saúde, bem-estar, vitalidade, coaching, materiais, pwa">
+    <meta name="author" content="Plan de Vitalidad Team">
+    
+    <!-- PWA Theme -->
+    <meta name="theme-color" content="#10b981">
+    <meta name="background-color" content="#ffffff">
+    
+    <!-- Apple PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Plan de Vitalidad">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    
+    <!-- Critical CSS -->
+    <style>
+        /* Critical CSS for faster initial load */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: #f8fafc;
+            color: #1e293b;
+        }
+        
+        #root {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Loading screen styles */
+        .initial-loading {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .initial-loading-logo {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .initial-loading-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .initial-loading-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        
+        .initial-loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Hide initial loading when React loads */
+        .react-loaded .initial-loading {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .initial-loading-logo {
+                font-size: 48px;
+            }
+            
+            .initial-loading-title {
+                font-size: 24px;
+            }
+            
+            .initial-loading-subtitle {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <!-- Initial loading screen (shown while React loads) -->
+        <div class="initial-loading">
+            <div class="initial-loading-logo">🌱</div>
+            <h1 class="initial-loading-title">Plan de Vitalidad</h1>
+            <p class="initial-loading-subtitle">Carregando sua jornada de bem-estar...</p>
+            <div class="initial-loading-spinner"></div>
+        </div>
+    </div>
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        
+        // Make Firebase available globally for the app
+        window.Firebase = {
+            initializeApp,
+            getAuth,
+            getFirestore
+        };
+    </script>
+    
+    <!-- React Development Build -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for JSX transformation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Main application -->
+    <script type="text/babel" src="/src/main.jsx"></script>
+    
+    <!-- PWA Install prompt -->
+    <script>
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install button or banner
+            console.log('PWA install prompt available');
+        });
+        
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('PWA was installed');
+        });
+        
+        // Track if user installs PWA
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Track the event
+            gtag('event', 'pwa_install_prompt_shown', {
+                event_category: 'PWA',
+                event_label: 'Install Prompt Shown'
+            });
+        });
+    </script>
+    
+    <!-- Performance monitoring -->
+    <script>
+        // Mark when React has loaded
+        window.addEventListener('load', () => {
+            document.body.classList.add('react-loaded');
+        });
+        
+        // Basic performance monitoring
+        window.addEventListener('load', () => {
+            if ('performance' in window) {
+                const perfData = performance.getEntriesByType('navigation')[0];
+                console.log('Page load time:', perfData.loadEventEnd - perfData.fetchStart, 'ms');
+            }
+        });
+    </script>
+    
+    <!-- Error handling -->
+    <script>
+        window.addEventListener('error', (e) => {
+            console.error('Global error:', e.error);
+            // You can send errors to your analytics service here
+        });
+        
+        window.addEventListener('unhandledrejection', (e) => {
+            console.error('Unhandled promise rejection:', e.reason);
+            // You can send errors to your analytics service here
+        });
+    </script>
+</body>
+</html>
