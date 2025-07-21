@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Vitalidad</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .slider-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .slider {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 600px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .slide-description {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .slide-button {
+            background: linear-gradient(135deg, #ff6b6b, #ff5722);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(255,107,107,0.3);
+        }
+
+        .slide-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,107,107,0.4);
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .slider-arrows {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-arrows:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .prev-arrow {
+            left: 20px;
+        }
+
+        .next-arrow {
+            right: 20px;
+        }
+
+        .no-banners {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #6c757d;
+        }
+
+        .no-banners h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #495057;
+        }
+
+        .no-banners p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 500px;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .slider {
+                height: 400px;
+            }
+            
+            .slide-title {
+                font-size: 1.8rem;
+            }
+            
+            .slide-description {
+                font-size: 1rem;
+            }
+            
+            .slide-content {
+                padding: 1.5rem;
+                margin: 0 1rem;
+            }
+            
+            .slider-arrows {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .prev-arrow {
+                left: 10px;
+            }
+            
+            .next-arrow {
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Plan de Vitalidad</h1>
+        <button class="logout-btn" onclick="logout()">Sair</button>
+    </div>
+
+    <div class="container">
+        <div class="slider-container">
+            <div id="sliderContent" class="loading">
+                <div class="spinner"></div>
+                <p>Carregando banners...</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, collection, getDocs, orderBy, query, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC6X05SSX-3Nv5yF3oVtovxCHzHC9qx5J8",
+            authDomain: "app-vitalidade.firebaseapp.com",
+            projectId: "app-vitalidade",
+            storageBucket: "app-vitalidade.firebasestorage.app",
+            messagingSenderId: "360435217676",
+            appId: "1:360435217676:web:3bce7a5fa30305a8dc0529",
+            measurementId: "G-BN5KS1HYR9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentSlide = 0;
+        let banners = [];
+        let slideInterval;
+
+        // Verificar autenticação
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Função para fazer logout
+        window.logout = async function() {
+            try {
+                await signOut(auth);
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Erro ao fazer logout:', error);
+            }
+        };
+
+        // Função para carregar banners
+        function loadBanners() {
+            const q = query(collection(db, 'banners'), orderBy('createdAt', 'desc'));
+            
+            // Usar onSnapshot para atualizações em tempo real
+            onSnapshot(q, (querySnapshot) => {
+                banners = [];
+                querySnapshot.forEach((doc) => {
+                    banners.push({ id: doc.id, ...doc.data() });
+                });
+                
+                renderSlider();
+            }, (error) => {
+                console.error('Erro ao carregar banners:', error);
+                showNoBanners();
+            });
+        }
+
+        // Função para renderizar o slider
+        function renderSlider() {
+            const sliderContent = document.getElementById('sliderContent');
+            
+            if (banners.length === 0) {
+                showNoBanners();
+                return;
+            }
+
+            currentSlide = 0;
+            
+            sliderContent.innerHTML = `
+                <div class="slider">
+                    ${banners.map((banner, index) => createSlide(banner, index)).join('')}
+                    ${banners.length > 1 ? `
+                        <button class="slider-arrows prev-arrow" onclick="previousSlide()">❮</button>
+                        <button class="slider-arrows next-arrow" onclick="nextSlide()">❯</button>
+                        <div class="slider-nav">
+                            ${banners.map((_, index) => `<div class="nav-dot ${index === 0 ? 'active' : ''}" onclick="goToSlide(${index})"></div>`).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            // Iniciar slideshow automático se houver mais de um banner
+            if (banners.length > 1) {
+                startSlideshow();
+            }
+        }
+
+        // Função para criar um slide
+        function createSlide(banner, index) {
+            return `
+                <div class="slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
+                    <div class="slide-background" style="background-image: url('${banner.imageUrl}')"></div>
+                    <div class="slide-content">
+                        ${banner.showTitle && banner.title ? `<h2 class="slide-title">${banner.title}</h2>` : ''}
+                        ${banner.showDescription && banner.description ? `<p class="slide-description">${banner.description}</p>` : ''}
+                        ${banner.showButton && banner.buttonText && banner.link ? `<a href="${banner.link}" target="_blank" class="slide-button">${banner.buttonText}</a>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Função para mostrar mensagem quando não há banners
+        function showNoBanners() {
+            const sliderContent = document.getElementById('sliderContent');
+            sliderContent.innerHTML = `
+                <div class="no-banners">
+                    <h2>Nenhum banner disponível</h2>
+                    <p>Os banners aparecerão aqui assim que forem adicionados pelo administrador.</p>
+                </div>
+            `;
+            stopSlideshow();
+        }
+
+        // Funções de navegação do slider
+        window.nextSlide = function() {
+            if (banners.length <= 1) return;
+            
+            currentSlide = (currentSlide + 1) % banners.length;
+            updateSlider();
+            resetSlideshow();
+        };
+
+        window.previousSlide = function() {
+            if (banners.length <= 1) return;
+            
+            currentSlide = (currentSlide - 1 + banners.length) % banners.length;
+            updateSlider();
+            resetSlideshow();
+        };
+
+        window.goToSlide = function(index) {
+            if (banners.length <= 1) return;
+            
+            currentSlide = index;
+            updateSlider();
+            resetSlideshow();
+        };
+
+        // Função para atualizar o slider
+        function updateSlider() {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.nav-dot');
+            
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        // Função para iniciar slideshow automático
+        function startSlideshow() {
+            slideInterval = setInterval(() => {
+                nextSlide();
+            }, 5000); // Troca a cada 5 segundos
+        }
+
+        // Função para parar slideshow
+        function stopSlideshow() {
+            if (slideInterval) {
+                clearInterval(slideInterval);
+                slideInterval = null;
+            }
+        }
+
+        // Função para resetar slideshow
+        function resetSlideshow() {
+            stopSlideshow();
+            if (banners.length > 1) {
+                startSlideshow();
+            }
+        }
+
+        // Pausar slideshow ao passar o mouse
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.slider-container');
+            container.addEventListener('mouseenter', stopSlideshow);
+            container.addEventListener('mouseleave', () => {
+                if (banners.length > 1) {
+                    startSlideshow();
+                }
+            });
+        });
+
+        // Suporte a navegação por teclado
+        document.addEventListener('keydown', (e) => {
+            if (banners.length <= 1) return;
+            
+            if (e.key === 'ArrowLeft') {
+                previousSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
+        });
+
+        // Suporte a gestos touch para mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (banners.length <= 1) return;
+            
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    previousSlide();
+                }
+            }
+        }
+
+        // Carregar banners ao inicializar
+        loadBanners();
+    </script>
+</body>
+</html>
