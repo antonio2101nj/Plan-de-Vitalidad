@@ -1,0 +1,288 @@
+# 📋 ARQUIVOS PARA COPIAR E COLAR
+
+Como você não conseguiu baixar os arquivos, vou fornecer o conteúdo de cada um para que você possa **copiar e colar** diretamente.
+
+## 🚀 INSTRUÇÕES RÁPIDAS
+
+1. **Crie cada arquivo** com o nome indicado
+2. **Copie e cole** o conteúdo exato
+3. **Salve** no formato correto
+4. **Faça upload** para `app.plandevitalidad.com`
+
+---
+
+## 📄 **ARQUIVO 1: index.html** (Página de Login)
+
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Vitalidad</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            margin-top: 20px;
+        }
+
+        .login-btn:hover {
+            opacity: 0.9;
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 15px;
+            padding: 10px;
+            background: #fdf2f2;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">PV</div>
+        <h1>Login</h1>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" id="loginBtn" class="login-btn">Entrar</button>
+        </form>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+        </div>
+        
+        <div class="error-message" id="errorMessage"></div>
+    </div>
+
+    <script type="module" src="assets/js/auth.js"></script>
+</body>
+</html>
+```
+
+---
+
+## 📄 **ARQUIVO 2: assets/js/auth.js** (Crie a pasta assets/js/ primeiro)
+
+```javascript
+// Firebase modules
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyC6X05SSX-3Nv5yF3oVtovxCHzHC9qx5J8",
+    authDomain: "app-vitalidade.firebaseapp.com",
+    projectId: "app-vitalidade",
+    storageBucket: "app-vitalidade.firebasestorage.app",
+    messagingSenderId: "360435217676",
+    appId: "1:360435217676:web:3bce7a5fa30305a8dc0529",
+    measurementId: "G-BN5KS1HYR9"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const loginForm = document.getElementById('loginForm');
+const loginBtn = document.getElementById('loginBtn');
+const loading = document.getElementById('loading');
+const errorMessage = document.getElementById('errorMessage');
+
+function showError(message) {
+    errorMessage.textContent = message;
+    errorMessage.style.display = 'block';
+}
+
+function hideError() {
+    errorMessage.style.display = 'none';
+}
+
+function showLoading() {
+    loading.style.display = 'block';
+    loginBtn.disabled = true;
+}
+
+function hideLoading() {
+    loading.style.display = 'none';
+    loginBtn.disabled = false;
+}
+
+loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideError();
+    showLoading();
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Verificar se é admin
+        let isAdmin = false;
+        if (email === 'antonio.n.21lsantos@gmail.com') {
+            isAdmin = true;
+        } else {
+            try {
+                const userDoc = await getDoc(doc(db, 'users', user.uid));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    isAdmin = userData.role === 'admin';
+                }
+            } catch (error) {
+                console.log('Erro ao verificar role do usuário:', error);
+            }
+        }
+
+        // Redirecionar baseado no tipo de usuário
+        if (isAdmin) {
+            window.location.href = 'admin-dashboard.html';
+        } else {
+            window.location.href = 'user-dashboard.html';
+        }
+
+    } catch (error) {
+        hideLoading();
+        console.error('Erro no login:', error);
+        
+        let errorMsg = 'Erro ao fazer login. Tente novamente.';
+        if (error.code === 'auth/invalid-credential') {
+            errorMsg = 'Email ou senha incorretos.';
+        } else if (error.code === 'auth/user-not-found') {
+            errorMsg = 'Usuário não encontrado.';
+        } else if (error.code === 'auth/wrong-password') {
+            errorMsg = 'Senha incorreta.';
+        } else if (error.code === 'auth/too-many-requests') {
+            errorMsg = 'Muitas tentativas. Tente novamente mais tarde.';
+        }
+        
+        showError(errorMsg);
+    }
+});
+```
+
+Continue para ver os outros arquivos... Este arquivo já é muito longo, quer que eu continue com os próximos arquivos?

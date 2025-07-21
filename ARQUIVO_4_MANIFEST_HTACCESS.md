@@ -1,0 +1,115 @@
+# 📄 ARQUIVO 4: manifest.json
+
+**Nome do arquivo**: `manifest.json`  
+**Local**: Raiz do domínio (`app.plandevitalidad.com/manifest.json`)
+
+```json
+{
+  "name": "Plan de Vitalidad",
+  "short_name": "Plan Vitalidad",
+  "description": "Sistema de gerenciamento de banners",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "pt-BR",
+  "categories": ["productivity", "business"],
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "16x16 32x32 48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Painel Admin",
+      "short_name": "Admin",
+      "description": "Acessar painel administrativo",
+      "url": "/admin-dashboard.html"
+    },
+    {
+      "name": "Painel Usuário",
+      "short_name": "Usuário",
+      "description": "Acessar painel do usuário",
+      "url": "/user-dashboard.html"
+    }
+  ]
+}
+```
+
+---
+
+# 📄 ARQUIVO 5: .htaccess
+
+**Nome do arquivo**: `.htaccess` (com ponto no início!)  
+**Local**: Raiz do domínio (`app.plandevitalidad.com/.htaccess`)
+
+```apache
+# Configurações para Plan de Vitalidad App
+
+# Habilitar compressão GZIP
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+</IfModule>
+
+# Cache Headers
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType application/json "access plus 1 day"
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Content-Security-Policy "default-src 'self' https://www.gstatic.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com; script-src 'self' 'unsafe-inline' https://www.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://app.plandevitalidad.com; frame-ancestors 'none';"
+</IfModule>
+
+# Force HTTPS
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Prevent access to sensitive files
+<Files ".htaccess">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "*.log">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# MIME Types for PWA
+AddType application/manifest+json .webmanifest
+AddType application/manifest+json .json
+
+# Error Pages
+ErrorDocument 404 /index.html
+ErrorDocument 403 /index.html
+```
