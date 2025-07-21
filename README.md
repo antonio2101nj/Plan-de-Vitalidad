@@ -1,242 +1,218 @@
-# Plan de Vitalidad - Admin Panel
+# Plan de Vitalidad - Sistema de Banners
 
-## 🌱 Sobre o Projeto
+Sistema completo de gerenciamento de banners com painel administrativo e painel do usuário, desenvolvido com Firebase Authentication e upload direto para Hostinger.
 
-O **Plan de Vitalidad - Admin Panel** é um painel administrativo moderno, responsivo e funcional para gerenciar um aplicativo digital de saúde e bem-estar (PWA). O sistema foi desenvolvido com foco em alimentação saudável, estilo de vida equilibrado e desenvolvimento pessoal.
+## 🚀 Características
 
-## ✨ Características Principais
+- **Autenticação Firebase**: Login seguro para admin e usuários
+- **Painel Administrativo**: Gerenciamento completo de banners
+- **Painel do Usuário**: Visualização de banners em slider responsivo
+- **Upload Direto**: Imagens salvas diretamente na Hostinger
+- **Tempo Real**: Sincronização automática entre painéis
+- **PWA Ready**: Funciona como aplicativo nativo
 
-### 🎨 Design e Interface
-- Interface moderna e limpa com design intuitivo
-- Totalmente responsivo (desktop e mobile)
-- Paleta de cores: Verde (#10B981), Branco, Azul claro (#60A5FA)
-- Sidebar com ícones para cada seção
-- Menu lateral colapsável
-- Animações suaves e transições elegantes
-
-### 🌐 Multilíngue
-- Suporte completo para 3 idiomas:
-  - **Português (Brasil)** - Idioma padrão
-  - **Español** - Idioma principal
-  - **English** - Idioma internacional
-- Troca de idioma em tempo real
-- Interface totalmente traduzida
-
-### 📱 Progressive Web App (PWA)
-- Instalação automática no dispositivo
-- Service Worker para cache inteligente
-- Funcionamento offline
-- Notificações push
-- Ícones adaptativos
-
-### 🌙 Modo Escuro/Claro
-- Alternância entre temas claro e escuro
-- Preferências salvas automaticamente
-- Suporte a tema do sistema
-
-## 🔧 Funcionalidades
-
-### 📊 Seções Disponíveis
-1. **Dashboard** - Visão geral com métricas importantes
-2. **Usuários** - Gerenciamento de usuários
-3. **Produtos Digitais** - Gestão de produtos
-4. **Bônus e Materiais Extras** - Materiais complementares
-5. **Conteúdos** - Gestão de conteúdo
-6. **Desafios** - Sistema de desafios
-7. **Criativos e Campanhas** - Materiais de marketing
-8. **Imagens do Carrossel** - Gestão de imagens
-9. **Loja (Tienda)** - E-commerce
-10. **Vendas - Kiwify** - Integração com Kiwify
-11. **Notificações Push** - Sistema de notificações
-12. **Integrações e APIs** - Gestão de APIs
-13. **Relatórios** - Analytics e relatórios
-14. **Autoresponder** - Email marketing
-15. **Personalização do App** - Customização
-16. **Gamificação** - Sistema de pontos e conquistas
-17. **Configurações Gerais** - Configurações do sistema
-18. **Central de Suporte com IA** - Atendimento inteligente
-
-### ⚡ Recursos Técnicos
-- Navegação por abas dinâmica
-- Armazenamento local de preferências
-- Cache inteligente para performance
-- Atalhos de teclado (Alt+S para sidebar, Alt+T para tema)
-- Notificações do sistema
-- Modo offline funcional
-
-## 🚀 Como Usar
-
-### 📋 Pré-requisitos
-- Navegador web moderno (Chrome, Firefox, Safari, Edge)
-- Servidor web (Apache, Nginx, ou similar)
-- Conexão com internet para recursos externos
-
-### 🔧 Instalação
-1. Faça o download dos arquivos
-2. Coloque os arquivos em seu servidor web
-3. Acesse via navegador
-4. O sistema oferecerá instalação automática como PWA
-
-### 🎯 Navegação
-- **Menu Lateral**: Clique nos itens para navegar entre seções
-- **Colapsar Sidebar**: Clique no ícone de menu ou use Alt+S
-- **Trocar Tema**: Clique no ícone de lua/sol ou use Alt+T
-- **Trocar Idioma**: Clique no seletor de idioma no cabeçalho
-- **Mobile**: Use o botão de menu hambúrguer para acessar o menu
-
-### ⚙️ Configurações
-- **Idioma**: Português (padrão), Espanhol, Inglês
-- **Tema**: Claro/Escuro (salvo automaticamente)
-- **Sidebar**: Expandido/Colapsado (salvo automaticamente)
-- **Aba Ativa**: Última aba visitada (salvo automaticamente)
-
-## 🔗 Estrutura de Arquivos
+## 📁 Estrutura do Projeto
 
 ```
-plan-vitalidad/
-├── Core System
-│   ├── index.html              # Página de redirecionamento inteligente
-│   ├── auth.js                 # Sistema de autenticação e sessões
-│   ├── manifest.json           # Configuração PWA
-│   └── service-worker.js       # Service Worker
-├── Admin Panel
-│   ├── admin-dashboard.html    # Interface administrativa
-│   ├── admin-login.html        # Login para administradores
-│   ├── auth-styles.css         # Estilos de autenticação
-│   ├── styles.css              # Estilos do painel admin
-│   └── script.js               # JavaScript do admin
-├── User Panel (NOVO)
-│   ├── user-dashboard.html     # 🆕 Painel do usuário final
-│   ├── user-dashboard.css      # 🆕 Estilos modernos e responsivos
-│   ├── user-dashboard.js       # 🆕 Funcionalidades baseadas no React
-│   ├── app-dashboard.html      # Dashboard alternativo
-│   ├── app-login.html          # Login para usuários
-│   └── app-styles.css          # Estilos do app
-└── Documentation
-    ├── README.md               # Documentação principal
-    ├── AUTHENTICATION.md       # Sistema de autenticação
-    └── USER_DASHBOARD.md       # 🆕 Documentação do painel do usuário
+banner-app/
+├── dist/                    # Arquivos prontos para produção
+│   ├── index.html          # Página de login principal
+│   ├── admin-dashboard.html # Painel administrativo
+│   ├── user-dashboard.html  # Painel do usuário
+│   ├── manifest.json       # Configuração PWA
+│   ├── .htaccess          # Configurações Apache
+│   └── assets/
+│       └── js/
+│           └── auth.js     # Autenticação Firebase
+├── backend/
+│   └── upload.php         # Script de upload de imagens
+└── src/                   # Código fonte
 ```
 
-## 🎨 Personalização
+## 🛠️ Instalação na Hostinger
 
-### 🎨 Cores Principais
-```css
---primary-green: #10B981;
---light-blue: #60A5FA;
---white: #FFFFFF;
+### 1. Upload dos Arquivos
+
+1. Faça upload do conteúdo da pasta `dist/` para o diretório raiz do subdomínio `app.plandevitalidad.com`
+2. Faça upload do arquivo `backend/upload.php` para `https://app.plandevitalidad.com/upload.php`
+
+### 2. Configuração de Diretórios
+
+Certifique-se de que os seguintes diretórios existam e tenham permissões de escrita:
+
+```bash
+https://app.plandevitalidad.com/uploads/imagens/
+https://app.plandevitalidad.com/uploads/pdfs/
 ```
 
-### 📐 Dimensões
-- Sidebar: 280px (expandido), 80px (colapsado)
-- Header: 70px de altura
-- Breakpoint mobile: 768px
+### 3. Estrutura Final na Hostinger
 
-## 🔧 Desenvolvimento Futuro
+```
+app.plandevitalidad.com/
+├── index.html
+├── admin-dashboard.html
+├── user-dashboard.html
+├── manifest.json
+├── .htaccess
+├── upload.php
+├── assets/
+│   └── js/
+│       └── auth.js
+└── uploads/
+    ├── imagens/
+    └── pdfs/
+```
 
-### 🚀 Recursos Planejados
-- Webhook universal de eventos
-- Upload em lote (PDF, imagens, vídeos)
-- Logs de falhas de API
-- Logs de atividade de usuário
-- Modo desenvolvedor
-- Histórico de testes
+## 🔐 Configuração Firebase
 
-### 🔌 Integrações
-- APIs REST
-- Webhooks
-- Kiwify
-- Sistemas de pagamento
-- Ferramentas de email marketing
+O projeto já está configurado com as credenciais fornecidas:
 
-## � Painel do Usuário Final
+```javascript
+const firebaseConfig = {
+    apiKey: "AIzaSyC6X05SSX-3Nv5yF3oVtovxCHzHC9qx5J8",
+    authDomain: "app-vitalidade.firebaseapp.com",
+    projectId: "app-vitalidade",
+    // ... outras configurações
+};
+```
 
-### 🎯 Nova Funcionalidade Implementada
-Com base no código React fornecido, foi criado um **painel completo para usuários finais** com todas as funcionalidades modernas de saúde e bem-estar:
+### Regras do Firestore
 
-#### 🏠 Características do User Dashboard
-- **Interface moderna** baseada no componente React original
-- **Navegação por abas** com 8 seções principais:
-  - Início (Dashboard personalizado)
-  - Meus Produtos (Biblioteca de conteúdo)
-  - Meus Bônus (Sistema de recompensas)
-  - Desafíos (Tarefas diárias e progresso)
-  - Tienda (Loja integrada com Kiwify)
-  - Notificações (Centro de mensagens)
-  - Soporte (IA + suporte humano)
-  - Configurações (Preferências pessoais)
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    match /banners/{document} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+  }
+}
+```
 
-#### ⭐ Funcionalidades Especiais
-- **Sistema de gamificação** com pontos e conquistas
-- **Tarefas diárias interativas** com tracking de progresso
-- **Gravação de áudio** para suporte técnico
-- **Filtros avançados** para produtos e notificações
-- **Ofertas flash** com countdown em tempo real
-- **Sistema de bônus** com desbloqueio por tempo/pontos
-- **Desafios ativos** com métricas visuais
+## 👤 Acesso Administrativo
 
-#### � Tecnologias Utilizadas
-- **HTML5 semântico** para estrutura acessível
-- **CSS3 moderno** com variáveis e grid/flexbox
-- **JavaScript ES6+** com classes e modules
-- **Media Recorder API** para áudio nativo
-- **LocalStorage** para persistência de dados
-- **Sistema de traduções** completo (ES/PT/EN)
+**Email do Administrador**: `antonio.n.21lsantos@gmail.com`
 
-#### 🎮 Demo e Acesso
-- **Login de teste:** usuario@planvitalidad.com
-- **Senha:** user123
-- **Acesso direto:** `user-dashboard.html`
-- **Documentação completa:** Ver `USER_DASHBOARD.md`
+O sistema reconhece automaticamente este email como administrador. Outros usuários podem ser configurados no Firestore com `role: 'admin'`.
 
-## 🌟 Recursos Avançados
+## 🎨 Funcionalidades do Painel Admin
 
-### 🔒 Segurança
-- Sistema de autenticação robusto com roles
-- Sessões persistentes por 7 dias
-- Validação de formulários
-- Proteção contra XSS
-- Headers de segurança
-- Redirecionamento inteligente baseado em permissões
+- ✅ Upload de imagens (JPG, PNG, WebP até 5MB)
+- ✅ Campos opcionais: título, descrição, botão CTA
+- ✅ Preview em tempo real das imagens
+- ✅ Visualização dos banners criados
+- ✅ Exclusão de banners
+- ✅ Arrastar e soltar para upload
+- ✅ Otimização automática de imagens
 
-### 📈 Performance
-- Cache inteligente
-- Lazy loading
-- Compressão de recursos
-- Otimização de imagens
-- Navegação SPA sem reload
-- Bundle otimizado
+### Recomendações de Imagem
 
-### 🎯 Acessibilidade
-- Navegação por teclado
-- Contraste adequado (WCAG 2.1)
-- Indicadores de foco
-- Suporte a leitores de tela
-- Design responsivo mobile-first
-- Touch-friendly para dispositivos móveis
+- **Proporção**: 16:9 (ex: 1920x1080px)
+- **Largura mínima**: 1200px
+- **Formatos**: JPG, PNG, WebP
+- **Tamanho máximo**: 5MB
+
+## 🖥️ Funcionalidades do Painel Usuário
+
+- ✅ Slider responsivo com transições suaves
+- ✅ Atualização em tempo real dos banners
+- ✅ Navegação por setas e pontos
+- ✅ Slideshow automático (5 segundos)
+- ✅ Suporte a gestos touch (mobile)
+- ✅ Navegação por teclado (setas)
+- ✅ Pause ao passar o mouse
+
+## 📱 PWA (Progressive Web App)
+
+O aplicativo pode ser instalado como app nativo no dispositivo:
+
+- **Desktop**: Botão "Instalar" no navegador
+- **Mobile**: "Adicionar à tela inicial"
+
+## 🔧 Configurações Técnicas
+
+### PHP Upload Script
+
+- **Limite de arquivo**: 5MB
+- **Tipos permitidos**: JPG, JPEG, PNG, WebP
+- **Otimização**: Redimensionamento automático para máx. 1920x1080px
+- **Segurança**: Validação de tipo MIME e extensão
+- **CORS**: Configurado para aceitar requisições do domínio
+
+### Firebase
+
+- **Autenticação**: Email/senha
+- **Firestore**: Armazenamento de dados dos banners
+- **Tempo real**: Sincronização automática via `onSnapshot`
+
+## 🚦 Como Usar
+
+### Para Administradores
+
+1. Acesse `https://app.plandevitalidad.com`
+2. Faça login com as credenciais de admin
+3. No painel administrativo:
+   - Escolha quais elementos mostrar (título, descrição, botão)
+   - Preencha os campos desejados
+   - Faça upload da imagem
+   - Clique em "Adicionar Banner"
+4. Os banners aparecerão em tempo real no painel do usuário
+
+### Para Usuários
+
+1. Acesse `https://app.plandevitalidad.com`
+2. Faça login com suas credenciais
+3. Visualize os banners no slider central
+4. Use as setas, pontos ou gestos para navegar
+
+## 🔒 Segurança
+
+- **HTTPS obrigatório**: Redirecionamento automático
+- **Headers de segurança**: XSS Protection, Content Security Policy
+- **Validação de arquivos**: Tipo MIME e extensão
+- **Autenticação Firebase**: Tokens seguros
+- **CORS configurado**: Apenas domínios autorizados
+
+## 🐛 Resolução de Problemas
+
+### Erro no Upload de Imagens
+
+1. Verifique se o diretório `uploads/imagens/` existe
+2. Confirme as permissões de escrita (755)
+3. Verifique o tamanho do arquivo (máx. 5MB)
+4. Confirme o formato (JPG, PNG, WebP)
+
+### Problemas de Login
+
+1. Verifique a conexão com Firebase
+2. Confirme as credenciais no console Firebase
+3. Verifique as regras do Firestore
+
+### Banners não Aparecem
+
+1. Verifique se há banners no Firestore
+2. Confirme a autenticação do usuário
+3. Verifique o console do navegador para erros
 
 ## 📞 Suporte
 
-### 🐛 Reportar Problemas
-1. Verifique o console do navegador
-2. Teste em modo incógnito
-3. Limpe o cache se necessário
-4. Documente o problema com screenshots
+Para suporte técnico ou dúvidas sobre a implementação, consulte:
 
-### 🔧 Solução de Problemas
-- **PWA não instala**: Verifique se está em HTTPS
-- **Não funciona offline**: Aguarde o cache ser criado
-- **Idioma não muda**: Limpe o cache do navegador
-- **Sidebar não colapsa**: Verifique se não está em modo mobile
+- Logs do servidor em `uploads/logs/uploads.log`
+- Console do navegador para erros JavaScript
+- Firebase Console para dados e autenticação
 
-## 📄 Licença
+## 🔄 Atualizações Futuras
 
-Este projeto foi desenvolvido como uma solução administrativa personalizada para o Plan de Vitalidad.
-
-## 🎉 Agradecimentos
-
-Desenvolvido com foco na melhor experiência do usuário e máxima funcionalidade para administradores de aplicativos de saúde e bem-estar.
-
----
-
-**Plan de Vitalidad - Admin Panel** | Versão 1.0.0 | 2024
+- [ ] Sistema de categorias de banners
+- [ ] Agendamento de publicação
+- [ ] Estatísticas de visualização
+- [ ] Editor de imagem integrado
+- [ ] Múltiplos idiomas
